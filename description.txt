@@ -1,0 +1,35 @@
+The addon for Fargos's Souls. The main goal of the mod is to balance many global mods with Fargos and among themselves.
+
+
+Source code: https://github.com/Shtuks/StarlightsSouls
+
+Discord Server: https://discord.gg/frUcz2dQAy
+
+Official Wiki: https://terrariamods.wiki.gg/wiki/Community_Souls_Expansion
+
+
+All things mod doing for now:
+
+- Force for Calamity Addons
+
+- Merge kinetic(SoA) thrower(Thorium) and rogue(Calamity) in one class
+
+- Reworked boots and shields progression
+
+- Adds SoA and Thorium items to 1st tier souls recepies and effects
+
+- Redemption, Thorium, SoA caught NPCs
+
+- Thorium / SoA / Polarities / Spooky enchantments, forces, souls
+
+Full list of supported mods: Calamity, Shadows of Abaddon, Thorium, Redemption, Spooky, Polarities, Bombus Apis, Magic Storage
+Coming soon compatibility: Homeward Journey, Spirit, Consolaria
+
+Coding: StarlightCat, Ropro0923
+Sprites: ma3allim, DanHameln
+Wiki: Soltan, magegor11
+Testing: cheesenuggets, Mr.Puzzles, Wild Mayo
+
+Special thanks to Fargowilta, Javyz, Terry N Muse, Blushiemagic, DanYami, Jopojelly, ChickenBones, Jofairden, DivermanSam.
+
+Thanks to active members of Discord Server: Mith Moonwalker, AwesomeSavage777, GodzillaJedi, vergeneu

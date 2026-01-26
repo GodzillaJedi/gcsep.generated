@@ -1,0 +1,148 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+	<!-- Import tModLoader build rules -->
+	<Import Project="..\tModLoader.targets" />
+
+	<!-- General project identity -->
+	<PropertyGroup>
+		<RootNamespace>gcsep</RootNamespace>
+		<AssemblyName>gcsep</AssemblyName>
+		<Platforms>AnyCPU;x64;ARM64</Platforms>
+	</PropertyGroup>
+
+	<!-- Source includes/excludes -->
+	<ItemGroup>
+		<!-- Remove unwanted legacy content -->
+		<Compile Remove="Content\NPCs\StarlightCat\**" />
+		<Compile Remove="Thorium\Swarm\**" />
+		<EmbeddedResource Remove="Content\NPCs\StarlightCat\**" />
+		<EmbeddedResource Remove="Thorium\Swarm\**" />
+		<None Remove="Content\NPCs\StarlightCat\**" />
+		<None Remove="Thorium\Swarm\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="AlchemistNPCLite">
+	    <HintPath>lib\AlchemistNPCLite.dll</HintPath>
+	  </Reference>
+	  <Reference Include="BombusApisBee">
+	    <HintPath>lib\BombusApisBee.dll</HintPath>
+	  </Reference>
+	  <Reference Include="BossChecklist">
+	    <HintPath>lib\BossChecklist.dll</HintPath>
+	  </Reference>
+	  <Reference Include="CalamityBardHealer">
+	    <HintPath>lib\CalamityBardHealer.dll</HintPath>
+	  </Reference>
+	  <Reference Include="CalamityEntropy">
+	    <HintPath>lib\CalamityEntropy.dll</HintPath>
+	  </Reference>
+	  <Reference Include="CalamityHunt">
+	    <HintPath>lib\CalamityHunt.dll</HintPath>
+	  </Reference>
+	  <Reference Include="CalamityMod">
+	    <HintPath>lib\CalamityMod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="CatalystMod">
+	    <HintPath>lib\CatalystMod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="CheatSheet">
+	    <HintPath>lib\CheatSheet.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Clamity">
+	    <HintPath>lib\Clamity.dll</HintPath>
+	  </Reference>
+	  <Reference Include="ClickerClass">
+	    <HintPath>lib\ClickerClass.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Consolaria">
+	    <HintPath>lib\Consolaria.dll</HintPath>
+	  </Reference>
+	  <Reference Include="ContinentOfJourney">
+	    <HintPath>lib\ContinentOfJourney.dll</HintPath>
+	  </Reference>
+	  <Reference Include="DragonLens">
+	    <HintPath>lib\DragonLens.dll</HintPath>
+	  </Reference>
+	  <Reference Include="EbonianMod">
+	    <HintPath>lib\EbonianMod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Fargowiltas">
+	    <HintPath>lib\Fargowiltas.dll</HintPath>
+	  </Reference>
+	  <Reference Include="FargowiltasCrossmod">
+	    <HintPath>lib\FargowiltasCrossmod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="FargowiltasSouls">
+	    <HintPath>lib\FargowiltasSouls.dll</HintPath>
+	  </Reference>
+	  <Reference Include="GMR">
+	    <HintPath>..\..\ModReader\GMR\GMR.dll</HintPath>
+	  </Reference>
+	  <Reference Include="gunrightsmod">
+	    <HintPath>lib\gunrightsmod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="HEROsMod">
+	    <HintPath>lib\HEROsMod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Luminance">
+	    <HintPath>lib\Luminance.dll</HintPath>
+	  </Reference>
+	  <Reference Include="MagicStorage">
+	    <HintPath>lib\MagicStorage.dll</HintPath>
+	  </Reference>
+	  <Reference Include="NoxusBoss">
+	    <HintPath>lib\NoxusBoss.dll</HintPath>
+	  </Reference>
+	  <Reference Include="OrchidMod">
+	    <HintPath>lib\OrchidMod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Polarities">
+	    <HintPath>lib\Polarities.dll</HintPath>
+	  </Reference>
+	  <Reference Include="RagnarokMod">
+	    <HintPath>lib\RagnarokMod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Redemption">
+	    <HintPath>..\..\ModReader\Redemption\Redemption.dll</HintPath>
+	  </Reference>
+	  <Reference Include="RedemptionBardHealer">
+	    <HintPath>..\..\ModReader\RedemptionBardHealer\RedemptionBardHealer.dll</HintPath>
+	  </Reference>
+	  <Reference Include="SacredTools">
+	    <HintPath>Libraries\SacredTools.dll</HintPath>
+	  </Reference>
+	  <Reference Include="SOTS">
+	    <HintPath>lib\SOTS.dll</HintPath>
+	  </Reference>
+	  <Reference Include="SOTSBardHealer">
+	    <HintPath>..\..\ModReader\SOTSBardHealer\SOTSBardHealer.dll</HintPath>
+	  </Reference>
+	  <Reference Include="SpiritBardHealer">
+	    <HintPath>..\..\ModReader\SpiritBardHealer\SpiritBardHealer.dll</HintPath>
+	  </Reference>
+	  <Reference Include="SpiritMod">
+	    <HintPath>lib\SpiritMod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Spooky">
+	    <HintPath>lib\Spooky.dll</HintPath>
+	  </Reference>
+	  <Reference Include="SpookyBardHealer">
+	    <HintPath>lib\SpookyBardHealer.dll</HintPath>
+	  </Reference>
+	  <Reference Include="SubworldLibrary">
+	    <HintPath>Libraries\SubworldLibrary.dll</HintPath>
+	  </Reference>
+	  <Reference Include="ThoriumMod">
+	    <HintPath>lib\ThoriumMod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="ThoriumRework">
+	    <HintPath>lib\ThoriumRework.dll</HintPath>
+	  </Reference>
+	  <Reference Include="VitalityMod">
+	    <HintPath>lib\VitalityMod.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<!-- References -->
+
+</Project>

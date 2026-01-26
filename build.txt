@@ -1,0 +1,10 @@
+displayName = GodzillaJedi's Community Souls Expansion Plus 
+author = GodzillaJedi(Abaddon)
+version = 1.1.4.16
+homepage = https://discord.gg/frUcz2dQAy
+modReferences = FargowiltasSouls, Fargowiltas, Luminance
+weakReferences = CalamityMod, Redemption, SacredTools, ThoriumMod, FargowiltasCrossmod, CalValEX, CatalystMod, CalamityHunt, MagicStorage, DragonLens, Clamity, CalamityEntropy, NoxusBoss, Polarities, Spooky, BombusApisBee, ClickerClass, SOTS, gunrightsmod, Consolaria, SpiritMod, CalamityBardHealer, SpookyBardHealer, RedemptionBardHealer, SOTSBardHealer, SpiritBardHealer, GMR, ContinentOfJourney, AlchemistNPCLite, RagnarokMod, OrchidMod, VitalityMod, almazikmod
+sortArfter = FargowiltasSouls, Fargowiltas, Luminance, FargowiltasCrossmod
+includePDB = true
+includeSource = true
+buildIgnore = lib\*

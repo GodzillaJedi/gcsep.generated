@@ -1,0 +1,38 @@
+﻿using gcsep.Core;
+using gcsep.Thorium.Buffs;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using ThoriumMod.Projectiles;
+
+namespace gcsep.Thorium
+{
+    [ExtendsFromMod(ModCompatibility.SacredTools.Name)]
+    [JITWhenModsEnabled(ModCompatibility.SacredTools.Name)]
+    public class ThoriumProjectiles : GlobalProjectile
+    {
+        public override bool InstancePerEntity => true;
+        public override void AI(Projectile projectile)
+        {
+            if (projectile.type == ModContent.ProjectileType<PlasmaShot>())
+            {
+                projectile.velocity *= 1.1f;
+            }
+        }
+        public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Player player = Main.player[projectile.owner];
+            if (player.GetModPlayer<CSEThoriumPlayer>().ThunderTalonEternity)
+            {
+                target.AddBuff(BuffID.BoneJavelin, 300);
+            }
+            if (player.GetModPlayer<CSEThoriumPlayer>().DarkenedCloak)
+            {
+                if (Main.rand.NextBool(4))
+                {
+                    player.AddBuff(ModContent.BuffType<SoulStrength>(), 120);
+                }
+            }
+        }
+    }
+}

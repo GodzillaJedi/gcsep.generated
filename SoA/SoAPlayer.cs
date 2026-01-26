@@ -1,0 +1,379 @@
+﻿using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Core;
+using Microsoft.Xna.Framework;
+using SacredTools;
+using gcsep.Content.Buffs;
+using gcsep.Content.Projectiles.Enchantments;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static gcsep.SoA.Enchantments.FlariumEnchant;
+using System;
+
+namespace gcsep.SoA
+{
+    [ExtendsFromMod(ModCompatibility.SacredTools.Name)]
+    [JITWhenModsEnabled(ModCompatibility.SacredTools.Name)]
+    public class SoAPlayer : ModPlayer
+    {
+        //General
+        public int rivalStreak;
+        public int EerieEnchantCooldown;
+        public int SpaceJunkCooldown;
+        //Bismuth Enchant
+        public int bismuthEnchant;
+        public int bismuthCrystalStage = 0;
+        public int bismuthFormationTimer = 0;
+        public const int FormationTime = 300;
+        public const int MaxStages = 3;
+        public const int MaxDamageAbsorption = 90;
+        public int currentDamageAbsorbed = 0;
+
+        //Frosthunter Enchantment
+        public int frosthunterEnchant;
+        public int frosthunterCooldown = 0;
+
+        //Lapis Enchant
+        public int lapisSpeedTimer;
+        public int lapisEnchant;
+
+        //Blightbone Enchant
+        public int blightboneEnchant;
+
+        //Eerie Enchant
+        public int eerieEnchant;
+
+        //Eival Enchant
+        public int rivalEnchant = 0;
+        public int rivalKillCount = 0;
+        public int rivalTimer = 0;
+
+        //Space Junk Enchant
+        public int spaceJunkEnchant = 0;
+
+        //Fallen Prince Enchant
+        public int fallenPrinceEnchant = 0;
+
+        //Vulcan Reaper Enchant
+        public int vulcanReaperEnchant;
+        public int vulcanStacks;
+        public int vulcanTime;
+        public override void ResetEffects()
+        {
+            vulcanReaperEnchant = 0;
+            fallenPrinceEnchant = 0;
+            spaceJunkEnchant = 0;
+            rivalEnchant = 0;
+            eerieEnchant = 0;
+            blightboneEnchant = 0;
+            lapisEnchant = 0;
+            frosthunterEnchant = 0;
+            bismuthEnchant = 0;
+        }
+        public override void UpdateDead()
+        {
+            fallenPrinceEnchant = 0;
+            rivalTimer = 0;
+            rivalKillCount = 0;
+            frosthunterCooldown = 0;
+            rivalKillCount = 0;
+            currentDamageAbsorbed = 0;
+            bismuthCrystalStage = 0;
+        }
+        public override void PostUpdateEquips()
+        {
+            if (rivalKillCount > 0)
+            {
+                rivalTimer++;
+            }
+
+            if (rivalTimer >= 300)
+            {
+                rivalKillCount--;
+                rivalTimer = 0;
+            }
+
+            if (vulcanStacks > 0)
+            {
+                vulcanTime++;
+            }
+
+            if (vulcanTime >= 300)
+            {
+                vulcanStacks--;
+                vulcanTime = 0;
+            }
+
+            if (frosthunterCooldown > 0)
+            {
+                frosthunterCooldown--;
+            }
+
+            if (lapisSpeedTimer > 0)
+            {
+                lapisSpeedTimer--;
+                if (lapisEnchant > 0)
+                {
+                    Player.moveSpeed += 0.25f;
+                }
+            }
+
+            if (bismuthEnchant > 0)
+            {
+                bismuthFormationTimer++;
+
+                if (bismuthFormationTimer >= FormationTime / MaxStages * (bismuthCrystalStage + 1) && bismuthCrystalStage < MaxStages)
+                {
+                    bismuthCrystalStage++;
+                    currentDamageAbsorbed = 0;
+                }
+            }
+        }
+
+        public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
+        {
+            CreateShrapnel();
+        }
+
+        public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
+        {
+            CreateShrapnel();
+        }
+
+        public void CreateShrapnel()
+        {
+            if (spaceJunkEnchant > 0 && Main.rand.NextFloat() < 0.33f)
+            {
+                int shardCount = Main.rand.Next(2, 5);
+
+                for (int i = 0; i < shardCount; i++)
+                {
+                    Vector2 position = Player.Center;
+
+                    int shard = Projectile.NewProjectile(
+                        Player.GetSource_FromThis(),
+                        position,
+                        Vector2.Zero,
+                        ModContent.ProjectileType<SatelliteShard>(),
+                        80 / 2,
+                        0,
+                        Player.whoAmI);
+
+                    Main.projectile[shard].rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+                }
+            }
+        }
+
+        public override void PostUpdateMiscEffects()
+        {
+            if (rivalEnchant > 0 && rivalKillCount > 0)
+            {
+                Player.AddBuff(ModContent.BuffType<RivalBuff>(), 60);
+            }
+        }
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (rivalEnchant > 0 && rivalKillCount > 0)
+            {
+                hit.Damage = (int)(hit.Damage * (1f + 0.2f * rivalKillCount));
+            }
+            if (frosthunterEnchant > 0)
+            {
+                bool isCluster = frosthunterCooldown <= 0;
+
+                CreateFrostExplosion(target.Center, isCluster, proj);
+
+                if (isCluster)
+                {
+                    frosthunterCooldown = 120;
+                }
+            }
+            if (blightboneEnchant == 1 && IsBoneWeapon(proj))
+            {
+                target.AddBuff(BuffID.OnFire, 180);
+            }
+
+            if (blightboneEnchant == 2 && IsBoneWeapon(proj))
+            {
+                target.AddBuff(BuffID.OnFire, 360);
+            }
+            if (proj.owner.ToPlayer().ownedProjectileCounts[ModContent.ProjectileType<FlariumTornado>()] < 6)
+            {
+                if (proj.owner.ToPlayer().HasEffect<FlariumHelmEffect>() && Main.rand.NextFloat() < 0.05f && proj.damage > 0 && !proj.minion)
+                {
+                    Vector2 spawnPosition = proj.Center;
+                    Projectile.NewProjectile(
+                    proj.GetSource_FromThis(),
+                    spawnPosition,
+                    Vector2.Zero,
+                    ModContent.ProjectileType<FlariumTornado>(),
+                    100,
+                    0,
+                        proj.owner
+                    );
+                }
+            }
+        }
+
+        private bool IsBoneWeapon(Projectile proj)
+        {
+            //...
+            return proj.type == ProjectileID.Bone ||
+                   proj.type == ProjectileID.BoneJavelin ||
+                   proj.type == ProjectileID.BoneGloveProj;
+        }
+
+        public void CreateFrostExplosion(Vector2 pos, bool isCluster, Projectile proj)
+        {
+            float radius = isCluster ? 100f : 150f;
+            int damage = (int)(Player.GetDamage(DamageClass.Generic).ApplyTo(20));
+            float knockback = 3f;
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && !npc.friendly && npc.Distance(pos) <= radius)
+                {
+                    Player.ApplyDamageToNPC(npc, damage, knockback, Player.direction);
+                    npc.AddBuff(frosthunterEnchant > 1 ? BuffID.Frostburn2 : BuffID.Frostburn, 180);
+                }
+            }
+
+            Projectile.NewProjectile(proj.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<FrosthunterExplosion>(), 0, 0);
+
+            //for (int i = 0; i < 15; i++)
+            //{
+            //    Dust sust = Dust.NewDustPerfect(pos, DustID.Ice, Main.rand.NextVector2Circular(5, 5) * 3f);
+            //    sust.noGravity = true;
+            //    sust.scale = 1.5f;
+            //}
+
+            if (isCluster)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Vector2 clusterPos = pos + Main.rand.NextVector2Circular(radius * 0.5f, radius * 0.5f);
+                    CreateSmallFrostExplosion(pos, proj);
+                }
+            }
+        }
+        public void CreateSmallFrostExplosion(Vector2 pos, Projectile proj)
+        {
+            float radius = 60f;
+            int damage = (int)(Player.GetDamage(DamageClass.Generic).ApplyTo(10));
+            float knockback = 1.5f;
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && !npc.friendly && npc.Distance(pos) <= radius)
+                {
+                    Player.ApplyDamageToNPC(npc, damage, knockback, Player.direction);
+                    npc.AddBuff(frosthunterEnchant > 1 ? BuffID.Frostburn2 : BuffID.Frostburn, 180);
+                }
+            }
+
+            Projectile.NewProjectile(proj.GetSource_FromThis(), pos, Vector2.Zero, ModContent.ProjectileType<FrosthunterExplosion>(), 0, 0);
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    Dust sust = Dust.NewDustPerfect(pos, DustID.Ice, Main.rand.NextVector2Circular(5, 5) * 3f);
+            //    sust.noGravity = true;
+            //    sust.scale = 1.5f;
+            //}
+        }
+
+        public override void OnHurt(Player.HurtInfo info)
+        {
+            if (lapisEnchant > 1 && !Player.dead)
+            {
+                lapisSpeedTimer = 120;
+            }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+
+            if (rivalEnchant > 0 && target.life <= 0 && !target.friendly && target.type != NPCID.TargetDummy)
+            {
+                if (rivalKillCount < 5)
+                {
+                    rivalKillCount++;
+                }
+            }
+            if (vulcanReaperEnchant > 0 && target.life <= 0 && !target.friendly && target.type != NPCID.TargetDummy)
+            {
+                vulcanStacks++;
+            }
+        }
+        public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+        {
+            if (bismuthEnchant > 0)
+            {
+                if (bismuthCrystalStage > 0 && currentDamageAbsorbed < MaxDamageAbsorption)
+                {
+                    float damageReduction = 0f;
+
+                    if (GCSEUtils.AnyBossAlive())
+                    {
+                        damageReduction = bismuthEnchant > 1 ? 0.05f : 0.02f;
+                    }
+                    else
+                    {
+                        damageReduction = bismuthEnchant > 1 ? 0.1f : 0.05f;
+                    }
+
+                    float damageToAbsorb = modifiers.FinalDamage.Flat * damageReduction;
+
+                    if (currentDamageAbsorbed + damageToAbsorb > MaxDamageAbsorption)
+                    {
+                        damageToAbsorb = MaxDamageAbsorption - currentDamageAbsorbed;
+                    }
+
+                    if (damageToAbsorb > 0)
+                    {
+                        modifiers.FinalDamage -= damageToAbsorb;
+                        currentDamageAbsorbed += (int)damageToAbsorb;
+                    }
+                }
+            }
+        }
+        public override void PreUpdateMovement()
+        {
+            if (Player.HasBuff(ModContent.BuffType<SniperBuff>()))
+            {
+                Player.controlLeft = false;
+                Player.controlRight = false;
+                Player.controlJump = false;
+                Player.controlDown = false;
+                Player.controlUp = false;
+                Player.velocity = Vector2.Zero;
+                Player.gravity = 0f;
+                Player.fallStart = (int)(Player.position.Y / 16f);
+            }
+        }
+        public override void UpdateEquips()
+        {
+            if (Player.GetModPlayer<ModdedPlayer>().DragonSetEffect)
+            {
+                Player.GetDamage(DamageClass.Generic) += 0.05f;
+            }
+        }
+        public override void ModifyWeaponDamage(Item item, ref StatModifier damage)
+        {
+            if (Player.HasBuff(ModContent.BuffType<SniperBuff>()))
+            {
+                damage += 1.25f;
+            }
+            else if (Player.HasBuff(ModContent.BuffType<SniperCooldownBuff>()))
+            {
+                damage *= 0.75f;
+            }
+        }
+
+        internal bool CheckSoulbound(Item item)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

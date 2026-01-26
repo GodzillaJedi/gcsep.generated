@@ -1,0 +1,35 @@
+﻿using Consolaria.Content.NPCs.Bosses.Ocram;
+using Consolaria.Content.NPCs.Bosses.Turkor;
+using gcsep.Core;
+using Terraria;
+using Terraria.ModLoader;
+
+namespace gcsep.Consolaria
+{
+    [JITWhenModsEnabled(ModCompatibility.Consolaria.Name)]
+    [ExtendsFromMod(ModCompatibility.Consolaria.Name)]
+    public class ConsolariaBossesBalance : GlobalNPC
+    {
+        public override bool InstancePerEntity => true;
+        public override void SetDefaults(NPC npc)
+        {
+            if (npc.type == ModContent.NPCType<Ocram>())
+            {
+                npc.lifeMax = ModCompatibility.Calamity.Loaded ? 150000 : 100000;
+                npc.damage = 230;
+            }
+
+            if (npc.type == ModContent.NPCType<TurkortheUngrateful>())
+            {
+                npc.lifeMax = ModCompatibility.Calamity.Loaded ? 18000 : 13000;
+                npc.damage = 420;
+            }
+
+            if (npc.type == ModContent.NPCType<TurkortheUngratefulHead>())
+            {
+                npc.lifeMax = ModCompatibility.Calamity.Loaded ? 5000 : 2600;
+                npc.damage = 420;
+            }
+        }
+    }
+}

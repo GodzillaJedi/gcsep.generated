@@ -1,0 +1,2859 @@
+Mods: {
+	gcsep: {
+		Keybinds: {
+			"Dot Mount.DisplayName": Dot  Mount
+			SupernovaeAttack.DisplayName: Supernovae Attack
+			CruserAttack.DisplayName: Cruser Attack
+			NamelessAttack.DisplayName: Nameless Attack
+		}
+
+		Tiles: {
+			DemonshadeWorkbenchTile.MapEntry: Demonshade Workbench Tile
+			DreamersForgeTile.MapEntry: Dreamers Forge Tile
+			MutantsForgeTile.MapEntry: Mutants Forge Tile
+			RedemptionCraftingStationTile.MapEntry: Redemption Crafting Station Tile
+			SyranCraftingStationTile.MapEntry: Syran Crafting Station Tile
+			CSEStorageUnit.MapEntry: C S E Storage Unit
+		}
+
+		Buffs: {
+			ChtuxlagorInferno: {
+				DisplayName: Chtuxlagor Inferno
+				Description: Mods.gcsep.Buffs.ChtuxlagorInferno.Description
+			}
+
+			CryDebuff: {
+				DisplayName: Cry Debuff
+				Description: Mods.gcsep.Buffs.CryDebuff.Description
+			}
+
+			CutOpen: {
+				DisplayName: Cut Open
+				Description: Mods.gcsep.Buffs.CutOpen.Description
+			}
+
+			DreadflameAura: {
+				DisplayName: Dreadflame Aura
+				Description: Mods.gcsep.Buffs.DreadflameAura.Description
+			}
+
+			DreadflameAuraCD: {
+				DisplayName: Dreadflame Aura C D
+				Description: Mods.gcsep.Buffs.DreadflameAuraCD.Description
+			}
+
+			EnrageCal: {
+				DisplayName: Enrage Cal
+				Description: Mods.gcsep.Buffs.EnrageCal.Description
+			}
+
+			FearBuff: {
+				DisplayName: Fear Buff
+				Description: Mods.gcsep.Buffs.FearBuff.Description
+			}
+
+			GojiPrice: {
+				DisplayName: Goji Price
+				Description: Mods.gcsep.Buffs.GojiPrice.Description
+			}
+
+			DeviSoulBuff: {
+				DisplayName: Devi Soul Buff
+				Description: Mods.gcsep.Buffs.DeviSoulBuff.Description
+			}
+
+			MutantSoulBuff: {
+				DisplayName: Mutant Soul Buff
+				Description: Mods.gcsep.Buffs.MutantSoulBuff.Description
+			}
+
+			MonstrosityPresenceBuff: {
+				DisplayName: Monstrosity Presence Buff
+				Description: Mods.gcsep.Buffs.MonstrosityPresenceBuff.Description
+			}
+
+			MushroomBuff: {
+				DisplayName: Mushroom Buff
+				Description: Mods.gcsep.Buffs.MushroomBuff.Description
+			}
+
+			NihilityPresenceBuff: {
+				DisplayName: Nihility Presence Buff
+				Description: Mods.gcsep.Buffs.NihilityPresenceBuff.Description
+			}
+
+			PureFlameBuff: {
+				DisplayName: Pure Flame Buff
+				Description: Mods.gcsep.Buffs.PureFlameBuff.Description
+			}
+
+			RivalBuff: {
+				DisplayName: Rival Buff
+				Description: Mods.gcsep.Buffs.RivalBuff.Description
+			}
+
+			SadismEX: {
+				DisplayName: Sadism E X
+				Description: Mods.gcsep.Buffs.SadismEX.Description
+			}
+
+			SniperBuff: {
+				DisplayName: Sniper Buff
+				Description: Mods.gcsep.Buffs.SniperBuff.Description
+			}
+
+			SniperCooldownBuff: {
+				DisplayName: Sniper Cooldown Buff
+				Description: Mods.gcsep.Buffs.SniperCooldownBuff.Description
+			}
+
+			TheRichBuff: {
+				DisplayName: The Rich Buff
+				Description: Mods.gcsep.Buffs.TheRichBuff.Description
+			}
+
+			YharimBuff: {
+				DisplayName: Yharim Buff
+				Description: Mods.gcsep.Buffs.YharimBuff.Description
+			}
+
+			Moonified: {
+				DisplayName: Moonified
+				Description: Mods.gcsep.Buffs.Moonified.Description
+			}
+
+			Gun: {
+				DisplayName: Gun
+				Description: Mods.gcsep.Buffs.Gun.Description
+			}
+
+			SoulStrength: {
+				DisplayName: Soul Strength
+				Description: Mods.gcsep.Buffs.SoulStrength.Description
+			}
+		}
+
+		Items: {
+			AddonsForce: {
+				DisplayName: Addons Force
+				Tooltip: ""
+			}
+
+			ClamitasEnchant: {
+				DisplayName: Clamitas Enchant
+				Tooltip: ""
+			}
+
+			FrozenEnchant: {
+				DisplayName: Frozen Enchant
+				Tooltip: ""
+			}
+
+			IntergelacticEnchant: {
+				DisplayName: Intergelactic Enchant
+				Tooltip: ""
+			}
+
+			MariviumEnchant: {
+				DisplayName: Marivium Enchant
+				Tooltip: ""
+			}
+
+			ShogunEnchant: {
+				DisplayName: Shogun Enchant
+				Tooltip: ""
+			}
+
+			SolynsSigil: {
+				DisplayName: Solyns Sigil
+				Tooltip: ""
+			}
+
+			VoidFaquirEnchant: {
+				DisplayName: Void Faquir Enchant
+				Tooltip: ""
+			}
+
+			AerospecEnchantEx: {
+				DisplayName: Aerospec Enchant Ex
+				Tooltip: ""
+			}
+
+			AstralEnchant: {
+				DisplayName: Astral Enchant
+				Tooltip: ""
+			}
+
+			AuricTeslaEnchant: {
+				DisplayName: Auric Tesla Enchant
+				Tooltip: ""
+			}
+
+			BloodflareEnchant: {
+				DisplayName: Bloodflare Enchant
+				Tooltip: ""
+			}
+
+			BrimflameEnchant: {
+				DisplayName: Brimflame Enchant
+				Tooltip: ""
+			}
+
+			DaedalusEnchantEx: {
+				DisplayName: Daedalus Enchant Ex
+				Tooltip: ""
+			}
+
+			DemonShadeEnchant: {
+				DisplayName: Demon Shade Enchant
+				Tooltip: ""
+			}
+
+			DesertProwlerEnchantEx: {
+				DisplayName: Desert Prowler Enchant Ex
+				Tooltip: ""
+			}
+
+			EmpyreanEnchant: {
+				DisplayName: Empyrean Enchant
+				Tooltip: ""
+			}
+
+			FathomSwarmerEnchant: {
+				DisplayName: Fathom Swarmer Enchant
+				Tooltip: ""
+			}
+
+			FearfallenEnchant: {
+				DisplayName: Fearfallen Enchant
+				Tooltip: ""
+			}
+
+			GemTechEnchant: {
+				DisplayName: Gem Tech Enchant
+				Tooltip: ""
+			}
+
+			GodSlayerEnchant: {
+				DisplayName: God Slayer Enchant
+				Tooltip: ""
+			}
+
+			HydrothermicEnchantEx: {
+				DisplayName: Hydrothermic Enchant Ex
+				Tooltip: ""
+			}
+
+			LunicCorpEnchant: {
+				DisplayName: Lunic Corp Enchant
+				Tooltip: ""
+			}
+
+			MarniteEnchantEx: {
+				DisplayName: Marnite Enchant Ex
+				Tooltip: ""
+			}
+
+			MolluskEnchant: {
+				DisplayName: Mollusk Enchant
+				Tooltip: ""
+			}
+
+			OmegaBlueEnchant: {
+				DisplayName: Omega Blue Enchant
+				Tooltip: ""
+			}
+
+			PlaguebringerEnchant: {
+				DisplayName: Plaguebringer Enchant
+				Tooltip: ""
+			}
+
+			PlagueReaperEnchant: {
+				DisplayName: Plague Reaper Enchant
+				Tooltip: ""
+			}
+
+			PrismaticEnchant: {
+				DisplayName: Prismatic Enchant
+				Tooltip: ""
+			}
+
+			ReaverEnchantEx: {
+				DisplayName: Reaver Enchant Ex
+				Tooltip: ""
+			}
+
+			SilvaEnchant: {
+				DisplayName: Silva Enchant
+				Tooltip: ""
+			}
+
+			SnowRuffianEnchantEx: {
+				DisplayName: Snow Ruffian Enchant Ex
+				Tooltip: ""
+			}
+
+			StatigelEnchantEx: {
+				DisplayName: Statigel Enchant Ex
+				Tooltip: ""
+			}
+
+			SulphurousEnchantEx: {
+				DisplayName: Sulphurous Enchant Ex
+				Tooltip: ""
+			}
+
+			TarragonEnchant: {
+				DisplayName: Tarragon Enchant
+				Tooltip: ""
+			}
+
+			TitanHeartEnchantEx: {
+				DisplayName: Titan Heart Enchant Ex
+				Tooltip: ""
+			}
+
+			UmbraphileEnchant: {
+				DisplayName: Umbraphile Enchant
+				Tooltip: ""
+			}
+
+			VictideEnchantEx: {
+				DisplayName: Victide Enchant Ex
+				Tooltip: ""
+			}
+
+			WulfrumEnchantEx: {
+				DisplayName: Wulfrum Enchant Ex
+				Tooltip: ""
+			}
+
+			AnnihilationForce: {
+				DisplayName: Annihilation Force
+				Tooltip: ""
+			}
+
+			DesolationForce: {
+				DisplayName: Desolation Force
+				Tooltip: ""
+			}
+
+			DevastationForceEx: {
+				DisplayName: Devastation Force Ex
+				Tooltip: ""
+			}
+
+			ExaltationForce: {
+				DisplayName: Exaltation Force
+				Tooltip: ""
+			}
+
+			ExplorationForceEx: {
+				DisplayName: Exploration Force Ex
+				Tooltip: ""
+			}
+
+			SalvationForce: {
+				DisplayName: Salvation Force
+				Tooltip: ""
+			}
+
+			CalamitySoul: {
+				DisplayName: Calamity Soul
+				Tooltip: ""
+			}
+
+			ElementalArtifact: {
+				DisplayName: Elemental Artifact
+				Tooltip: ""
+			}
+
+			PotJT: {
+				DisplayName: Pot J T
+				Tooltip: ""
+			}
+
+			BeekeeperEssence: {
+				DisplayName: Beekeeper Essence
+				Tooltip: ""
+			}
+
+			BeekeeperSoul: {
+				DisplayName: Beekeeper Soul
+				Tooltip: ""
+			}
+
+			AncientDragonEnchant: {
+				DisplayName: Ancient Dragon Enchant
+				Tooltip: ""
+			}
+
+			AncientPhantasmalEnchant: {
+				DisplayName: Ancient Phantasmal Enchant
+				Tooltip: ""
+			}
+
+			AncientTitanEnchant: {
+				DisplayName: Ancient Titan Enchant
+				Tooltip: ""
+			}
+
+			AncientWarlockEnchant: {
+				DisplayName: Ancient Warlock Enchant
+				Tooltip: ""
+			}
+
+			DragonEnchantC: {
+				DisplayName: Dragon Enchant C
+				Tooltip: ""
+			}
+
+			DragonEnchant: {
+				DisplayName: Dragon Enchant
+				Tooltip: ""
+			}
+
+			OstaraEnchant: {
+				DisplayName: Ostara Enchant
+				Tooltip: ""
+			}
+
+			PhantasmalEnchant: {
+				DisplayName: Phantasmal Enchant
+				Tooltip: ""
+			}
+
+			TitanEnchantC: {
+				DisplayName: Titan Enchant C
+				Tooltip: ""
+			}
+
+			WarlockEnchantC: {
+				DisplayName: Warlock Enchant C
+				Tooltip: ""
+			}
+
+			WarlockEnchant: {
+				DisplayName: Warlock Enchant
+				Tooltip: ""
+			}
+
+			HeroForce: {
+				DisplayName: Hero Force
+				Tooltip: ""
+			}
+
+			HeartQuiver: {
+				DisplayName: Heart Quiver
+				Tooltip: ""
+			}
+
+			SpectralQuiver: {
+				DisplayName: Spectral Quiver
+				Tooltip: ""
+			}
+
+			CyclonicFin: {
+				DisplayName: Cyclonic Fin
+				Tooltip: ""
+			}
+
+			EridanusEnchant: {
+				DisplayName: Eridanus Enchant
+				Tooltip: ""
+			}
+
+			EternityForce: {
+				DisplayName: Eternity Force
+				Tooltip: ""
+			}
+
+			GaiaEnchant: {
+				DisplayName: Gaia Enchant
+				Tooltip: ""
+			}
+
+			NekomiEnchant: {
+				DisplayName: Nekomi Enchant
+				Tooltip: ""
+			}
+
+			PhantaplazmalEnchant: {
+				DisplayName: Phantaplazmal Enchant
+				Tooltip: ""
+			}
+
+			StargateSoul: {
+				DisplayName: Stargate Soul
+				Tooltip: ""
+			}
+
+			StyxEnchant: {
+				DisplayName: Styx Enchant
+				Tooltip: ""
+			}
+
+			MonstrosityMask: {
+				DisplayName: Monstrosity Mask
+				Tooltip: ""
+			}
+
+			MonstrosityPants: {
+				DisplayName: Monstrosity Pants
+				Tooltip: ""
+			}
+
+			MonstrositySuit: {
+				DisplayName: Monstrosity Suit
+				Tooltip: ""
+			}
+
+			TrueLumberjackBody: {
+				DisplayName: True Lumberjack Body
+				Tooltip: ""
+			}
+
+			TrueLumberjackMask: {
+				DisplayName: True Lumberjack Mask
+				Tooltip: ""
+			}
+
+			TrueLumberjackPants: {
+				DisplayName: True Lumberjack Pants
+				Tooltip: ""
+			}
+
+			TrueMonstrosityMask: {
+				DisplayName: True Monstrosity Mask
+				Tooltip: ""
+			}
+
+			TrueMonstrosityPants: {
+				DisplayName: True Monstrosity Pants
+				Tooltip: ""
+			}
+
+			TrueMonstrositySuit: {
+				DisplayName: True Monstrosity Suit
+				Tooltip: ""
+			}
+
+			AntiCheatItem: {
+				DisplayName: Anti Cheat Item
+				Tooltip: ""
+			}
+
+			MonstrocityBag: {
+				DisplayName: Monstrocity Bag
+				Tooltip: ""
+			}
+
+			Sadism: {
+				DisplayName: Sadism
+				Tooltip: ""
+			}
+
+			StarblightFruit: {
+				DisplayName: Starblight Fruit
+				Tooltip: ""
+			}
+
+			UltimateHealingPotion: {
+				DisplayName: Ultimate Healing Potion
+				Tooltip: ""
+			}
+
+			EternalScale: {
+				DisplayName: Eternal Scale
+				Tooltip: ""
+			}
+
+			MonstrocityRelicItem: {
+				DisplayName: Monstrocity Relic Item
+				Tooltip: ""
+			}
+
+			Monstrocity: {
+				DisplayName: Monstrocity
+				Tooltip: ""
+			}
+
+			FutureSigil: {
+				DisplayName: Future Sigil
+				Tooltip: ""
+			}
+
+			GunterasFruit: {
+				DisplayName: Gunteras Fruit
+				Tooltip: ""
+			}
+
+			TruffleWormEX: {
+				DisplayName: Truffle Worm E X
+				Tooltip: ""
+			}
+
+			SwarmDeactivatorDebug: {
+				DisplayName: Swarm Deactivator Debug
+				Tooltip: ""
+			}
+
+			GtTETFinal: {
+				DisplayName: Gt T E T Final
+				Tooltip: ""
+			}
+
+			DemonshadeWorkbenchItem: {
+				DisplayName: Demonshade Workbench Item
+				Tooltip: ""
+			}
+
+			DreamersForgeItem: {
+				DisplayName: Dreamers Forge Item
+				Tooltip: ""
+			}
+
+			MutantsForgeItem: {
+				DisplayName: Mutants Forge Item
+				Tooltip: ""
+			}
+
+			RedemptionCraftingStationItem: {
+				DisplayName: Redemption Crafting Station Item
+				Tooltip: ""
+			}
+
+			SyranCraftingStationItem: {
+				DisplayName: Syran Crafting Station Item
+				Tooltip: ""
+			}
+
+			AstatineEnchant: {
+				DisplayName: Astatine Enchant
+				Tooltip: ""
+			}
+
+			FaradayEnchant: {
+				DisplayName: Faraday Enchant
+				Tooltip: ""
+			}
+
+			KevlarEnchant: {
+				DisplayName: Kevlar Enchant
+				Tooltip: ""
+			}
+
+			PlasticEnchant: {
+				DisplayName: Plastic Enchant
+				Tooltip: ""
+			}
+
+			PlutoniumEnchant: {
+				DisplayName: Plutonium Enchant
+				Tooltip: ""
+			}
+
+			PurifiedSaltEnchant: {
+				DisplayName: Purified Salt Enchant
+				Tooltip: ""
+			}
+
+			RockSaltEnchant: {
+				DisplayName: Rock Salt Enchant
+				Tooltip: ""
+			}
+
+			SuperCeramicEnchant: {
+				DisplayName: Super Ceramic Enchant
+				Tooltip: ""
+			}
+
+			UraniumEnchant: {
+				DisplayName: Uranium Enchant
+				Tooltip: ""
+			}
+
+			IdeocracyForce: {
+				DisplayName: Ideocracy Force
+				Tooltip: ""
+			}
+
+			RadioactiveForce: {
+				DisplayName: Radioactive Force
+				Tooltip: ""
+			}
+
+			ShtunTerminus: {
+				DisplayName: Shtun Terminus
+				Tooltip: ""
+			}
+
+			AbominableStorageUnitItem: {
+				DisplayName: Abominable Storage Unit Item
+				Tooltip: ""
+			}
+
+			DeviatingStorageUnitItem: {
+				DisplayName: Deviating Storage Unit Item
+				Tooltip: ""
+			}
+
+			EternalStorageUnitItem: {
+				DisplayName: Eternal Storage Unit Item
+				Tooltip: ""
+			}
+
+			UpgradeAbominable: {
+				DisplayName: Upgrade Abominable
+				Tooltip: ""
+			}
+
+			UpgradeDeviating: {
+				DisplayName: Upgrade Deviating
+				Tooltip: ""
+			}
+
+			UpgradeEternal: {
+				DisplayName: Upgrade Eternal
+				Tooltip: ""
+			}
+
+			ConvectiveEnchant: {
+				DisplayName: Convective Enchant
+				Tooltip: ""
+			}
+
+			FractalEnchant: {
+				DisplayName: Fractal Enchant
+				Tooltip: ""
+			}
+
+			HaliteEnchant: {
+				DisplayName: Halite Enchant
+				Tooltip: ""
+			}
+
+			LimestoneEnchant: {
+				DisplayName: Limestone Enchant
+				Tooltip: ""
+			}
+
+			MechanicalEnchant: {
+				DisplayName: Mechanical Enchant
+				Tooltip: ""
+			}
+
+			SelfsimilarEnchant: {
+				DisplayName: Selfsimilar Enchant
+				Tooltip: ""
+			}
+
+			SnakescaleEnchant: {
+				DisplayName: Snakescale Enchant
+				Tooltip: ""
+			}
+
+			StormcloudEnchant: {
+				DisplayName: Stormcloud Enchant
+				Tooltip: ""
+			}
+
+			SunplateEnchant: {
+				DisplayName: Sunplate Enchant
+				Tooltip: ""
+			}
+
+			SpacetimeForce: {
+				DisplayName: Spacetime Force
+				Tooltip: ""
+			}
+
+			WildernessForce: {
+				DisplayName: Wilderness Force
+				Tooltip: ""
+			}
+
+			CommonGuardEnchant: {
+				DisplayName: Common Guard Enchant
+				Tooltip: ""
+			}
+
+			DragonLeadEnchant: {
+				DisplayName: Dragon Lead Enchant
+				Tooltip: ""
+			}
+
+			HardlightEnchant: {
+				DisplayName: Hardlight Enchant
+				Tooltip: ""
+			}
+
+			LivingWoodEnchant2: {
+				DisplayName: Living Wood Enchant2
+				Tooltip: ""
+			}
+
+			LivingWoodEnchant: {
+				DisplayName: Living Wood Enchant
+				Tooltip: ""
+			}
+
+			PureIronEnchant: {
+				DisplayName: Pure Iron Enchant
+				Tooltip: ""
+			}
+
+			XeniumEnchant: {
+				DisplayName: Xenium Enchant
+				Tooltip: ""
+			}
+
+			XenomiteEnchant: {
+				DisplayName: Xenomite Enchant
+				Tooltip: ""
+			}
+
+			AdvancementForce: {
+				DisplayName: Advancement Force
+				Tooltip: ""
+			}
+
+			AquaQuiver: {
+				DisplayName: Aqua Quiver
+				Tooltip: ""
+			}
+
+			BilePouch: {
+				DisplayName: Bile Pouch
+				Tooltip: ""
+			}
+
+			BileQuiver: {
+				DisplayName: Bile Quiver
+				Tooltip: ""
+			}
+
+			MoonflareQuiver: {
+				DisplayName: Moonflare Quiver
+				Tooltip: ""
+			}
+
+			WastelandRenewal: {
+				DisplayName: Wasteland Renewal
+				Tooltip: ""
+			}
+
+			WastelandRenewalSupreme: {
+				DisplayName: Wasteland Renewal Supreme
+				Tooltip: ""
+			}
+
+			XenomitePouch: {
+				DisplayName: Xenomite Pouch
+				Tooltip: ""
+			}
+
+			BlueComputerChip: {
+				DisplayName: Blue Computer Chip
+				Tooltip: ""
+			}
+
+			BuffaloDrumstick: {
+				DisplayName: Buffalo Drumstick
+				Tooltip: ""
+			}
+
+			CockatriceEgg: {
+				DisplayName: Cockatrice Egg
+				Tooltip: ""
+			}
+
+			DirtyCloth: {
+				DisplayName: Dirty Cloth
+				Tooltip: ""
+			}
+
+			FrostedMetal: {
+				DisplayName: Frosted Metal
+				Tooltip: ""
+			}
+
+			GildedDrumstick: {
+				DisplayName: Gilded Drumstick
+				Tooltip: ""
+			}
+
+			GreenComputerChip: {
+				DisplayName: Green Computer Chip
+				Tooltip: ""
+			}
+
+			GreyComputerChip: {
+				DisplayName: Grey Computer Chip
+				Tooltip: ""
+			}
+
+			IrradiatedSkull: {
+				DisplayName: Irradiated Skull
+				Tooltip: ""
+			}
+
+			RadioactiveSushi: {
+				DisplayName: Radioactive Sushi
+				Tooltip: ""
+			}
+
+			SleepyRock: {
+				DisplayName: Sleepy Rock
+				Tooltip: ""
+			}
+
+			MutagenBeekeeper: {
+				DisplayName: Mutagen Beekeeper
+				Tooltip: ""
+			}
+
+			MutagenHealing: {
+				DisplayName: Mutagen Healing
+				Tooltip: ""
+			}
+
+			MutagenSymphonic: {
+				DisplayName: Mutagen Symphonic
+				Tooltip: ""
+			}
+
+			MutagenThrowingCal: {
+				DisplayName: Mutagen Throwing Cal
+				Tooltip: ""
+			}
+
+			AsthraltiteEnchant: {
+				DisplayName: Asthraltite Enchant
+				Tooltip: ""
+			}
+
+			BismuthEnchant: {
+				DisplayName: Bismuth Enchant
+				Tooltip: ""
+			}
+
+			BlazingBruteEnchant: {
+				DisplayName: Blazing Brute Enchant
+				Tooltip: ""
+			}
+
+			BlightboneEnchant: {
+				DisplayName: Blightbone Enchant
+				Tooltip: ""
+			}
+
+			CairoCrusaderEnchant: {
+				DisplayName: Cairo Crusader Enchant
+				Tooltip: ""
+			}
+
+			CosmicCommanderEnchant: {
+				DisplayName: Cosmic Commander Enchant
+				Tooltip: ""
+			}
+
+			DreadfireEnchant: {
+				DisplayName: Dreadfire Enchant
+				Tooltip: ""
+			}
+
+			EerieEnchant: {
+				DisplayName: Eerie Enchant
+				Tooltip: ""
+			}
+
+			ExitumLuxEnchant: {
+				DisplayName: Exitum Lux Enchant
+				Tooltip: ""
+			}
+
+			FallenPrinceEnchant: {
+				DisplayName: Fallen Prince Enchant
+				Tooltip: ""
+			}
+
+			FlariumEnchant: {
+				DisplayName: Flarium Enchant
+				Tooltip: ""
+			}
+
+			FrosthunterEnchant: {
+				DisplayName: Frosthunter Enchant
+				Tooltip: ""
+			}
+
+			LapisEnchant: {
+				DisplayName: Lapis Enchant
+				Tooltip: ""
+			}
+
+			MarstechEnchant: {
+				DisplayName: Marstech Enchant
+				Tooltip: ""
+			}
+
+			NebulousApprenticeEnchant: {
+				DisplayName: Nebulous Apprentice Enchant
+				Tooltip: ""
+			}
+
+			PrairieEnchant: {
+				DisplayName: Prairie Enchant
+				Tooltip: ""
+			}
+
+			QuasarEnchant: {
+				DisplayName: Quasar Enchant
+				Tooltip: ""
+			}
+
+			SpaceJunkEnchant: {
+				DisplayName: Space Junk Enchant
+				Tooltip: ""
+			}
+
+			StellarPriestEnchant: {
+				DisplayName: Stellar Priest Enchant
+				Tooltip: ""
+			}
+
+			VoidWardenEnchant: {
+				DisplayName: Void Warden Enchant
+				Tooltip: ""
+			}
+
+			VulcanReaperEnchant: {
+				DisplayName: Vulcan Reaper Enchant
+				Tooltip: ""
+			}
+
+			FoundationsForce: {
+				DisplayName: Foundations Force
+				Tooltip: ""
+			}
+
+			GenerationsForce: {
+				DisplayName: Generations Force
+				Tooltip: ""
+			}
+
+			SoranForce: {
+				DisplayName: Soran Force
+				Tooltip: ""
+			}
+
+			SyranForce: {
+				DisplayName: Syran Force
+				Tooltip: ""
+			}
+
+			AdamantiteJar: {
+				DisplayName: Adamantite Jar
+				Tooltip: ""
+			}
+
+			AsthralQuiver: {
+				DisplayName: Asthral Quiver
+				Tooltip: ""
+			}
+
+			AsthraltitePouch: {
+				DisplayName: Asthraltite Pouch
+				Tooltip: ""
+			}
+
+			ChlorophyteJar: {
+				DisplayName: Chlorophyte Jar
+				Tooltip: ""
+			}
+
+			CobaltJar: {
+				DisplayName: Cobalt Jar
+				Tooltip: ""
+			}
+
+			FlariumPouch: {
+				DisplayName: Flarium Pouch
+				Tooltip: ""
+			}
+
+			FlariumQuiver: {
+				DisplayName: Flarium Quiver
+				Tooltip: ""
+			}
+
+			FlariumRenewal: {
+				DisplayName: Flarium Renewal
+				Tooltip: ""
+			}
+
+			FlariumRenewalSupreme: {
+				DisplayName: Flarium Renewal Supreme
+				Tooltip: ""
+			}
+
+			LunarianPouch: {
+				DisplayName: Lunarian Pouch
+				Tooltip: ""
+			}
+
+			LunarianQuiver: {
+				DisplayName: Lunarian Quiver
+				Tooltip: ""
+			}
+
+			MarstechJar: {
+				DisplayName: Marstech Jar
+				Tooltip: ""
+			}
+
+			MythrilJar: {
+				DisplayName: Mythril Jar
+				Tooltip: ""
+			}
+
+			OblivionPouch: {
+				DisplayName: Oblivion Pouch
+				Tooltip: ""
+			}
+
+			OblivionQuiver: {
+				DisplayName: Oblivion Quiver
+				Tooltip: ""
+			}
+
+			OrichalcumJar: {
+				DisplayName: Orichalcum Jar
+				Tooltip: ""
+			}
+
+			PalladiumJar: {
+				DisplayName: Palladium Jar
+				Tooltip: ""
+			}
+
+			SpectralJar: {
+				DisplayName: Spectral Jar
+				Tooltip: ""
+			}
+
+			TitaniumJar: {
+				DisplayName: Titanium Jar
+				Tooltip: ""
+			}
+
+			VenomiteJar: {
+				DisplayName: Venomite Jar
+				Tooltip: ""
+			}
+
+			SoASoul: {
+				DisplayName: So A Soul
+				Tooltip: ""
+			}
+
+			CursedEnchant: {
+				DisplayName: Cursed Enchant
+				Tooltip: ""
+			}
+
+			EarthenEnchant: {
+				DisplayName: Earthen Enchant
+				Tooltip: ""
+			}
+
+			ElementalEnchant: {
+				DisplayName: Elemental Enchant
+				Tooltip: ""
+			}
+
+			FrigidEnchant: {
+				DisplayName: Frigid Enchant
+				Tooltip: ""
+			}
+
+			FrostArtifactEnchant: {
+				DisplayName: Frost Artifact Enchant
+				Tooltip: ""
+			}
+
+			PatchLeatherEnchant: {
+				DisplayName: Patch Leather Enchant
+				Tooltip: ""
+			}
+
+			TwilightAssassinEnchant: {
+				DisplayName: Twilight Assassin Enchant
+				Tooltip: ""
+			}
+
+			VesperaEnchant: {
+				DisplayName: Vespera Enchant
+				Tooltip: ""
+			}
+
+			VibrantEnchant: {
+				DisplayName: Vibrant Enchant
+				Tooltip: ""
+			}
+
+			VoidRangerEnchant: {
+				DisplayName: Void Ranger Enchant
+				Tooltip: ""
+			}
+
+			WormwoodEnchant: {
+				DisplayName: Wormwood Enchant
+				Tooltip: ""
+			}
+
+			SecretsForce: {
+				DisplayName: Secrets Force
+				Tooltip: ""
+			}
+
+			ShadowsForce: {
+				DisplayName: Shadows Force
+				Tooltip: ""
+			}
+
+			VoidShield: {
+				DisplayName: Void Shield
+				Tooltip: ""
+			}
+
+			ApostleEnchant: {
+				DisplayName: Apostle Enchant
+				Tooltip: ""
+			}
+
+			AstraliteEnchant: {
+				DisplayName: Astralite Enchant
+				Tooltip: ""
+			}
+
+			BismiteEnchant: {
+				DisplayName: Bismite Enchant
+				Tooltip: ""
+			}
+
+			BloodcourtEnchant: {
+				DisplayName: Bloodcourt Enchant
+				Tooltip: ""
+			}
+
+			BotanistEnchant: {
+				DisplayName: Botanist Enchant
+				Tooltip: ""
+			}
+
+			CascadeEnchant: {
+				DisplayName: Cascade Enchant
+				Tooltip: ""
+			}
+
+			ChitinEnchant: {
+				DisplayName: Chitin Enchant
+				Tooltip: ""
+			}
+
+			CryoliteEnchant: {
+				DisplayName: Cryolite Enchant
+				Tooltip: ""
+			}
+
+			DriftwoodEnchant: {
+				DisplayName: Driftwood Enchant
+				Tooltip: ""
+			}
+
+			DuskEnchant: {
+				DisplayName: Dusk Enchant
+				Tooltip: ""
+			}
+
+			ElderbarkEnchant: {
+				DisplayName: Elderbark Enchant
+				Tooltip: ""
+			}
+
+			FloranEnchant: {
+				DisplayName: Floran Enchant
+				Tooltip: ""
+			}
+
+			FrigidEnchantSp: {
+				DisplayName: Frigid Enchant Sp
+				Tooltip: ""
+			}
+
+			GraniteChunkEnchant: {
+				DisplayName: Granite Chunk Enchant
+				Tooltip: ""
+			}
+
+			MarbleChunkEnchant: {
+				DisplayName: Marble Chunk Enchant
+				Tooltip: ""
+			}
+
+			MarksmanEnchant: {
+				DisplayName: Marksman Enchant
+				Tooltip: ""
+			}
+
+			PainMongerEnchant: {
+				DisplayName: Pain Monger Enchant
+				Tooltip: ""
+			}
+
+			PrimalstoneEnchant: {
+				DisplayName: Primalstone Enchant
+				Tooltip: ""
+			}
+
+			RogueEnchant: {
+				DisplayName: Rogue Enchant
+				Tooltip: ""
+			}
+
+			Rogue: {
+				DisplayName: Rogue
+				Tooltip: ""
+			}
+
+			RunicEnchant: {
+				DisplayName: Runic Enchant
+				Tooltip: ""
+			}
+
+			SeraphEnchant: {
+				DisplayName: Seraph Enchant
+				Tooltip: ""
+			}
+
+			SlagTyrantEnchant: {
+				DisplayName: Slag Tyrant Enchant
+				Tooltip: ""
+			}
+
+			SpiritEnchant: {
+				DisplayName: Spirit Enchant
+				Tooltip: ""
+			}
+
+			StreamSurferEnchant: {
+				DisplayName: Stream Surfer Enchant
+				Tooltip: ""
+			}
+
+			SunflowerEnchant: {
+				DisplayName: Sunflower Enchant
+				Tooltip: ""
+			}
+
+			WayfarersEnchant: {
+				DisplayName: Wayfarers Enchant
+				Tooltip: ""
+			}
+
+			Wayfarer: {
+				DisplayName: Wayfarer
+				Tooltip: ""
+			}
+
+			AdventurerForce: {
+				DisplayName: Adventurer Force
+				Tooltip: ""
+			}
+
+			Adventurer: {
+				DisplayName: Adventurer
+				Tooltip: ""
+			}
+
+			AtlantisForce: {
+				DisplayName: Atlantis Force
+				Tooltip: ""
+			}
+
+			FrostburnForce: {
+				DisplayName: Frostburn Force
+				Tooltip: ""
+			}
+
+			HurricaneForce: {
+				DisplayName: Hurricane Force
+				Tooltip: ""
+			}
+
+			FlowerEnchant: {
+				DisplayName: Flower Enchant
+				Tooltip: ""
+			}
+
+			GildedWizardEnchant: {
+				DisplayName: Gilded Wizard Enchant
+				Tooltip: ""
+			}
+
+			GoreEnchant: {
+				DisplayName: Gore Enchant
+				Tooltip: ""
+			}
+
+			LivingFleshEnchant: {
+				DisplayName: Living Flesh Enchant
+				Tooltip: ""
+			}
+
+			OldWoodEnchant: {
+				DisplayName: Old Wood Enchant
+				Tooltip: ""
+			}
+
+			RootEnchant: {
+				DisplayName: Root Enchant
+				Tooltip: ""
+			}
+
+			RottenGourdEnchant: {
+				DisplayName: Rotten Gourd Enchant
+				Tooltip: ""
+			}
+
+			SpiOpsEnchant: {
+				DisplayName: Spi Ops Enchant
+				Tooltip: ""
+			}
+
+			SpiritHorsemenEnchant: {
+				DisplayName: Spirit Horsemen Enchant
+				Tooltip: ""
+			}
+
+			HorrorForce: {
+				DisplayName: Horror Force
+				Tooltip: ""
+			}
+
+			TerrorForce: {
+				DisplayName: Terror Force
+				Tooltip: ""
+			}
+
+			BoogerQuiver: {
+				DisplayName: Booger Quiver
+				Tooltip: ""
+			}
+
+			OldWoodQuiver: {
+				DisplayName: Old Wood Quiver
+				Tooltip: ""
+			}
+
+			EndlessMucusPouch: {
+				DisplayName: Endless Mucus Pouch
+				Tooltip: ""
+			}
+
+			EndlessRustedPouch: {
+				DisplayName: Endless Rusted Pouch
+				Tooltip: ""
+			}
+
+			EndlessSnotRocketBox: {
+				DisplayName: Endless Snot Rocket Box
+				Tooltip: ""
+			}
+
+			MossyPebbleJar: {
+				DisplayName: Mossy Pebble Jar
+				Tooltip: ""
+			}
+
+			SpookyRenewal: {
+				DisplayName: Spooky Renewal
+				Tooltip: ""
+			}
+
+			SpookyRenewalSupreme: {
+				DisplayName: Spooky Renewal Supreme
+				Tooltip: ""
+			}
+
+			SwampyRenewal: {
+				DisplayName: Swampy Renewal
+				Tooltip: ""
+			}
+
+			SwampyRenewalSupreme: {
+				DisplayName: Swampy Renewal Supreme
+				Tooltip: ""
+			}
+
+			AssassinEnchant: {
+				DisplayName: Assassin Enchant
+				Tooltip: ""
+			}
+
+			AstroEnchant: {
+				DisplayName: Astro Enchant
+				Tooltip: ""
+			}
+
+			BiotechEnchant: {
+				DisplayName: Biotech Enchant
+				Tooltip: ""
+			}
+
+			BronzeEnchant: {
+				DisplayName: Bronze Enchant
+				Tooltip: ""
+			}
+
+			BulbEnchant: {
+				DisplayName: Bulb Enchant
+				Tooltip: ""
+			}
+
+			CelestiaEnchant: {
+				DisplayName: Celestia Enchant
+				Tooltip: ""
+			}
+
+			ConduitEnchant: {
+				DisplayName: Conduit Enchant
+				Tooltip: ""
+			}
+
+			CoralEnchant: {
+				DisplayName: Coral Enchant
+				Tooltip: ""
+			}
+
+			CrierEnchant: {
+				DisplayName: Crier Enchant
+				Tooltip: ""
+			}
+
+			CryomancerEnchant: {
+				DisplayName: Cryomancer Enchant
+				Tooltip: ""
+			}
+
+			CyberPunkEnchant: {
+				DisplayName: Cyber Punk Enchant
+				Tooltip: ""
+			}
+
+			DarksteelEnchant: {
+				DisplayName: Darksteel Enchant
+				Tooltip: ""
+			}
+
+			DemonBloodEnchant: {
+				DisplayName: Demon Blood Enchant
+				Tooltip: ""
+			}
+
+			DepthDiverEnchant: {
+				DisplayName: Depth Diver Enchant
+				Tooltip: ""
+			}
+
+			DreadEnchant: {
+				DisplayName: Dread Enchant
+				Tooltip: ""
+			}
+
+			DreamWeaverEnchant: {
+				DisplayName: Dream Weaver Enchant
+				Tooltip: ""
+			}
+
+			DurasteelEnchant: {
+				DisplayName: Durasteel Enchant
+				Tooltip: ""
+			}
+
+			EbonEnchant: {
+				DisplayName: Ebon Enchant
+				Tooltip: ""
+			}
+
+			FallenPaladinEnchant: {
+				DisplayName: Fallen Paladin Enchant
+				Tooltip: ""
+			}
+
+			Fallen: {
+				DisplayName: Fallen
+				Tooltip: ""
+			}
+
+			FleshEnchant: {
+				DisplayName: Flesh Enchant
+				Tooltip: ""
+			}
+
+			FlightEnchant: {
+				DisplayName: Flight Enchant
+				Tooltip: ""
+			}
+
+			FungusEnchant: {
+				DisplayName: Fungus Enchant
+				Tooltip: ""
+			}
+
+			GeodeEnchant: {
+				DisplayName: Geode Enchant
+				Tooltip: ""
+			}
+
+			GraniteEnchant: {
+				DisplayName: Granite Enchant
+				Tooltip: ""
+			}
+
+			IcyEnchant: {
+				DisplayName: Icy Enchant
+				Tooltip: ""
+			}
+
+			IllumiteEnchant: {
+				DisplayName: Illumite Enchant
+				Tooltip: ""
+			}
+
+			IridescentEnchant: {
+				DisplayName: Iridescent Enchant
+				Tooltip: ""
+			}
+
+			JesterEnchant: {
+				DisplayName: Jester Enchant
+				Tooltip: ""
+			}
+
+			LichEnchant: {
+				DisplayName: Lich Enchant
+				Tooltip: ""
+			}
+
+			LifeBinderEnchant: {
+				DisplayName: Life Binder Enchant
+				Tooltip: ""
+			}
+
+			LifeBloomEnchant: {
+				DisplayName: Life Bloom Enchant
+				Tooltip: ""
+			}
+
+			LodestoneEnchant: {
+				DisplayName: Lodestone Enchant
+				Tooltip: ""
+			}
+
+			MaestroEnchant: {
+				DisplayName: Maestro Enchant
+				Tooltip: ""
+			}
+
+			MarchingBandEnchant: {
+				DisplayName: Marching Band Enchant
+				Tooltip: ""
+			}
+
+			NagaSkinEnchant: {
+				DisplayName: Naga Skin Enchant
+				Tooltip: ""
+			}
+
+			NobleEnchant: {
+				DisplayName: Noble Enchant
+				Tooltip: ""
+			}
+
+			NoviceClericEnchant: {
+				DisplayName: Novice Cleric Enchant
+				Tooltip: ""
+			}
+
+			OrnateEnchant: {
+				DisplayName: Ornate Enchant
+				Tooltip: ""
+			}
+
+			PlagueDoctorEnchant: {
+				DisplayName: Plague Doctor Enchant
+				Tooltip: ""
+			}
+
+			PyromancerEnchant: {
+				DisplayName: Pyromancer Enchant
+				Tooltip: ""
+			}
+
+			RhapsodistEnchant: {
+				DisplayName: Rhapsodist Enchant
+				Tooltip: ""
+			}
+
+			SacredEnchant: {
+				DisplayName: Sacred Enchant
+				Tooltip: ""
+			}
+
+			SandstoneEnchant: {
+				DisplayName: Sandstone Enchant
+				Tooltip: ""
+			}
+
+			ShadeMasterEnchant: {
+				DisplayName: Shade Master Enchant
+				Tooltip: ""
+			}
+
+			ShootingStarEnchant: {
+				DisplayName: Shooting Star Enchant
+				Tooltip: ""
+			}
+
+			SilkEnchant: {
+				DisplayName: Silk Enchant
+				Tooltip: ""
+			}
+
+			SpiritTrapperEnchant: {
+				DisplayName: Spirit Trapper Enchant
+				Tooltip: ""
+			}
+
+			SteelEnchant: {
+				DisplayName: Steel Enchant
+				Tooltip: ""
+			}
+
+			TemplarEnchant: {
+				DisplayName: Templar Enchant
+				Tooltip: ""
+			}
+
+			TerrariumEnchant: {
+				DisplayName: Terrarium Enchant
+				Tooltip: ""
+			}
+
+			ThoriumEnchant: {
+				DisplayName: Thorium Enchant
+				Tooltip: ""
+			}
+
+			TideHunterEnchant: {
+				DisplayName: Tide Hunter Enchant
+				Tooltip: ""
+			}
+
+			TideTurnerEnchant: {
+				DisplayName: Tide Turner Enchant
+				Tooltip: ""
+			}
+
+			TitanEnchantT: {
+				DisplayName: Titan Enchant T
+				Tooltip: ""
+			}
+
+			ValadiumEnchant: {
+				DisplayName: Valadium Enchant
+				Tooltip: ""
+			}
+
+			WhisperingEnchant: {
+				DisplayName: Whispering Enchant
+				Tooltip: ""
+			}
+
+			WhiteDwarfEnchant: {
+				DisplayName: White Dwarf Enchant
+				Tooltip: ""
+			}
+
+			WhiteKnightEnchant: {
+				DisplayName: White Knight Enchant
+				Tooltip: ""
+			}
+
+			YewWoodEnchant: {
+				DisplayName: Yew Wood Enchant
+				Tooltip: ""
+			}
+
+			BardEssence: {
+				DisplayName: Bard Essence
+				Tooltip: ""
+			}
+
+			HealerEssence: {
+				DisplayName: Healer Essence
+				Tooltip: ""
+			}
+
+			DarkenedCloak: {
+				DisplayName: Darkened Cloak
+				Tooltip: ""
+			}
+
+			RottingFingernail: {
+				DisplayName: Rotting Fingernail
+				Tooltip: ""
+			}
+
+			ThunderTalonEternity: {
+				DisplayName: Thunder Talon Eternity
+				Tooltip: ""
+			}
+
+			AlfheimForce: {
+				DisplayName: Alfheim Force
+				Tooltip: ""
+			}
+
+			AsgardForce: {
+				DisplayName: Asgard Force
+				Tooltip: ""
+			}
+
+			HelheimForce: {
+				DisplayName: Helheim Force
+				Tooltip: ""
+			}
+
+			JotunheimForce: {
+				DisplayName: Jotunheim Force
+				Tooltip: ""
+			}
+
+			MidgardForce: {
+				DisplayName: Midgard Force
+				Tooltip: ""
+			}
+
+			MuspelheimForce: {
+				DisplayName: Muspelheim Force
+				Tooltip: ""
+			}
+
+			NiflheimForce: {
+				DisplayName: Niflheim Force
+				Tooltip: ""
+			}
+
+			SvartalfheimForce: {
+				DisplayName: Svartalfheim Force
+				Tooltip: ""
+			}
+
+			VanaheimForce: {
+				DisplayName: Vanaheim Force
+				Tooltip: ""
+			}
+
+			CrystalQuiver: {
+				DisplayName: Crystal Quiver
+				Tooltip: ""
+			}
+
+			DurasteelQuiver: {
+				DisplayName: Durasteel Quiver
+				Tooltip: ""
+			}
+
+			GhostPulseQuiver: {
+				DisplayName: Ghost Pulse Quiver
+				Tooltip: ""
+			}
+
+			IcyQuiver: {
+				DisplayName: Icy Quiver
+				Tooltip: ""
+			}
+
+			SpiritQuiver: {
+				DisplayName: Spirit Quiver
+				Tooltip: ""
+			}
+
+			SteelQuiver: {
+				DisplayName: Steel Quiver
+				Tooltip: ""
+			}
+
+			TalonQuiver: {
+				DisplayName: Talon Quiver
+				Tooltip: ""
+			}
+
+			CoralDartBox: {
+				DisplayName: Coral Dart Box
+				Tooltip: ""
+			}
+
+			DrillDartBox: {
+				DisplayName: Drill Dart Box
+				Tooltip: ""
+			}
+
+			FlareDartBox: {
+				DisplayName: Flare Dart Box
+				Tooltip: ""
+			}
+
+			PhaseDartBox: {
+				DisplayName: Phase Dart Box
+				Tooltip: ""
+			}
+
+			TetherDartBox: {
+				DisplayName: Tether Dart Box
+				Tooltip: ""
+			}
+
+			BaseballJar: {
+				DisplayName: Baseball Jar
+				Tooltip: ""
+			}
+
+			LilTorpedoBox: {
+				DisplayName: Lil Torpedo Box
+				Tooltip: ""
+			}
+
+			PillCase: {
+				DisplayName: Pill Case
+				Tooltip: ""
+			}
+
+			SeethingChargeJar: {
+				DisplayName: Seething Charge Jar
+				Tooltip: ""
+			}
+
+			SnotBallJar: {
+				DisplayName: Snot Ball Jar
+				Tooltip: ""
+			}
+
+			SpudJar: {
+				DisplayName: Spud Jar
+				Tooltip: ""
+			}
+
+			SteamBatteryCase: {
+				DisplayName: Steam Battery Case
+				Tooltip: ""
+			}
+
+			SyringeCase: {
+				DisplayName: Syringe Case
+				Tooltip: ""
+			}
+
+			CursedSawbladeStack: {
+				DisplayName: Cursed Sawblade Stack
+				Tooltip: ""
+			}
+
+			DazzlingSawbladeStack: {
+				DisplayName: Dazzling Sawblade Stack
+				Tooltip: ""
+			}
+
+			FrozenSawbladeStack: {
+				DisplayName: Frozen Sawblade Stack
+				Tooltip: ""
+			}
+
+			MoltenSawbladeStack: {
+				DisplayName: Molten Sawblade Stack
+				Tooltip: ""
+			}
+
+			SawbladeStack: {
+				DisplayName: Sawblade Stack
+				Tooltip: ""
+			}
+
+			VileSawbladeStack: {
+				DisplayName: Vile Sawblade Stack
+				Tooltip: ""
+			}
+
+			BardSoul: {
+				DisplayName: Bard Soul
+				Tooltip: ""
+			}
+
+			CorruptedWarShield: {
+				DisplayName: Corrupted War Shield
+				Tooltip: ""
+			}
+
+			GuardianAngelsSoul: {
+				DisplayName: Guardian Angels Soul
+				Tooltip: ""
+			}
+
+			MotDE: {
+				DisplayName: Mot D E
+				Tooltip: ""
+			}
+
+			ThoriumSoul: {
+				DisplayName: Thorium Soul
+				Tooltip: ""
+			}
+
+			Blacksmith: {
+				DisplayName: Blacksmith
+				Tooltip: ""
+			}
+
+			Cook: {
+				DisplayName: Cook
+				Tooltip: ""
+			}
+
+			Cobbler: {
+				DisplayName: Cobbler
+				Tooltip: ""
+			}
+
+			ConfusedZombie: {
+				DisplayName: Confused Zombie
+				Tooltip: ""
+			}
+
+			DesertAcolyte: {
+				DisplayName: Desert Acolyte
+				Tooltip: ""
+			}
+
+			Diverman: {
+				DisplayName: Diverman
+				Tooltip: ""
+			}
+
+			Druid: {
+				DisplayName: Druid
+				Tooltip: ""
+			}
+
+			Spiritualist: {
+				DisplayName: Spiritualist
+				Tooltip: ""
+			}
+
+			Tracker: {
+				DisplayName: Tracker
+				Tooltip: ""
+			}
+
+			WeaponMaster: {
+				DisplayName: Weapon Master
+				Tooltip: ""
+			}
+
+			PureNymph: {
+				DisplayName: Pure Nymph
+				Tooltip: ""
+			}
+
+			Scavenger: {
+				DisplayName: Scavenger
+				Tooltip: ""
+			}
+
+			PandolarSalvager: {
+				DisplayName: Pandolar Salvager
+				Tooltip: ""
+			}
+
+			Decorationist: {
+				DisplayName: Decorationist
+				Tooltip: ""
+			}
+
+			CloakedAlchemist: {
+				DisplayName: Cloaked Alchemist
+				Tooltip: ""
+			}
+
+			Fool: {
+				DisplayName: Fool
+				Tooltip: ""
+			}
+
+			FriendlyTbot: {
+				DisplayName: Friendly Tbot
+				Tooltip: ""
+			}
+
+			Calavia: {
+				DisplayName: Calavia
+				Tooltip: ""
+			}
+
+			Politician: {
+				DisplayName: Politician
+				Tooltip: ""
+			}
+
+			Gambler: {
+				DisplayName: Gambler
+				Tooltip: ""
+			}
+
+			RuneWizard: {
+				DisplayName: Rune Wizard
+				Tooltip: ""
+			}
+
+			ClickerEssence: {
+				DisplayName: Clicker Essence
+				Tooltip: ""
+			}
+
+			ClickerSoul: {
+				DisplayName: Clicker Soul
+				Tooltip: ""
+			}
+
+			MacroverseSoul: {
+				DisplayName: Macroverse Soul
+				Tooltip: ""
+			}
+
+			MicroverseSoul: {
+				DisplayName: Microverse Soul
+				Tooltip: ""
+			}
+
+			tModLoadiumBar: {
+				DisplayName: t Mod Loadium Bar
+				Tooltip: ""
+			}
+
+			StalkerEssence: {
+				DisplayName: Stalker Essence
+				Tooltip: ""
+			}
+
+			StalkerSoul: {
+				DisplayName: Stalker Soul
+				Tooltip: ""
+			}
+
+			OlympiansSoul: {
+				DisplayName: Olympians Soul
+				Tooltip: ""
+			}
+
+			LivingWoodEnchantR: {
+				Tooltip: ""
+				DisplayName: Living Wood Enchant R
+			}
+
+			SoulOfDiversity: {
+				Tooltip: ""
+				DisplayName: Soul Of Diversity
+			}
+
+			ForceOfShamanist: {
+				Tooltip: ""
+				DisplayName: Force Of Shamanist
+			}
+
+			ForceOfAlchemy: {
+				Tooltip: ""
+				DisplayName: Force Of Alchemy
+			}
+
+			TycheEnchant: {
+				Tooltip: ""
+				DisplayName: Tyche Enchant
+			}
+
+			PyreEnchant: {
+				Tooltip: ""
+				DisplayName: Pyre Enchant
+			}
+
+			PhosphorescentEnchant: {
+				Tooltip: ""
+				DisplayName: Phosphorescent Enchant
+			}
+
+			OutlawEnchant: {
+				Tooltip: ""
+				DisplayName: Outlaw Enchant
+			}
+
+			MeteorEnchant: {
+				Tooltip: ""
+				DisplayName: Meteor Enchant
+			}
+
+			HorizonEnchant: {
+				Tooltip: ""
+				DisplayName: Horizon Enchant
+			}
+
+			GitGudEnchant: {
+				Tooltip: ""
+				DisplayName: Git Gud Enchant
+			}
+
+			DawnlightEnchant: {
+				Tooltip: ""
+				DisplayName: Dawnlight Enchant
+			}
+
+			BambooEnchant: {
+				Tooltip: ""
+				DisplayName: Bamboo Enchant
+			}
+
+			AnarchyEnchant: {
+				DisplayName: Anarchy Enchant
+				Tooltip: ""
+			}
+
+			ForceOfChaos: {
+				DisplayName: Force Of Chaos
+				Tooltip: ""
+			}
+
+			AerogelEnchant: {
+				DisplayName: Aerogel Enchant
+				Tooltip: ""
+			}
+
+			HighTechEnchant: {
+				DisplayName: High Tech Enchant
+				Tooltip: ""
+			}
+
+			ElderWoodEnchant: {
+				DisplayName: Elder Wood Enchant
+				Tooltip: ""
+			}
+
+			SpiritSoul: {
+				DisplayName: Spirit Soul
+				Tooltip: ""
+			}
+
+			AntlionEnchant: {
+				DisplayName: Antlion Enchant
+				Tooltip: ""
+			}
+
+			ArcaneGoldEnchant: {
+				DisplayName: Arcane Gold Enchant
+				Tooltip: ""
+			}
+
+			ArcticEnchant: {
+				DisplayName: Arctic Enchant
+				Tooltip: ""
+			}
+
+			BloodkeeperEnchant: {
+				DisplayName: Bloodkeeper Enchant
+				Tooltip: ""
+			}
+
+			ChaosEnchant: {
+				DisplayName: Chaos Enchant
+				Tooltip: ""
+			}
+
+			DarkbloodEnchant: {
+				DisplayName: Darkblood Enchant
+				Tooltip: ""
+			}
+
+			GlacialEnchant: {
+				DisplayName: Glacial Enchant
+				Tooltip: ""
+			}
+
+			ForceOfEvil: {
+				DisplayName: Force Of Evil
+				Tooltip: ""
+			}
+
+			ForceOfNature: {
+				DisplayName: Force Of Nature
+				Tooltip: ""
+			}
+
+			ForceOfOre: {
+				DisplayName: Force Of Ore
+				Tooltip: ""
+			}
+
+			LivingWoodEnchantV: {
+				Tooltip: ""
+				DisplayName: Living Wood Enchant V
+			}
+
+			HerbEnchant: {
+				Tooltip: ""
+				DisplayName: Herb Enchant
+			}
+
+			GlowshroomEnchant: {
+				Tooltip: ""
+				DisplayName: Glowshroom Enchant
+			}
+
+			GeraniumEnchant: {
+				Tooltip: ""
+				DisplayName: Geranium Enchant
+			}
+
+			GeoformedEnchant: {
+				Tooltip: ""
+				DisplayName: Geoformed Enchant
+			}
+
+			EbonwitchEnchant: {
+				Tooltip: ""
+				DisplayName: Ebonwitch Enchant
+			}
+
+			ShadewitchEnchant: {
+				Tooltip: ""
+				DisplayName: Shadewitch Enchant
+			}
+
+			OlympianEnchant: {
+				Tooltip: ""
+				DisplayName: Olympian Enchant
+			}
+
+			OccultEnchant: {
+				Tooltip: ""
+				DisplayName: Occult Enchant
+			}
+
+			MosquitoEnchant: {
+				Tooltip: ""
+				DisplayName: Mosquito Enchant
+			}
+
+			MoonmothEnchant: {
+				Tooltip: ""
+				DisplayName: Moonmoth Enchant
+			}
+
+			MetalsmithEnchant: {
+				Tooltip: ""
+				DisplayName: Metalsmith Enchant
+			}
+
+			MartianGunnerEnchant: {
+				Tooltip: ""
+				DisplayName: Martian Gunner Enchant
+			}
+
+			TrailHunterEnchant: {
+				Tooltip: ""
+				DisplayName: Trail Hunter Enchant
+			}
+
+			TempleEnchant: {
+				Tooltip: ""
+				DisplayName: Temple Enchant
+			}
+
+			SpiritKnightEnchant: {
+				Tooltip: ""
+				DisplayName: Spirit Knight Enchant
+			}
+
+			SkyforgedEnchant: {
+				Tooltip: ""
+				DisplayName: Skyforged Enchant
+			}
+
+			ShiverEnchant: {
+				Tooltip: ""
+				DisplayName: Shiver Enchant
+			}
+
+			ScubaEnchant: {
+				Tooltip: ""
+				DisplayName: Scuba Enchant
+			}
+
+			RobinsEnchant: {
+				Tooltip: ""
+				DisplayName: Robins Enchant
+			}
+
+			PurifiedEnchant: {
+				Tooltip: ""
+				DisplayName: Purified Enchant
+			}
+
+			PaladinEnchant: {
+				Tooltip: ""
+				DisplayName: Paladin Enchant
+			}
+
+			MonstrosityEnchant: {
+				DisplayName: Monstrosity Enchant
+				Tooltip: ""
+			}
+		}
+
+		NPCs: {
+			CeilingOfMoonLord.DisplayName: Ceiling Of Moon Lord
+			CeilingOfMoonLordEye.DisplayName: Ceiling Of Moon Lord Eye
+			CeilingOfMoonLordFace.DisplayName: Ceiling Of Moon Lord Face
+			DukeFishronEX.DisplayName: Duke Fishron E X
+			Echdeath.DisplayName: Echdeath
+			GunCelebration.DisplayName: Gun Celebration
+			GunMagnum.DisplayName: Gun Magnum
+			GunQuad.DisplayName: Gun Quad
+			GunShotgun.DisplayName: Gun Shotgun
+			GunSniper.DisplayName: Gun Sniper
+			Guntera.DisplayName: Guntera
+			GunteraHook.DisplayName: Guntera Hook
+			GunteraTentacle.DisplayName: Guntera Tentacle
+			GunUzi.DisplayName: Gun Uzi
+
+			Monstrocity: {
+				DisplayName: Monstrocity
+
+				TownNPCMood: {
+					Content: I am content.
+					NoHome: I hate not having a home.
+					FarFromHome: I am too far from home.
+					LoveSpace: I love having so much space.
+					DislikeCrowded: I dislike how crowded I am.
+					HateCrowded: I hate how crowded I am.
+					LikeNPC: I like {NPCName}.
+					DislikeNPC: I dislike {NPCName}.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+
+				Census.SpawnCondition: Conditions unknown
+			}
+
+			MutantAuraOfSupression.DisplayName: Mutant Aura Of Supression
+			MutantIllusion.DisplayName: Mutant Illusion
+			CyberneticOrb.DisplayName: Cybernetic Orb
+		}
+
+		Projectiles: {
+			CeilingDeathray.DisplayName: Ceiling Deathray
+			CeilingProj.DisplayName: Ceiling Proj
+			CeilingSphere.DisplayName: Ceiling Sphere
+			GunteraBullet.DisplayName: Guntera Bullet
+			MonstrosityBoss.DisplayName: Monstrosity Boss
+			MonstrosityRitual.DisplayName: Monstrosity Ritual
+			BossRush.DisplayName: Boss Rush
+			MutantSCal.DisplayName: Mutant S Cal
+			NDLaserbeam.DisplayName: N D Laserbeam
+			AbomSword.DisplayName: Abom Sword
+			AbomSwordHandle.DisplayName: Abom Sword Handle
+			MonstrosityRitual5.DisplayName: Monstrosity Ritual5
+			MutantSansBeam.DisplayName: Mutant Sans Beam
+			MutantSansHead.DisplayName: Mutant Sans Head
+			MutantShadowHand.DisplayName: Mutant Shadow Hand
+			MutantSlimeSpike.DisplayName: Mutant Slime Spike
+			MutantSpearAim.DisplayName: Mutant Spear Aim
+			MutantSpearDash.DisplayName: Mutant Spear Dash
+			MutantSpearMagical.DisplayName: Mutant Spear Magical
+			MutantSpearSpin.DisplayName: Mutant Spear Spin
+			MutantSpearThrown.DisplayName: Mutant Spear Thrown
+			MutantSphereRing.DisplayName: Mutant Sphere Ring
+			MutantBomb.DisplayName: Mutant Bomb
+			MutantBombSmall.DisplayName: Mutant Bomb Small
+			MutantBoss.DisplayName: Mutant Boss
+			MutantCrystalLeaf.DisplayName: Mutant Crystal Leaf
+			MutantDeathray1.DisplayName: Mutant Deathray1
+			MutantDeathray2.DisplayName: Mutant Deathray2
+			MutantDeathray3.DisplayName: Mutant Deathray3
+			MutantDeathrayAim.DisplayName: Mutant Deathray Aim
+			MutantDeathraySmall.DisplayName: Mutant Deathray Small
+			MutantDestroyerBody.DisplayName: Mutant Destroyer Body
+			MutantDestroyerHead.DisplayName: Mutant Destroyer Head
+			MutantDestroyerTail.DisplayName: Mutant Destroyer Tail
+			MutantEye.DisplayName: Mutant Eye
+			MutantEyeHoming.DisplayName: Mutant Eye Homing
+			MutantEyeOfCthulhu.DisplayName: Mutant Eye Of Cthulhu
+			MutantEyeWavy.DisplayName: Mutant Eye Wavy
+			MutantFishron.DisplayName: Mutant Fishron
+			MutantFishronRitual.DisplayName: Mutant Fishron Ritual
+			MutantFragment.DisplayName: Mutant Fragment
+			MutantGiantDeathray2.DisplayName: Mutant Giant Deathray2
+			MutantGlowything.DisplayName: Mutant Glowything
+			MutantGuardian.DisplayName: Mutant Guardian
+			MutantHeal.DisplayName: Mutant Heal
+			MutantMark1.DisplayName: Mutant Mark1
+			MutantMark2.DisplayName: Mutant Mark2
+			MutantNuke.DisplayName: Mutant Nuke
+			MutantPillar.DisplayName: Mutant Pillar
+			MutantReticle.DisplayName: Mutant Reticle
+			MutantReticle2.DisplayName: Mutant Reticle2
+			MutantRetirang.DisplayName: Mutant Retirang
+			MutantRitual.DisplayName: Mutant Ritual
+			MutantScythe1.DisplayName: Mutant Scythe1
+			MutantScythe2.DisplayName: Mutant Scythe2
+			MutantSlimeBall.DisplayName: Mutant Slime Ball
+			MutantSlimeRain.DisplayName: Mutant Slime Rain
+			MutantSpazmarang.DisplayName: Mutant Spazmarang
+			MutantSphereSmall.DisplayName: Mutant Sphere Small
+			MutantSword.DisplayName: Mutant Sword
+			MutantTrueEyeDeathray.DisplayName: Mutant True Eye Deathray
+			MutantTrueEyeL.DisplayName: Mutant True Eye L
+			MutantTrueEyeR.DisplayName: Mutant True Eye R
+			MutantTrueEyeS.DisplayName: Mutant True Eye S
+			MutantTrueEyeSphere.DisplayName: Mutant True Eye Sphere
+			MutantTyphoon.DisplayName: Mutant Typhoon
+			MonstrosityAxe.DisplayName: Monstrosity Axe
+			MonstrosityDEH.DisplayName: Monstrosity D E H
+			MonstrositySparklingLove.DisplayName: Monstrosity Sparkling Love
+			SpawnCutsceneProj.DisplayName: Spawn Cutscene Proj
+			CuteFishronRitual.DisplayName: Cute Fishron Ritual
+			DreadfireAuraProj.DisplayName: Dreadfire Aura Proj
+			BellMinionPulse.DisplayName: Bell Minion Pulse
+			Blightbone.DisplayName: Blightbone
+			CarePackage.DisplayName: Care Package
+			EeriePulse.DisplayName: Eerie Pulse
+			FlariumGeyser2.DisplayName: Flarium Geyser2
+			FlariumTornado.DisplayName: Flarium Tornado
+			FrosthunterExplosion.DisplayName: Frosthunter Explosion
+			HardlightDrone.DisplayName: Hardlight Drone
+			MartianProbe.DisplayName: Martian Probe
+			MushroomProj.DisplayName: Mushroom Proj
+			NightmareBubble.DisplayName: Nightmare Bubble
+			PlutoniumParticle.DisplayName: Plutonium Particle
+			PureFireballProj.DisplayName: Pure Fireball Proj
+			SatelliteShard.DisplayName: Satellite Shard
+			Shrapnel.DisplayName: Shrapnel
+			SpaceJunkProj.DisplayName: Space Junk Proj
+			SpaceshipMinion.DisplayName: Spaceship Minion
+			SteelSwordProjectile.DisplayName: Steel Sword Projectile
+			SwordRainProjectile.DisplayName: Sword Rain Projectile
+			ToxicCloudsProj.DisplayName: Toxic Clouds Proj
+			TwigProj.DisplayName: Twig Proj
+			VileArrow.DisplayName: Vile Arrow
+			XeniumRocket.DisplayName: Xenium Rocket
+			XeniumTurret.DisplayName: Xenium Turret
+			MinionBellProj.DisplayName: Minion Bell Proj
+			DevianttSoul.DisplayName: Deviantt Soul
+			EerieMinion.DisplayName: Eerie Minion
+			MutantSoul.DisplayName: Mutant Soul
+			SpectralFishron.DisplayName: Spectral Fishron
+			SquirrelRing.DisplayName: Squirrel Ring
+			TrueAcornProjectile.DisplayName: True Acorn Projectile
+			WastelandNukeProj.DisplayName: Wasteland Nuke Proj
+			WastelandNukeSupremeProj.DisplayName: Wasteland Nuke Supreme Proj
+			FlariumNukeProj.DisplayName: Flarium Nuke Proj
+			FlariumNukeSupremeProj.DisplayName: Flarium Nuke Supreme Proj
+			SpookyRenewalProj.DisplayName: Spooky Renewal Proj
+			SpookyRenewalSupremeProj.DisplayName: Spooky Renewal Supreme Proj
+			SwampyRenewalProj.DisplayName: Swampy Renewal Proj
+			SwampyRenewalSupremeProj.DisplayName: Swampy Renewal Supreme Proj
+			CyberHitbox.DisplayName: Cyber Hitbox
+			IllumiteAuraProj.DisplayName: Illumite Aura Proj
+			NamelessMagicCircle.DisplayName: Nameless Magic Circle
+			NamelessBeam.DisplayName: Nameless Beam
+		}
+
+		Configs: {
+			GCSEConfig: {
+				DisplayName: G C S E Config
+
+				Headers: {
+					General: General Header
+					Crossmods: Crossmods Header
+					EnchantsLoad: Enchants Load Header
+					EmodeAccesLoad: Emode Acces Load Header
+					EmodeWeaponsLoad: Emode Weapons Load Header
+				}
+
+				WorldEnterMessage: {
+					Label: World Enter Message
+					Tooltip: ""
+				}
+
+				DebugMode: {
+					Label: Debug Mode
+					Tooltip: ""
+				}
+
+				ExperimentalContent: {
+					Label: Experimental Content
+					Tooltip: ""
+				}
+
+				AlternativeSiblings: {
+					Label: Alternative Siblings
+					Tooltip: ""
+				}
+
+				DevItems: {
+					Label: Dev Items
+					Tooltip: ""
+				}
+
+				SecretBosses: {
+					Label: Secret Bosses
+					Tooltip: ""
+				}
+
+				ThrowerMerge: {
+					Label: Thrower Merge
+					Tooltip: ""
+				}
+
+				Boots: {
+					Label: Boots
+					Tooltip: ""
+				}
+
+				Shields: {
+					Label: Shields
+					Tooltip: ""
+				}
+
+				BossRushPostMutant: {
+					Label: Boss Rush Post Mutant
+					Tooltip: ""
+				}
+
+				Thorium: {
+					Label: Thorium
+					Tooltip: ""
+				}
+
+				EternityForce: {
+					Label: Eternity Force
+					Tooltip: ""
+				}
+
+				SacredTools: {
+					Label: Sacred Tools
+					Tooltip: ""
+				}
+
+				Polarities: {
+					Label: Polarities
+					Tooltip: ""
+				}
+
+				Homeward: {
+					Label: Homeward
+					Tooltip: ""
+				}
+
+				Redemption: {
+					Label: Redemption
+					Tooltip: ""
+				}
+
+				Spooky: {
+					Label: Spooky
+					Tooltip: ""
+				}
+
+				Beekeeper: {
+					Label: Beekeeper
+					Tooltip: ""
+				}
+
+				TerMerica: {
+					Label: Ter Merica
+					Tooltip: ""
+				}
+
+				SpiritMod: {
+					Label: Spirit Mod
+					Tooltip: ""
+				}
+
+				Consolaria: {
+					Label: Consolaria
+					Tooltip: ""
+				}
+
+				SOTS: {
+					Label: S O T S
+					Tooltip: ""
+				}
+
+				RagnarokMod: {
+					Label: Ragnarok Mod
+					Tooltip: ""
+				}
+
+				EmodeThorium: {
+					Label: Emode Thorium
+					Tooltip: ""
+				}
+
+				EmodeRedemption: {
+					Label: Emode Redemption
+					Tooltip: ""
+				}
+
+				EmodeSoA: {
+					Label: Emode So A
+					Tooltip: ""
+				}
+
+				EmodeThoriumW: {
+					Label: Emode Thorium W
+					Tooltip: ""
+				}
+
+				EmodeRedemptionW: {
+					Label: Emode Redemption W
+					Tooltip: ""
+				}
+
+				EmodeSoAW: {
+					Label: Emode So A W
+					Tooltip: ""
+				}
+
+				OrchidMod: {
+					Label: Orchid Mod
+					Tooltip: ""
+				}
+			}
+		}
+	}
+
+	Redemption: {
+		Items: {
+			MutagenMagic: {
+				DisplayName: Sorcerer's Mutagen
+				Tooltip:
+					'''
+					20% increased magic damage
+					10% increased magic critical strike chance
+					Increase your maximum mana by 100
+					'''
+			}
+
+			MutagenMelee: {
+				DisplayName: Warrior's Mutagen
+				Tooltip:
+					'''
+					20% increased melee damage
+					10% increased melee critical strike chance and attack speed
+					Increased melee knockback
+					'''
+			}
+
+			MutagenRanged: {
+				DisplayName: Ranger's Mutagen
+				Tooltip:
+					'''
+					20% increased ranged damage
+					10% increased ranged critical strike chance
+					15% increased ranged projectile velocity
+					'''
+			}
+
+			MutagenRitualist: {
+				DisplayName: Ritualist's Mutagen
+				Tooltip:
+					'''
+					20% increased ritual damage
+					10% increased ritual critical strike chance
+					'''
+			}
+
+			MutagenSummon: {
+				DisplayName: Summoner's Mutagen
+				Tooltip:
+					'''
+					20% increased summon damage
+					10% increased whip range 
+					Increase max numbers of minions by 2
+					'''
+			}
+		}
+	}
+
+	FargowiltasCrossmod: {
+		Items: {
+			AddedEffects: {
+				OutlawsEssence: {
+					DisplayName: Outlaw's Essence
+					Tooltip:
+						'''
+						18% increased thrower damage
+						8% increased thrower projectile velocity
+						5% increased thrower critical chance
+						'''
+				}
+
+				VagabondsSoul: {
+					DisplayName: Vagabond's Soul
+					Tooltip:
+						'''
+						22% increased thrower damage
+						10% increased thrower projectile velocity
+						10% increased thrower critical chance
+						Effects of Nanotech and Eclipse Mirror
+						'''
+				}
+			}
+		}
+	}
+
+	Catalyst: {
+		Items: {
+			IntergelacticHeadRogue: {
+				DisplayName: Intergelactic Headgear
+				Tooltip:
+					'''
+					Increases thrower damage and critical strike chance by 22%
+					12% increased damage reduction
+					'''
+			}
+		}
+
+		AuricTeslaPlusSet.Rogue:
+			'''
+			Thrower Intergelactic, Bloodflare and God Slayer armor effects
+			Press {0} to make the asteroids more transparent
+			All projectiles spawn healing auric orbs on enemy hits
+			Thrower stealth builds while not attacking and slower while moving, up to a max of 130
+			Once you have built max stealth, you will be able to perform a Stealth Strike
+			Throwere stealth only reduces when you attack, it does not reduce while moving
+			The higher your thrower stealth the higher your thrower damage, crit, and movement speed
+			'''
+	}
+}
