@@ -125,18 +125,23 @@ namespace gcsep.SoA.Enchantments
                 if (!mp.AstralSet)
                     return;
 
-                // 1. Handle switching first
+                // 1. Handle switching
                 if (mp.switchCooldown == 0 && (player.controlUp || player.controlDown))
                 {
                     HandleSwitch(player, mp);
-                    return;
                 }
-
-                // 2. If no Up/Down, cast spell
-                if (!player.controlUp && !player.controlDown && mp.AsthralCooldown == 0)
+                // 2. Handle casting
+                else if (!player.controlUp && !player.controlDown && mp.AsthralCooldown == 0)
                 {
                     CastSpell(player, mp);
                 }
+
+                // 3. Tick cooldowns
+                if (mp.switchCooldown > 0)
+                    mp.switchCooldown--;
+
+                if (mp.AsthralCooldown > 0)
+                    mp.AsthralCooldown--;
             }
 
             private void HandleSwitch(Player player, ModdedPlayer mp)
@@ -174,17 +179,6 @@ namespace gcsep.SoA.Enchantments
                 );
 
                 mp.AsthralCooldown = 3600;
-            }
-
-            public override void PostUpdateEquips(Player player)
-            {
-                var mp = player.GetModPlayer<ModdedPlayer>();
-
-                if (mp.switchCooldown > 0)
-                    mp.switchCooldown--;
-
-                if (mp.AsthralCooldown > 0)
-                    mp.AsthralCooldown--;
             }
         }
         public override void AddRecipes()
