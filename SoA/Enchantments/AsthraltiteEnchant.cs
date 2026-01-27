@@ -118,7 +118,7 @@ namespace gcsep.SoA.Enchantments
                 ModContent.ProjectileType<DeployDares>()
             };
 
-            public override void ActiveSkillJustPressed(Player player, bool stunned)
+            public override void PostUpdateEquips(Player player)
             {
                 var mp = player.GetModPlayer<ModdedPlayer>();
 
