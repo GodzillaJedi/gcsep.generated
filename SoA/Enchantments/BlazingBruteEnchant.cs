@@ -4,9 +4,7 @@ using gcsep.Content.Buffs;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using SacredTools;
 using SacredTools.Buffs;
-using SacredTools.Content.Items.Armor.Bismuth;
 using SacredTools.Content.Items.Armor.Lunar.Solar;
 using SacredTools.Items.Weapons.Lunatic;
 using Terraria;
@@ -23,9 +21,6 @@ namespace gcsep.SoA.Enchantments
         {
             return GCSEConfig.Instance.SacredTools;
         }
-
-        private readonly Mod soa = ModLoader.GetMod("SacredTools");
-
         public override void SetDefaults()
         {
             Item.width = 20;
