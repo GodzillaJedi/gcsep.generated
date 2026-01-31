@@ -1,11 +1,19 @@
-﻿using FargowiltasSouls.Content.Items.Accessories.Souls;
+﻿using CalamityMod;
+using CalamityMod.Buffs.Summon;
+using CalamityMod.Projectiles.Summon;
+using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
+using gcsep.Content.Items.Accessories;
 using gcsep.Core;
+using Microsoft.Xna.Framework;
+using Redemption.Buffs.Minions;
 using Redemption.Items.Accessories.HM;
 using Redemption.Items.Accessories.PostML;
-using gcsep.Content.Items.Accessories;
+using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.Projectiles.Minions;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace gcsep.Redemption
@@ -18,6 +26,13 @@ namespace gcsep.Redemption
 
         public override void UpdateAccessory(Item Item, Player player, bool hideVisual)
         {
+            if (Item.type == ModContent.ItemType<ConjuristsSoul>() || Item.type == ModContent.ItemType<UniverseSoul>() || Item.type == ModContent.ItemType<EternitySoul>() || Item.type == ModContent.ItemType<StargateSoul>())
+            {
+                if (ModCompatibility.Redemption.Loaded)
+                {
+                    player.AddEffect<PortableHoloProjectorEffect>(Item);
+                }
+            }
             if (Item.type == ModContent.ItemType<ColossusSoul>() || Item.type == ModContent.ItemType<DimensionSoul>() || Item.type == ModContent.ItemType<EternitySoul>() || Item.type == ModContent.ItemType<StargateSoul>())
             {
                 if (ModCompatibility.Redemption.Loaded)
@@ -52,6 +67,30 @@ namespace gcsep.Redemption
             public override void PostUpdateEquips(Player player)
             {
                 ModCompatibility.Redemption.Mod.Find<ModItem>("InfectionShield").UpdateAccessory(player, true);
+            }
+        }
+        [ExtendsFromMod(ModCompatibility.Redemption.Name)]
+        public class PortableHoloProjectorEffect : AccessoryEffect
+        {
+            public override Header ToggleHeader => Header.GetHeader<SupersonicHeader>();
+            public override int ToggleItemType => ModContent.ItemType<InfectionShield>();
+
+            public override void PostUpdateEquips(Player player)
+            {
+                if (player.whoAmI == Main.myPlayer)
+                {
+                    IEntitySource source_ItemUse = player.GetSource_ItemUse(EffectItem(player));
+                    if (player.FindBuffIndex(ModContent.BuffType<HoloMinionBuff>()) == -1)
+                    {
+                        player.AddBuff(ModContent.BuffType<HoloMinionBuff>(), 3600);
+                    }
+
+                    if (player.ownedProjectileCounts[ModContent.ProjectileType<HoloProjector>()] < 1)
+                    {
+                        int num = player.ApplyArmorAccDamageBonusesTo(140f);
+                        Projectile.NewProjectileDirect(source_ItemUse, player.Center, -Vector2.UnitY, ModContent.ProjectileType<HoloProjector>(), num, 0f, player.whoAmI).originalDamage = num;
+                    }
+                }
             }
         }
     }
