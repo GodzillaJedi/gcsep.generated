@@ -60,21 +60,30 @@ namespace gcsep.Calamity.Enchantments
             public override void PostUpdateEquips(Player player)
             {
                 int buffType = ModContent.BuffType<MutatedTruffleBuff>();
-                if (player.FindBuffIndex(buffType) == -1)
-                {
+                if (!player.HasBuff(buffType))
                     player.AddBuff(buffType, 3600);
-                }
 
                 // Only spawn projectile on local player
                 if (player.whoAmI != Main.myPlayer)
                     return;
 
                 int projType = ModContent.ProjectileType<MutatedTruffleMinion>();
+
                 if (player.ownedProjectileCounts[projType] < 1)
                 {
-                    int damage = player.ApplyArmorAccDamageBonusesTo(140f);
+                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
                     var source = player.GetSource_Misc("TruffleEffect");
-                    var proj = Projectile.NewProjectileDirect(source, player.Center, -Vector2.UnitY, projType, damage, 0f, player.whoAmI);
+
+                    var proj = Projectile.NewProjectileDirect(
+                        source,
+                        player.Center,
+                        -Vector2.UnitY,
+                        projType,
+                        damage,
+                        0f,
+                        player.whoAmI
+                    );
+
                     proj.originalDamage = damage;
                 }
             }

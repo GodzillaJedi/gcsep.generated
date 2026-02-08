@@ -13,7 +13,7 @@ namespace gcsep.Calamity
 
         public override void AI(Projectile projectile)
         {
-            if (projectile.type == ModContent.ProjectileType<GayBeam>())
+            if (projectile.type == ModContent.ProjectileType<OrderbringerWaveProj>())
             {
                 projectile.velocity *= 1.1f;
             }

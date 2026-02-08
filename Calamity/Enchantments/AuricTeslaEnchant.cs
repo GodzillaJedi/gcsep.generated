@@ -7,13 +7,14 @@ using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Auric;
 using CalamityMod.Projectiles.Pets;
+using CalamityMod.Projectiles.Typeless;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using RagnarokMod.Items.BardItems.Armor;
 using RagnarokMod.Items.HealerItems.Armor;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -48,16 +49,16 @@ namespace gcsep.Calamity.Enchantments
             player.AddEffect<TransformerEffect>(Item);
             player.AddEffect<YharimJamEffect>(Item);
             player.AddEffect<AuricTeslaArmorsEffect>(Item);
-            player.AddEffect<AuricTeslaSummonerEffect>(Item);
+            player.AddEffect<AuricTeslaSummonEffect>(Item);
         }
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<AuricTeslaRoyalHelm>());
-            recipe.AddIngredient(ModContent.ItemType<AuricTeslaHoodedFacemask>());
-            recipe.AddIngredient(ModContent.ItemType<AuricTeslaWireHemmedVisage>());
-            recipe.AddIngredient(ModContent.ItemType<AuricTeslaSpaceHelmet>());
-            recipe.AddIngredient(ModContent.ItemType<AuricTeslaPlumedHelm>());
+            recipe.AddIngredient(ModContent.ItemType<AuricTeslaHeadMelee>());
+            recipe.AddIngredient(ModContent.ItemType<AuricTeslaHeadMagic>());
+            recipe.AddIngredient(ModContent.ItemType<AuricTeslaHeadRanged>());
+            recipe.AddIngredient(ModContent.ItemType<AuricTeslaHeadRogue>());
+            recipe.AddIngredient(ModContent.ItemType<AuricTeslaHeadSummon>());
             recipe.AddIngredient(ModContent.ItemType<AuricTeslaBodyArmor>());
             recipe.AddIngredient(ModContent.ItemType<AuricTeslaCuisses>());
             if (ModCompatibility.Ragnarok.Loaded)
@@ -87,24 +88,24 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<AuricTeslaEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<AuricTeslaRoyalHelm>().UpdateArmorSet(player);
-                ModContent.GetInstance<AuricTeslaHoodedFacemask>().UpdateArmorSet(player);
-                ModContent.GetInstance<AuricTeslaWireHemmedVisage>().UpdateArmorSet(player);
-                ModContent.GetInstance<AuricTeslaPlumedHelm>().UpdateArmorSet(player);
+                ModContent.GetInstance<AuricTeslaHeadMelee>().UpdateArmorSet(player);
+                ModContent.GetInstance<AuricTeslaHeadMagic>().UpdateArmorSet(player);
+                ModContent.GetInstance<AuricTeslaHeadRanged>().UpdateArmorSet(player);
+                ModContent.GetInstance<AuricTeslaHeadRogue>().UpdateArmorSet(player);
                 ModContent.GetInstance<AugmentedAuricTeslaFeatheredHeadwear>().UpdateArmorSet(player);
                 ModContent.GetInstance<AugmentedAuricTeslaValkyrieVisage>().UpdateArmorSet(player);
                 ModContent.GetInstance<AuricTeslaHealerHead>().UpdateArmorSet(player);
                 ModContent.GetInstance<AuricTeslaFrilledHelmet>().UpdateArmorSet(player);
             }
         }
-        public class AuricTeslaSummonerEffect : AccessoryEffect
+        public class AuricTeslaSummonEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<ExaltationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<AuricTeslaEnchant>();
 
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<AuricTeslaSpaceHelmet>().UpdateArmorSet(player);
+                ModContent.GetInstance<AuricTeslaHeadSummon>().UpdateArmorSet(player);
             }
         }
         public class DragonScalesEffect : AccessoryEffect
@@ -171,11 +172,37 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<ExaltationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<AuricTeslaEnchant>();
+
             public override void PostUpdateEquips(Player player)
             {
+                if (!player.active || player.dead)
+                    return;
+
                 CalamityPlayer calamityPlayer = player.Calamity();
+
+                // Enable effect
                 calamityPlayer.transformer = true;
-                calamityPlayer.aSpark = true;
+
+                // Respect visual toggle
+                calamityPlayer.transformerVisual = true;
+
+                // Spawn aura if needed
+                bool noAura = player.ownedProjectileCounts[ModContent.ProjectileType<TransformerAura>()] < 1;
+                bool visualsOn = true;
+                bool offCooldown = calamityPlayer.transformerCooldown == 0;
+
+                if (noAura && visualsOn && offCooldown)
+                {
+                    Projectile.NewProjectile(
+                        player.GetSource_FromThis(),
+                        player.Center,
+                        Vector2.Zero,
+                        ModContent.ProjectileType<TransformerAura>(),
+                        0,
+                        0f,
+                        player.whoAmI
+                    );
+                }
             }
         }
         public class YharimJamEffect : AccessoryEffect

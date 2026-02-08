@@ -25,7 +25,7 @@ namespace gcsep.Calamity.Addons
             Item.height = 20;
             Item.accessory = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ItemRarityID.Purple;
             Item.value = 50000000;
         }
 

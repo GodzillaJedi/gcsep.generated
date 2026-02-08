@@ -58,11 +58,11 @@ namespace gcsep.Calamity.Enchantments
         public override void AddRecipes()
         {
             Recipe recipe = this.CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<AerospecHelm>());
-            recipe.AddIngredient(ModContent.ItemType<AerospecHood>());
-            recipe.AddIngredient(ModContent.ItemType<AerospecHat>());
-            recipe.AddIngredient(ModContent.ItemType<AerospecHelmet>());
-            recipe.AddIngredient(ModContent.ItemType<AerospecHeadgear>());
+            recipe.AddIngredient(ModContent.ItemType<AerospecHeadMelee>());
+            recipe.AddIngredient(ModContent.ItemType<AerospecHeadMagic>());
+            recipe.AddIngredient(ModContent.ItemType<AerospecHeadRanged>());
+            recipe.AddIngredient(ModContent.ItemType<AerospecHeadRogue>());
+            recipe.AddIngredient(ModContent.ItemType<AerospecHeadSummon>());
             recipe.AddIngredient(ModContent.ItemType<AerospecBreastplate>());
             recipe.AddIngredient(ModContent.ItemType<AerospecLeggings>());
             if (ModCompatibility.Ragnarok.Loaded)
@@ -89,7 +89,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<AerospecEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<AerospecHelmet>().UpdateArmorSet(player);
+                ModContent.GetInstance<AerospecHeadSummon>().UpdateArmorSet(player);
             }
         }
         public class AerospecArmorEffects : AccessoryEffect
@@ -98,10 +98,10 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<AerospecEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<AerospecHelm>().UpdateArmorSet(player);
-                ModContent.GetInstance<AerospecHood>().UpdateArmorSet(player);
-                ModContent.GetInstance<AerospecHat>().UpdateArmorSet(player);
-                ModContent.GetInstance<AerospecHeadgear>().UpdateArmorSet(player);
+                ModContent.GetInstance<AerospecHeadMelee>().UpdateArmorSet(player);
+                ModContent.GetInstance<AerospecHeadRanged>().UpdateArmorSet(player);
+                ModContent.GetInstance<AerospecHeadRogue>().UpdateArmorSet(player);
+                ModContent.GetInstance<AerospecHeadMagic>().UpdateArmorSet(player);
                 ModContent.GetInstance<AerospecBiretta>().UpdateArmorSet(player);
                 ModContent.GetInstance<AerospecHeadphones>().UpdateArmorSet(player);
                 ModContent.GetInstance<AerospecBard>().UpdateArmorSet(player);

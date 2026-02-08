@@ -24,14 +24,14 @@ namespace gcsep.Calamity
             {
                 entity.damage = (int)(entity.damage * 0.9f);
             }
-            if (entity.type == ModContent.ItemType<IridescentExcalibur>())
+            if (entity.type == ModContent.ItemType<Orderbringer>())
             {
                 entity.damage = (int)(entity.damage * 1.3f);
             }
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (item.type == ModContent.ItemType<IridescentExcalibur>())
+            if (item.type == ModContent.ItemType<Orderbringer>())
             {
                 tooltips.Add(new TooltipLine(Mod, "rebalance", $"[c/FFFF00:CSE Balance:] Increased projectile velocity."));
             }

@@ -35,9 +35,9 @@ namespace gcsep.Calamity.Enchantments
             {
                 ModContent.GetInstance<UrsaSergeant>().UpdateAccessory(player, hideVisual);
             }
-            if (player.AddEffect<GravistarEffect>(Item))
+            if (player.AddEffect<InterstellarEffect>(Item))
             {
-                ModContent.GetInstance<GravistarSabaton>().UpdateAccessory(player, hideVisual);
+                ModContent.GetInstance<InterstellarStompers>().UpdateAccessory(player, hideVisual);
             }
         }
         public class UrsaEffect : AccessoryEffect
@@ -45,7 +45,7 @@ namespace gcsep.Calamity.Enchantments
             public override Header ToggleHeader => Header.GetHeader<DesolationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<AstralEnchant>();
         }
-        public class GravistarEffect : AccessoryEffect
+        public class InterstellarEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<DesolationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<AstralEnchant>();
@@ -73,7 +73,7 @@ namespace gcsep.Calamity.Enchantments
             recipe.AddIngredient(ModContent.ItemType<AstralBreastplate>());
             recipe.AddIngredient(ModContent.ItemType<AstralLeggings>());
             recipe.AddIngredient(ModContent.ItemType<UrsaSergeant>());
-            recipe.AddIngredient(ModContent.ItemType<GravistarSabaton>());
+            recipe.AddIngredient(ModContent.ItemType<InterstellarStompers>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();

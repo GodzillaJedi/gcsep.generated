@@ -1,12 +1,13 @@
 ﻿using CalamityMod;
+using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Brimflame;
 using CalamityMod.Projectiles.Typeless;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -40,7 +41,7 @@ namespace gcsep.Calamity.Enchantments
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<BrimflameScowl>());
+            recipe.AddIngredient(ModContent.ItemType<BrimflameCowl>());
             recipe.AddIngredient(ModContent.ItemType<BrimflameRobes>());
             recipe.AddIngredient(ModContent.ItemType<BrimflameBoots>());
             recipe.AddIngredient(ModContent.ItemType<VoidofCalamity>());
@@ -61,7 +62,7 @@ namespace gcsep.Calamity.Enchantments
                 player.GetDamage<MagicDamageClass>() += 0.15f;
                 player.GetCritChance<MagicDamageClass>() += 15f;
                 string text = CalamityKeybinds.ArmorSetBonusHotKey.TooltipHotkeyString();
-                player.setBonus = ModContent.GetInstance<BrimflameScowl>().GetLocalization("SetBonus").Format(text);
+                player.setBonus = ModContent.GetInstance<BrimflameCowl>().GetLocalization("SetBonus").Format(text);
             }
         }
         public class FlameShellEffect : AccessoryEffect
@@ -89,7 +90,9 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<BrimflameEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().Pauldron = true;
+                CalamityPlayer calamityPlayer = player.Calamity();
+                calamityPlayer.sPauldron = true;
+                calamityPlayer.sPauldronVisual = true;
             }
         }
         public class VoidCalamityEffect : AccessoryEffect
@@ -105,9 +108,8 @@ namespace gcsep.Calamity.Enchantments
                     IEntitySource source_Accessory = player.GetSource_Accessory(EffectItem(player));
                     if (player.immune && player.miscCounter % 10 == 0)
                     {
-                        int num = (int)player.GetBestClassDamage().ApplyTo(30f);
-                        num = player.ApplyArmorAccDamageBonusesTo(num);
-                        CalamityUtils.ProjectileRain(source_Accessory, player.Center, 400f, 100f, 500f, 800f, 22f, ModContent.ProjectileType<StandingFire>(), num, 5f, player.whoAmI);
+                        int damage = (int)player.GetBestClassDamage().ApplyTo(30f);
+                        CalamityUtils.ProjectileRain(source_Accessory, player.Center, 400f, 100f, 500f, 800f, 22f, ModContent.ProjectileType<StandingFire>(), damage, 5f, player.whoAmI);
                     }
                 }
             }

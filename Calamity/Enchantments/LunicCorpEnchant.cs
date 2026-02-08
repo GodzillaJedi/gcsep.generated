@@ -114,7 +114,7 @@ namespace gcsep.Calamity.Enchantments
 
                     if (player.ownedProjectileCounts[ModContent.ProjectileType<NaturePixie>()] < 1)
                     {
-                        int num = player.ApplyArmorAccDamageBonusesTo(140f);
+                        int num = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
                         Projectile.NewProjectileDirect(source_ItemUse, player.Center, -Vector2.UnitY, ModContent.ProjectileType<NaturePixie>(), num, 0f, player.whoAmI).originalDamage = num;
                     }
                 }

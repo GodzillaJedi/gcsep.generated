@@ -69,13 +69,13 @@ namespace gcsep.Calamity.Enchantments
 
                 if (player.whoAmI == Main.myPlayer)
                 {
-                    int buffType = ModContent.BuffType<ReaverOrbBuff>();
+                    int buffType = ModContent.BuffType<>();
                     if (player.FindBuffIndex(buffType) == -1)
                     {
                         player.AddBuff(buffType, 3600);
                     }
 
-                    int projType = ModContent.ProjectileType<ReaverOrb>();
+                    int projType = ModContent.ProjectileType<Reaver>();
                     if (player.ownedProjectileCounts[projType] < 1)
                     {
                         var source = player.GetSource_Misc("ReaverExploreEffect");

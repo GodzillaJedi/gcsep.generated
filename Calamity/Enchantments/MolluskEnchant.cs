@@ -2,14 +2,15 @@
 using CalamityMod.Buffs.Summon;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Armor.Auric;
 using CalamityMod.Items.Armor.Demonshade;
 using CalamityMod.Items.Armor.Mollusk;
 using CalamityMod.Projectiles.Summon;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -84,27 +85,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<MolluskEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.setBonus = ModContent.GetInstance<MolluskShellmet>().GetLocalization("SetBonus").Format();
-                CalamityPlayer calamityPlayer = player.Calamity();
-                player.GetDamage<GenericDamageClass>() += 0.1f;
-                calamityPlayer.molluskSet = true;
-                player.maxMinions += 4;
-                if (player.whoAmI == Main.myPlayer)
-                {
-                    IEntitySource source_ItemUse = player.GetSource_ItemUse(EffectItem(player));
-                    if (player.FindBuffIndex(ModContent.BuffType<ShellfishBuff>()) == -1)
-                    {
-                        player.AddBuff(ModContent.BuffType<ShellfishBuff>(), 3600);
-                    }
-
-                    if (player.ownedProjectileCounts[ModContent.ProjectileType<Shellfish>()] < 2)
-                    {
-                        int num = player.ApplyArmorAccDamageBonusesTo(140f);
-                        Projectile.NewProjectileDirect(source_ItemUse, player.Center, -Vector2.UnitY, ModContent.ProjectileType<Shellfish>(), num, 0f, player.whoAmI).originalDamage = num;
-                    }
-                }
-
-                player.Calamity().wearingRogueArmor = true;
+                ModContent.GetInstance<MolluskShellmet>().UpdateArmorSet(player);
             }
         }
     }

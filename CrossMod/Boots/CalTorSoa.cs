@@ -72,11 +72,11 @@ namespace gcsep.Crossmod.Boots
                     recipe.AddIngredient<AeolusBoots>(1);
                 }
                 //sprinters to celestial
-                if (recipe.HasResult(ModContent.ItemType<TracersCelestial>()) && !recipe.HasIngredient<TerrariumParticleSprinters>())
+                if (recipe.HasResult(ModContent.ItemType<MoonWalkers>()) && !recipe.HasIngredient<TerrariumParticleSprinters>())
                 {
                     recipe.AddIngredient<TerrariumParticleSprinters>(1);
                 }
-                if (recipe.HasResult(ModContent.ItemType<TracersCelestial>()) && recipe.HasIngredient<AeolusBoots>())
+                if (recipe.HasResult(ModContent.ItemType<MoonWalkers>()) && recipe.HasIngredient<AeolusBoots>())
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<AeolusBoots>());
                 }
@@ -84,12 +84,12 @@ namespace gcsep.Crossmod.Boots
                 if (recipe.HasResult(ModContent.ItemType<VoidSpurs>()) && recipe.HasIngredient<RoyalRunners>() && !ModCompatibility.Homeward.Loaded)
                 {
                     recipe.RemoveIngredient(ModContent.ItemType<RoyalRunners>());
-                    recipe.AddIngredient<TracersCelestial>(1);
+                    recipe.AddIngredient<MoonWalkers>(1);
                 }
                 //spurs to elysian
-                if (recipe.HasResult(ModContent.ItemType<TracersElysian>()) && recipe.HasIngredient<TracersCelestial>())
+                if (recipe.HasResult(ModContent.ItemType<VoidStriders>()) && recipe.HasIngredient<MoonWalkers>())
                 {
-                    recipe.RemoveIngredient(ModContent.ItemType<TracersCelestial>());
+                    recipe.RemoveIngredient(ModContent.ItemType<MoonWalkers>());
                     recipe.AddIngredient<VoidSpurs>(1);
                 }
             }
@@ -111,10 +111,10 @@ namespace gcsep.Crossmod.Boots
                 || Item.type == ModContent.ItemType<RoyalRunners>()
                 || Item.type == ModContent.ItemType<AeolusBoots>()
                 || Item.type == ModContent.ItemType<TerrariumParticleSprinters>()
-                || Item.type == ModContent.ItemType<TracersCelestial>()
+                || Item.type == ModContent.ItemType<MoonWalkers>()
                 //|| Item.type == ModContent.ItemType<VoidSpurs>()
-                || Item.type == ModContent.ItemType<TracersElysian>()
-                || Item.type == ModContent.ItemType<TracersSeraph>()
+                || Item.type == ModContent.ItemType<VoidStriders>()
+                || Item.type == ModContent.ItemType<SeraphTracers>()
                 || Item.type == ModContent.ItemType<SupersonicSoul>())
             {
                 ModContent.Find<ModItem>(ModCompatibility.SoulsMod.Name, "ZephyrBoots").UpdateAccessory(player, false);
@@ -123,10 +123,10 @@ namespace gcsep.Crossmod.Boots
             if (Item.type == ModContent.ItemType<RoyalRunners>()
                 || Item.type == ModContent.ItemType<AeolusBoots>()
                 || Item.type == ModContent.ItemType<TerrariumParticleSprinters>()
-                || Item.type == ModContent.ItemType<TracersCelestial>()
+                || Item.type == ModContent.ItemType<MoonWalkers>()
                 //|| Item.type == ModContent.ItemType<VoidSpurs>()
-                || Item.type == ModContent.ItemType<TracersElysian>()
-                || Item.type == ModContent.ItemType<TracersSeraph>()
+                || Item.type == ModContent.ItemType<VoidStriders>()
+                || Item.type == ModContent.ItemType<SeraphTracers>()
                 || Item.type == ModContent.ItemType<SupersonicSoul>())
             {
                 ModContent.Find<ModItem>(ModCompatibility.Calamity.Name, "AngelTreads").UpdateAccessory(player, false);
@@ -134,44 +134,44 @@ namespace gcsep.Crossmod.Boots
 
             if (Item.type == ModContent.ItemType<AeolusBoots>()
                 || Item.type == ModContent.ItemType<TerrariumParticleSprinters>()
-                || Item.type == ModContent.ItemType<TracersCelestial>()
+                || Item.type == ModContent.ItemType<MoonWalkers>()
                 //|| Item.type == ModContent.ItemType<VoidSpurs>()
-                || Item.type == ModContent.ItemType<TracersElysian>()
-                || Item.type == ModContent.ItemType<TracersSeraph>()
+                || Item.type == ModContent.ItemType<VoidStriders>()
+                || Item.type == ModContent.ItemType<SeraphTracers>()
                 || Item.type == ModContent.ItemType<SupersonicSoul>())
             {
                 ModContent.Find<ModItem>(ModCompatibility.SacredTools.Name, "RoyalRunners").UpdateAccessory(player, false);
             }
 
             if (Item.type == ModContent.ItemType<TerrariumParticleSprinters>()
-                || Item.type == ModContent.ItemType<TracersCelestial>()
+                || Item.type == ModContent.ItemType<MoonWalkers>()
                 || Item.type == ModContent.ItemType<VoidSpurs>()
-                || Item.type == ModContent.ItemType<TracersElysian>()
-                || Item.type == ModContent.ItemType<TracersSeraph>()
+                || Item.type == ModContent.ItemType<VoidStriders>()
+                || Item.type == ModContent.ItemType<SeraphTracers>()
                 || Item.type == ModContent.ItemType<SupersonicSoul>())
             {
                 ModContent.Find<ModItem>(ModCompatibility.SoulsMod.Name, "AeolusBoots").UpdateAccessory(player, false);
             }
 
-            if (Item.type == ModContent.ItemType<TracersCelestial>()
+            if (Item.type == ModContent.ItemType<MoonWalkers>()
                 //|| Item.type == ModContent.ItemType<VoidSpurs>()
-                || Item.type == ModContent.ItemType<TracersElysian>()
-                || Item.type == ModContent.ItemType<TracersSeraph>()
+                || Item.type == ModContent.ItemType<VoidStriders>()
+                || Item.type == ModContent.ItemType<SeraphTracers>()
                 || Item.type == ModContent.ItemType<SupersonicSoul>())
             {
                 ModContent.Find<ModItem>(ModCompatibility.Thorium.Name, "TerrariumParticleSprinters").UpdateAccessory(player, false);
             }
 
             if (//Item.type == ModContent.ItemType<VoidSpurs>()
-                Item.type == ModContent.ItemType<TracersElysian>()
-                || Item.type == ModContent.ItemType<TracersSeraph>()
+                Item.type == ModContent.ItemType<VoidStriders>()
+                || Item.type == ModContent.ItemType<SeraphTracers>()
                 || Item.type == ModContent.ItemType<SupersonicSoul>())
             {
                 ModContent.Find<ModItem>(ModCompatibility.Calamity.Name, "TracersCelestial").UpdateAccessory(player, false);
             }
 
-            if (Item.type == ModContent.ItemType<TracersElysian>()
-                || Item.type == ModContent.ItemType<TracersSeraph>()
+            if (Item.type == ModContent.ItemType<VoidStriders>()
+                || Item.type == ModContent.ItemType<SeraphTracers>()
                 || Item.type == ModContent.ItemType<SupersonicSoul>())
             {
                 ModContent.Find<ModItem>(ModCompatibility.SacredTools.Name, "VoidSpurs").UpdateAccessory(player, false);

@@ -73,7 +73,7 @@ namespace gcsep.Calamity.Enchantments
             recipe.AddIngredient(ModContent.ItemType<GodSlayerLeggings>());
             recipe.AddIngredient(ModContent.ItemType<VeneratedLocket>());
             recipe.AddIngredient(ModContent.ItemType<DimensionalSoulArtifact>());
-            recipe.AddIngredient(ModContent.ItemType<StaffoftheMechworm>());
+            recipe.AddIngredient(ModContent.ItemType<VoidEaterMarionette>());
 
             recipe.AddTile(calamity, "DraedonsForge");
             recipe.Register();
@@ -130,48 +130,27 @@ namespace gcsep.Calamity.Enchantments
                 if (player.whoAmI != Main.myPlayer)
                     return;
 
-                IEntitySource source = player.GetSource_Misc("MechwormEffect");
+                // Apply buff
+                if (!player.HasBuff(ModContent.BuffType<VoidEaterMarionetteBuff>()))
+                    player.AddBuff(ModContent.BuffType<VoidEaterMarionetteBuff>(), 3600);
 
-                // Apply buff if not already active
-                if (player.FindBuffIndex(ModContent.BuffType<Mechworm>()) == -1)
-                    player.AddBuff(ModContent.BuffType<Mechworm>(), 3600);
-
-                // Spawn head
-                int headIndex = -1;
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<MechwormHead>()] < 1)
+                // Spawn the minion if missing
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<VoidEaterMarionetteProjectile>()] < 1)
                 {
-                    int damage = player.ApplyArmorAccDamageBonusesTo(140f);
-                    var head = Projectile.NewProjectileDirect(source, player.Center, -Vector2.UnitY,
-                        ModContent.ProjectileType<MechwormHead>(), damage, 0f, player.whoAmI);
-                    head.originalDamage = damage;
-                    headIndex = head.whoAmI;
-                }
+                    IEntitySource source = player.GetSource_Misc("MechwormEffect");
+                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140);
 
-                // Spawn body segments
-                int previousSegmentIndex = headIndex;
-                for (int i = 0; i < 15; i++)
-                {
-                    if (player.ownedProjectileCounts[ModContent.ProjectileType<MechwormBody>()] < 5)
-                    {
-                        int damage = player.ApplyArmorAccDamageBonusesTo(140f);
-                        Vector2 pos = player.Center + new Vector2(0, -20 * (i + 1));
-                        var body = Projectile.NewProjectileDirect(source, pos, -Vector2.UnitY,
-                            ModContent.ProjectileType<MechwormBody>(), damage, 0f, player.whoAmI);
-                        body.originalDamage = damage;
-                        body.ai[0] = previousSegmentIndex;
-                        previousSegmentIndex = body.whoAmI;
-                    }
-                }
+                    var proj = Projectile.NewProjectileDirect(
+                        source,
+                        player.Center,
+                        Vector2.Zero,
+                        ModContent.ProjectileType<VoidEaterMarionetteProjectile>(),
+                        damage,
+                        0f,
+                        player.whoAmI
+                    );
 
-                // Spawn tail
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<MechwormTail>()] < 1)
-                {
-                    int damage = player.ApplyArmorAccDamageBonusesTo(140f);
-                    Vector2 tailPos = player.Center + new Vector2(0, -20 * 16);
-                    var tail = Projectile.NewProjectileDirect(source, tailPos, -Vector2.UnitY,
-                        ModContent.ProjectileType<MechwormTail>(), damage, 0f, player.whoAmI);
-                    tail.originalDamage = damage;
-                    tail.ai[0] = previousSegmentIndex;
+                    proj.originalDamage = damage;
                 }
             }
         }

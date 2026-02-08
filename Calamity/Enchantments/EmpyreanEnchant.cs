@@ -5,12 +5,13 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Empyrean;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Items.Misc;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -52,19 +53,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<EmpyreanEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.xerocSet = true;
-                calamityPlayer.rogueStealthMax += 1.15f;
-                player.setBonus = ModContent.GetInstance<EmpyreanMask>().GetLocalization("SetBonus").Format(true);
-                if (player.statLife <= (int)((double)player.statLifeMax2 * 0.5))
-                {
-                    player.AddBuff(ModContent.BuffType<EmpyreanWrath>(), 2);
-                    player.AddBuff(ModContent.BuffType<EmpyreanRage>(), 2);
-                }
-
-                player.GetDamage<ThrowingDamageClass>() += 0.09f;
-                calamityPlayer.rogueVelocity += 0.09f;
-                calamityPlayer.wearingRogueArmor = true;
+                ModContent.GetInstance<EmpyreanMask>().UpdateArmorSet(player);
             }
         }
         public class DarkHeartCalamityEffect : AccessoryEffect

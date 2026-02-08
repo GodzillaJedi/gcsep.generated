@@ -1,13 +1,14 @@
 ﻿using CalamityMod;
 using CalamityMod.Buffs.DamageOverTime;
+using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.FathomSwarmer;
 using CalamityMod.Projectiles.Rogue;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -41,7 +42,7 @@ namespace gcsep.Calamity.Enchantments
             recipe.AddIngredient(ModContent.ItemType<FathomSwarmerVisage>());
             recipe.AddIngredient(ModContent.ItemType<FathomSwarmerBreastplate>());
             recipe.AddIngredient(ModContent.ItemType<FathomSwarmerBoots>());
-            recipe.AddIngredient(ModContent.ItemType<LumenousAmulet>());
+            recipe.AddIngredient(ModContent.ItemType<DiamondOfTheDeep>());
             recipe.AddIngredient(ModContent.ItemType<CorrosiveSpine>());
 
             recipe.AddTile(TileID.CrystalBall);
@@ -94,7 +95,10 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<FathomSwarmerEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().lumenousAmulet = true;
+                CalamityPlayer calamityPlayer = player.Calamity();
+                calamityPlayer.dOfTheDeep = true;
+                calamityPlayer.dOfTheDeepVisual = true;
+                calamityPlayer.WaterDebuffMultiplier += 0.75f;
                 player.buffImmune[ModContent.BuffType<RiptideDebuff>()] = true;
                 player.buffImmune[ModContent.BuffType<CrushDepth>()] = true;
             }

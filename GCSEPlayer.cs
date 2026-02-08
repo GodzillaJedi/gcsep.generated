@@ -33,6 +33,7 @@ namespace gcsep
         public bool lumberjackSet;
         public bool starlightFruit;
         public bool eternalMonolith;
+        public bool rOrb;
 
         public int Screenshake;
         private float blindTime;

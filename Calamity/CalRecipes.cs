@@ -7,6 +7,7 @@ using CalamityMod.Items.Armor.Silva;
 using CalamityMod.Items.Armor.Tarragon;
 using CalamityMod.Items.Armor.Vanity;
 using CalamityMod.Items.Materials;
+using CalamityMod.Items.Placeables;
 using CalamityMod.Tiles.Furniture.CraftingStations;
 using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Essences;
 using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Souls;
@@ -26,14 +27,14 @@ namespace gcsep.Calamity
     {
         public override void AddRecipes()
         {
-            Recipe.Create(ModContent.ItemType<SCalMask>(), 1).AddIngredient<AshesofAnnihilation>(10).AddIngredient<CoreofHavoc>(8).AddIngredient<GalacticaSingularity>(5).AddIngredient<BrimflameScowl>(1).AddTile<CosmicAnvil>().Register();
-            Recipe.Create(ModContent.ItemType<SCalRobes>(), 1).AddIngredient<AshesofAnnihilation>(15).AddIngredient<CoreofHavoc>(10).AddIngredient<GalacticaSingularity>(7).AddIngredient<BrimflameRobes>(1).AddTile<CosmicAnvil>().Register();
-            Recipe.Create(ModContent.ItemType<SCalBoots>(), 1).AddIngredient<AshesofAnnihilation>(12).AddIngredient<CoreofHavoc>(7).AddIngredient<GalacticaSingularity>(6).AddIngredient<BrimflameBoots>(1).AddTile<CosmicAnvil>().Register();
+            Recipe.Create(ModContent.ItemType<SCalMask>(), 1).AddIngredient<AshesofAnnihilation>(10).AddIngredient<EssenceofHavoc>(8).AddIngredient<GalacticaSingularity>(5).AddIngredient<BrimflameCowl>(1).AddTile<CosmicAnvil>().Register();
+            Recipe.Create(ModContent.ItemType<SCalRobes>(), 1).AddIngredient<AshesofAnnihilation>(15).AddIngredient<EssenceofHavoc>(10).AddIngredient<GalacticaSingularity>(7).AddIngredient<BrimflameRobes>(1).AddTile<CosmicAnvil>().Register();
+            Recipe.Create(ModContent.ItemType<SCalBoots>(), 1).AddIngredient<AshesofAnnihilation>(12).AddIngredient<EssenceofHavoc>(7).AddIngredient<GalacticaSingularity>(6).AddIngredient<BrimflameBoots>(1).AddTile<CosmicAnvil>().Register();
         }
 
         public override void AddRecipeGroups()
         {
-            RecipeGroup rec = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Auric Helmet", ModContent.ItemType<AuricTeslaHoodedFacemask>(), ModContent.ItemType<AuricTeslaSpaceHelmet>(), ModContent.ItemType<AuricTeslaPlumedHelm>(), ModContent.ItemType<AuricTeslaRoyalHelm>(), ModContent.ItemType<AuricTeslaWireHemmedVisage>());
+            RecipeGroup rec = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Auric Helmet", ModContent.ItemType<AuricTeslaHeadMelee>(), ModContent.ItemType<AuricTeslaHeadMagic>(), ModContent.ItemType<AuricTeslaHeadRanged>(), ModContent.ItemType<AuricTeslaHeadRogue>(), ModContent.ItemType<AuricTeslaHeadSummon>());
             RecipeGroup.RegisterGroup("gcsep:Auric", rec);
             RecipeGroup rec2 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Godslayer Helmet", ModContent.ItemType<GodSlayerHeadMelee>(), ModContent.ItemType<GodSlayerHeadRanged>(), ModContent.ItemType<GodSlayerHeadRogue>());
             RecipeGroup.RegisterGroup("gcsep:Godslayer", rec2);
