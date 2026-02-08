@@ -1,17 +1,18 @@
 ﻿using CalamityMod.Systems;
 using CalamityMod.World;
+using FargowiltasCrossmod.Core.Calamity.Systems;
 using FargowiltasSouls.Core.Systems;
 using gcsep.Core;
+using gcsep.SoA;
+using gcsep.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using gcsep.SoA;
-using gcsep.Systems;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using FargowiltasCrossmod.Core.Calamity.Systems;
 
 namespace gcsep.Crossmod.Difficulties
 {
@@ -40,44 +41,45 @@ namespace gcsep.Crossmod.Difficulties
                     PacketManager.SendPacket<DifficultyPackets.TrueEternityDeathPacket>();
             }
         }
-
         private Asset<Texture2D> _texture;
-        public override Asset<Texture2D> Texture
-        {
-            get
-            {
-                _texture ??= ModContent.Request<Texture2D>("gcsep/Assets/TrueEternityDeathIcon");
+        public override Asset<Texture2D> Texture =>
+            _texture ??= ModContent.Request<Texture2D>("gcsep/Assets/TrueEternityDeathIcon");
 
-                return _texture;
-            }
-        }
+        public override Asset<Texture2D> TextureDisabled =>
+            ModContent.Request<Texture2D>("gcsep/Assets/TrueEternityDeathIcon_Disabled");
 
-        public override LocalizedText ExpandedDescription => Language.GetText("Mods.gcsep.TrueEternityDeath.ExpandedDescription");
+        public override Asset<Texture2D> OutlineTexture =>
+            ModContent.Request<Texture2D>("gcsep/Assets/TrueEternityDeathIcon_Outline");
 
-        public TrueEternityDeathDifficulty()
-        {
-            DifficultyScale = 2f;
-            Name = Language.GetText("Mods.gcsep.TrueEternityDeath.Name");
-            ShortDescription = Language.GetText("Mods.gcsep.EternityDeath.ShortDescription");
+        public override LocalizedText ExpandedDescription =>
+            Language.GetText("Mods.gcsep.TrueEternityDeath.ExpandedDescription");
 
-            ActivationTextKey = "Mods.gcsep.TrueEternityDeath.Activation";
-            DeactivationTextKey = "Mods.gcsep.TrueEternityDeath.Deactivation";
+        public override float DifficultyScale => 2f;
 
-            ActivationSound = SoundID.Roar with { Pitch = -0.1f };
-            ChatTextColor = Color.DeepPink;
-        }
+        public override LocalizedText Name =>
+            Language.GetText("Mods.gcsep.TrueEternityDeath.Name");
 
-        public override int FavoredDifficultyAtTier(int tier)
+        public override LocalizedText ShortDescription =>
+            Language.GetText("Mods.gcsep.EternityDeath.ShortDescription");
+
+        public override SoundStyle ActivationSound =>
+            SoundID.Roar with { Pitch = -0.1f };
+
+        public override Color ChatTextColor => Color.DeepPink;
+
+        public override int BackBoneGameModeID => 0;
+
+        public override int[] FavoredDifficultyAtTier(int tier)
         {
             DifficultyMode[] tierList = DifficultyModeSystem.DifficultyTiers[tier];
 
             for (int i = 0; i < tierList.Length; i++)
             {
                 if (tierList[i].Name.Value == "Death")
-                    return i;
+                    return new int[] { i };
             }
 
-            return 0;
+            return new int[] { 0 };
         }
     }
 }

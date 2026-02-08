@@ -11,8 +11,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static CalamityMod.Systems.DifficultyModeSystem;
 using FargowiltasCrossmod.Core.Calamity.Systems;
+using Terraria.Audio;
 
 namespace gcsep.Crossmod.Difficulties
 {
@@ -42,42 +42,44 @@ namespace gcsep.Crossmod.Difficulties
         }
 
         private Asset<Texture2D> _texture;
-        public override Asset<Texture2D> Texture
+        public override Asset<Texture2D> Texture =>
+            _texture ??= ModContent.Request<Texture2D>("gcsep/Assets/EternityRevIcon");
+
+        public override Asset<Texture2D> TextureDisabled =>
+            ModContent.Request<Texture2D>("gcsep/Assets/EternityRevIcon_Disabled");
+
+        public override Asset<Texture2D> OutlineTexture =>
+            ModContent.Request<Texture2D>("gcsep/Assets/EternityRevIcon_Outline");
+
+        public override SoundStyle ActivationSound =>
+            SoundID.Roar with { Pitch = -0.3f };
+
+        public override int BackBoneGameModeID => 0;
+
+        public override float DifficultyScale => 1f;
+
+        public override LocalizedText Name =>
+            Language.GetText("Mods.gcsep.TrueEternityRev.Name");
+
+        public override LocalizedText ShortDescription =>
+            Language.GetText("Mods.gcsep.TrueEternityRev.ShortDescription");
+
+        public override LocalizedText ExpandedDescription =>
+            Language.GetText("Mods.gcsep.TrueEternityRev.ExpandedDescription");
+
+        public override Color ChatTextColor => Color.Pink;
+
+        public override int[] FavoredDifficultyAtTier(int tier)
         {
-            get
-            {
-                _texture ??= ModContent.Request<Texture2D>("gcsep/Assets/EternityRevIcon");
-
-                return _texture;
-            }
-        }
-
-        public override LocalizedText ExpandedDescription => Language.GetText("Mods.gcsep.TrueEternityRev.ExpandedDescription");
-
-        public TrueEternityRevDifficulty()
-        {
-            DifficultyScale = 1f;
-            Name = Language.GetText("Mods.gcsep.TrueEternityRev.Name");
-            ShortDescription = Language.GetText("Mods.gcsep.TrueEternityRev.ShortDescription");
-
-            ActivationTextKey = "Mods.gcsep.TrueEternityRev.Activation";
-            DeactivationTextKey = "Mods.gcsep.TrueEternityRev.Deactivation";
-
-            ActivationSound = SoundID.Roar with { Pitch = -0.3f };
-            ChatTextColor = Color.Pink;
-        }
-
-        public override int FavoredDifficultyAtTier(int tier)
-        {
-            DifficultyMode[] tierList = DifficultyTiers[tier];
+            DifficultyMode[] tierList = DifficultyModeSystem.DifficultyTiers[tier];
 
             for (int i = 0; i < tierList.Length; i++)
             {
                 if (tierList[i].Name.Value == "Death")
-                    return i;
+                    return new int[] { i };
             }
 
-            return 0;
+            return new int[] { 0 };
         }
     }
 }
