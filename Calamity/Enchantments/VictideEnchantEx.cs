@@ -189,28 +189,42 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<ExplorationForceExHeader>();
             public override int ToggleItemType => ModContent.ItemType<VictideEnchantEx>();
+
             public override void PostUpdateEquips(Player player)
             {
+                // Enable the effect on CalamityPlayer
                 player.Calamity().fungalClump = true;
+
+                // Only run on local player
                 if (player.whoAmI != Main.myPlayer)
-                {
                     return;
-                }
 
-                if (player.FindBuffIndex(ModContent.BuffType<FungalClumpBuff>()) == -1)
-                {
-                    player.AddBuff(ModContent.BuffType<FungalClumpBuff>(), 3600);
-                }
+                // Apply buff
+                int buffType = ModContent.BuffType<FungalClumpBuff>();
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 3600);
 
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<FungalClumpMinion>()] < 1)
+                // Spawn minion if missing
+                int projType = ModContent.ProjectileType<FungalClumpMinion>();
+                if (player.ownedProjectileCounts[projType] < 1)
                 {
-                    IEntitySource source_Accessory = player.GetSource_Misc("ClumpEffect");
-                    int num = player.ApplyArmorAccDamageBonusesTo(10f);
-                    int num2 = Projectile.NewProjectile(Damage: (int)player.GetBestClassDamage().ApplyTo(num), spawnSource: source_Accessory, X: player.Center.X, Y: player.Center.Y, SpeedX: 0f, SpeedY: -1f, Type: ModContent.ProjectileType<FungalClumpMinion>(), KnockBack: 1f, Owner: player.whoAmI);
-                    if (Main.projectile.IndexInRange(num2))
-                    {
-                        Main.projectile[num2].originalDamage = num;
-                    }
+                    IEntitySource source = player.GetSource_Misc("ClumpEffect");
+
+                    // Modern damage scaling
+                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(10f);
+
+                    int p = Projectile.NewProjectile(
+                        source,
+                        player.Center,
+                        new Vector2(0f, -1f),
+                        projType,
+                        damage,
+                        1f,
+                        player.whoAmI
+                    );
+
+                    if (Main.projectile.IndexInRange(p))
+                        Main.projectile[p].originalDamage = damage;
                 }
             }
         }

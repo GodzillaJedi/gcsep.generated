@@ -53,15 +53,31 @@ namespace gcsep.Redemption.Enchantments
             {
                 if (player.whoAmI == Main.myPlayer)
                 {
-                    IEntitySource source_ItemUse = player.GetSource_ItemUse(base.Item);
-                    if (player.FindBuffIndex(ModContent.BuffType<XeniumTurretBuff>()) == -1)
+                    // Apply buff
+                    int buff = ModContent.BuffType<XeniumTurretBuff>();
+                    if (!player.HasBuff(buff))
+                        player.AddBuff(buff, 3600);
+
+                    // Spawn turret if missing
+                    int projType = ModContent.ProjectileType<XeniumTurret>();
+                    if (player.ownedProjectileCounts[projType] < 1)
                     {
-                        player.AddBuff(ModContent.BuffType<XeniumTurretBuff>(), 3600);
-                    }
-                    if (player.ownedProjectileCounts[ModContent.ProjectileType<XeniumTurret>()] < 1)
-                    {
-                        int num = player.ApplyArmorAccDamageBonusesTo(140f);
-                        Projectile.NewProjectileDirect(source_ItemUse, player.Center, -Vector2.UnitY, ModContent.ProjectileType<XeniumTurret>(), num, 0f, player.whoAmI).originalDamage = num;
+                        IEntitySource source = player.GetSource_ItemUse(Item);
+
+                        // Modern damage scaling
+                        int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
+
+                        var proj = Projectile.NewProjectileDirect(
+                            source,
+                            player.Center,
+                            -Vector2.UnitY,
+                            projType,
+                            damage,
+                            0f,
+                            player.whoAmI
+                        );
+
+                        proj.originalDamage = damage;
                     }
                 }
             }

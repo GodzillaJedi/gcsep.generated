@@ -27,9 +27,9 @@ namespace gcsep.Homeward
                 {
                     recipe.AddIngredient<FinalBar>(5);
                 }
-                if (recipe.HasResult<TracersElysian>() && !recipe.HasIngredient<Horizon>() && !ModCompatibility.SacredTools.Loaded)
+                if (recipe.HasResult<VoidStriders>() && !recipe.HasIngredient<Horizon>() && !ModCompatibility.SacredTools.Loaded)
                 {
-                    recipe.RemoveIngredient(ModContent.ItemType<TracersCelestial>());
+                    recipe.RemoveIngredient(ModContent.ItemType<MoonWalkers>());
                     recipe.AddIngredient<Horizon>();
                 }
             }

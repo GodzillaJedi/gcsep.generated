@@ -106,7 +106,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<SnowRuffianEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                IEntitySource source_Accessory = player.GetSource_Misc("CamperEffect");
+                IEntitySource source_Accessory = player.GetSource_Accessory(EffectItem(player));
                 CalamityPlayer calamityPlayer = player.Calamity();
                 calamityPlayer.camper = true;
                 player.AddBuff(89, 60);
@@ -148,19 +148,19 @@ namespace gcsep.Calamity.Enchantments
                             NPC current = enumerator.Current;
                             if (current.IsAnEnemy() && !current.dontTakeDamage && Vector2.Distance(player.Center, current.Center) <= num)
                             {
-                                int damage = (int)player.GetBestClassDamage().ApplyTo(Main.rand.Next(20, 41));
-                                Projectile.NewProjectileDirect(source_Accessory, current.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), damage, 0f, player.whoAmI, current.whoAmI);
+                                int damage = (int)player.GetBestClassDamage().ApplyTo(Main.rand.Next(100, 121));
+                                Projectile.NewProjectile(source_Accessory, current.Center, Vector2.Zero, ModContent.ProjectileType<DirectStrike>(), damage, 0f, player.whoAmI, current.whoAmI);
                             }
                         }
                     }
 
-                    if (player.ActiveItem() != null && !player.ActiveItem().IsAir && player.ActiveItem().stack > 0)
+                    if (player.HeldItem != null && !player.HeldItem.IsAir && player.HeldItem.stack > 0)
                     {
-                        bool num2 = player.ActiveItem().CountsAsClass<SummonDamageClass>();
-                        bool flag = player.ActiveItem().CountsAsClass<ThrowingDamageClass>();
-                        bool flag2 = player.ActiveItem().CountsAsClass<MeleeDamageClass>();
-                        bool flag3 = player.ActiveItem().CountsAsClass<RangedDamageClass>();
-                        bool flag4 = player.ActiveItem().CountsAsClass<MagicDamageClass>();
+                        bool num2 = player.HeldItem.CountsAsClass<SummonDamageClass>();
+                        bool flag = player.HeldItem.CountsAsClass<ThrowingDamageClass>();
+                        bool flag2 = player.HeldItem.CountsAsClass<MeleeDamageClass>();
+                        bool flag3 = player.HeldItem.CountsAsClass<RangedDamageClass>();
+                        bool flag4 = player.HeldItem.CountsAsClass<MagicDamageClass>();
                         if (num2)
                         {
                             player.GetKnockback<SummonDamageClass>() += 0.1f;

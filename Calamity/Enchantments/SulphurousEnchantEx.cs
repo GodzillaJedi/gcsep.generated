@@ -52,7 +52,7 @@ namespace gcsep.Calamity.Enchantments
             recipe.AddIngredient(ModContent.ItemType<SandCloak>());
             recipe.AddIngredient(ModContent.ItemType<AmidiasPendant>());
             recipe.AddIngredient(ModContent.ItemType<OldDie>());
-            recipe.AddIngredient(ModContent.ItemType<RustyMedallion>());
+            recipe.AddIngredient(ModContent.ItemType<ScionsCurio>());
             recipe.AddIngredient(ModContent.ItemType<CausticCroakerStaff>());
             recipe.AddIngredient(ModContent.ItemType<SulphurEnchant>());
 
@@ -97,48 +97,27 @@ namespace gcsep.Calamity.Enchantments
             }
 
             ShardCountdown -= Main.rand.Next(1, 4);
-            if (ShardCountdown > 0 || player.whoAmI != Main.myPlayer)
+            if (ShardCountdown <= 0 && player.whoAmI == Main.myPlayer)
             {
-                return;
-            }
-
-            IEntitySource source_Accessory = player.GetSource_Misc("AmidiasEffect");
-            int num = 25;
-            float x = (float)(Main.rand.Next(1000) - 500) + player.Center.X;
-            float y = -1000f + player.Center.Y;
-            Vector2 vector = new Vector2(x, y);
-            Vector2 spinningpoint = player.Center - vector;
-            spinningpoint.Normalize();
-            spinningpoint *= (float)num;
-            int num2 = 30;
-            float num3 = -60f;
-            for (int i = 0; i < 2; i++)
-            {
-                Vector2 vector2 = vector;
-                vector2.X = vector2.X + (float)(i * 30) - (float)num2;
-                Vector2 vector3 = spinningpoint.RotatedBy(MathHelper.ToRadians(num3 + 120f * (float)i / 2f));
-                vector3.X = vector3.X + 3f * Main.rand.NextFloat() - 1.5f;
-                int type = 0;
-                int num4 = 0;
-                switch (Main.rand.Next(3))
+                IEntitySource source_Accessory = player.GetSource_Accessory(EffectItem(player));
+                int num = 25;
+                float x = (float)Main.rand.Next(-300, 301) + player.Center.X;
+                float y = -1000f + player.Center.Y;
+                Vector2 vector = new Vector2(x, y);
+                Vector2 spinningpoint = player.Center - vector;
+                spinningpoint.Normalize();
+                spinningpoint *= (float)num;
+                int num2 = 30;
+                float num3 = -45f;
+                for (int i = 0; i < 2; i++)
                 {
-                    case 0:
-                        type = ModContent.ProjectileType<PendantProjectile1>();
-                        num4 = 15;
-                        break;
-                    case 1:
-                        type = ModContent.ProjectileType<PendantProjectile2>();
-                        num4 = 15;
-                        break;
-                    case 2:
-                        type = ModContent.ProjectileType<PendantProjectile3>();
-                        num4 = 30;
-                        break;
+                    Vector2 vector2 = vector;
+                    vector2.X = vector2.X + (float)(i * 30) - (float)num2;
+                    Vector2 vector3 = spinningpoint.RotatedBy(MathHelper.ToRadians(num3 + 90f * (float)i / 2f));
+                    vector3.X = vector3.X + 3f * Main.rand.NextFloat() - 1.5f;
+                    int damage = (int)player.GetBestClassDamage().ApplyTo(30f);
+                    Projectile.NewProjectile(source_Accessory, vector2.X, vector2.Y, vector3.X / 3f, vector3.Y / 2f, ModContent.ProjectileType<PearlAuraShard>(), damage, 5f, Main.myPlayer);
                 }
-
-                int num5 = (int)player.GetBestClassDamage().ApplyTo(num4);
-                num5 = player.ApplyArmorAccDamageBonusesTo(num5);
-                Projectile.NewProjectile(source_Accessory, vector2.X, vector2.Y, vector3.X / 3f, vector3.Y / 2f, type, num5, 5f, Main.myPlayer);
             }
         }
     }
@@ -176,8 +155,13 @@ namespace gcsep.Calamity.Enchantments
         public override int ToggleItemType => ModContent.ItemType<SulphurousEnchantEx>();
         public override void PostUpdateEquips(Player player)
         {
-            player.Calamity().RustyMedallionDroplets = true;
-            player.buffImmune[ModContent.BuffType<Irradiated>()] = true;
+            CalamityPlayer calamityPlayer = player.Calamity();
+            calamityPlayer.scionsCurio = true;
+            calamityPlayer.scionsCurioVisuals = true;
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<ScionsCurioMini>()] < 1 && !player.dead)
+            {
+                Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<ScionsCurioMini>(), 0, 0f, player.whoAmI);
+            }
         }
     }
 }

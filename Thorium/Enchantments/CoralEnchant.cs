@@ -67,7 +67,7 @@ namespace gcsep.Thorium.Enchantments
                 // Check the same projectile type you spawn
                 if (player.ownedProjectileCounts[ModContent.ProjectileType<DavyJonesLockBoxPro>()] < 1)
                 {
-                    int baseDamage = player.ApplyArmorAccDamageBonusesTo(25f);
+                    int baseDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(25f);
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
 
                     int projIndex = Projectile.NewProjectile(

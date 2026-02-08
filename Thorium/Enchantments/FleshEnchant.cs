@@ -59,7 +59,7 @@ namespace gcsep.Thorium.Enchantments
 
                 if (player.ownedProjectileCounts[ModContent.ProjectileType<ViscountCanePro>()] < 1)
                 {
-                    int num = player.ApplyArmorAccDamageBonusesTo(25f);
+                    int num = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(25f);
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(num);
                     int num2 = Projectile.NewProjectile(source_ItemUse, player.Center.X, player.Center.Y, 0f, -1f, ModContent.ProjectileType<ViscountCanePro>(), damage, 0f, player.whoAmI);
                     if (Main.projectile.IndexInRange(num2))

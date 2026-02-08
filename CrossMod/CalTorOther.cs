@@ -23,7 +23,7 @@ namespace gcsep.FargoCrossmod
                     recipe.AddIngredient<NecroticSkull>(1);
                     recipe.RemoveIngredient(ItemID.PygmyNecklace);
                     recipe.AddIngredient<CoreofCalamity>(3);
-                    recipe.RemoveIngredient(ModContent.ItemType<CoreofSunlight>());
+                    recipe.RemoveIngredient(ModContent.ItemType<EssenceofSunlight>());
                     recipe.RemoveTile(TileID.MythrilAnvil);
                     recipe.AddTile(TileID.LunarCraftingStation);
                 }

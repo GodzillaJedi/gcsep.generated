@@ -1,6 +1,7 @@
 ﻿using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.NPCs.ExoMechs;
+using CalamityMod.NPCs.NormalNPCs;
 using ContinentOfJourney.NPCs.Boss_ScarabBelief;
 using ContinentOfJourney.NPCs.Boss_SlimeGod;
 using ContinentOfJourney.NPCs.Boss_TheOverwatcher;
@@ -19,7 +20,7 @@ namespace gcsep.Homeward
         {
             for (int i = Bosses.Count - 1; i >= 0; i--)
             {
-                if (Bosses[i].EntityID == ModContent.NPCType<Bumblefuck>())
+                if (Bosses[i].EntityID == ModContent.NPCType<WildBumblebirb>())
                 {
                     Bosses.Insert(i, new Boss(ModContent.NPCType<SlimeGod>(), TimeChangeContext.Night));
                     Bosses.Insert(i, new Boss(ModContent.NPCType<Overseer>(), TimeChangeContext.Night));

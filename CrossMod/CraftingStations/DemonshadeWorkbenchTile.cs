@@ -1,4 +1,9 @@
 ﻿using CalamityMod.Tiles.Furniture.CraftingStations;
+using CalamityMod.Tiles.FurnitureAncient;
+using CalamityMod.Tiles.FurnitureBotanic;
+using CalamityMod.Tiles.FurnitureMonolith;
+using CalamityMod.Tiles.FurnitureSilva;
+using CalamityMod.Tiles.FurnitureStatigel;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using Terraria;

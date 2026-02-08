@@ -126,10 +126,8 @@ namespace gcsep.Calamity.Enchantments
             public override void PostUpdateEquips(Player player)
             {
                 player.Calamity().dynamoStemCells = true;
-                player.Calamity().MiniSwarmers = true;
                 player.GetDamage<RangedDamageClass>() += 0.1f;
                 player.moveSpeed += 0.1f;
-                player.Calamity().eleResist = true;
             }
         }
         public class BlunderBoostEffect : AccessoryEffect

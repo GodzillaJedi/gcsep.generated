@@ -13,6 +13,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
+using gcsep.Content.Buffs;
+using gcsep.Content.Projectiles.Enchantments;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -69,13 +71,13 @@ namespace gcsep.Calamity.Enchantments
 
                 if (player.whoAmI == Main.myPlayer)
                 {
-                    int buffType = ModContent.BuffType<>();
+                    int buffType = ModContent.BuffType<ReaverOrbBuff>();
                     if (player.FindBuffIndex(buffType) == -1)
                     {
                         player.AddBuff(buffType, 3600);
                     }
 
-                    int projType = ModContent.ProjectileType<Reaver>();
+                    int projType = ModContent.ProjectileType<ReaverOrb>();
                     if (player.ownedProjectileCounts[projType] < 1)
                     {
                         var source = player.GetSource_Misc("ReaverExploreEffect");
