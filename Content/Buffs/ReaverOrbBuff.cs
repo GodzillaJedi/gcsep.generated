@@ -1,11 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.CalPlayer;
 using gcsep.Content.Projectiles.Enchantments;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
