@@ -38,7 +38,7 @@ namespace gcsep.Calamity.Addons
 
         public override void AddRecipes()
         {
-            Recipe recipe = this.CreateRecipe();
+            Recipe recipe = CreateRecipe();
 
             recipe.AddIngredient(ModContent.ItemType<FrozenHellstoneVisor>());
             recipe.AddIngredient(ModContent.ItemType<FrozenHellstoneChestplate>());

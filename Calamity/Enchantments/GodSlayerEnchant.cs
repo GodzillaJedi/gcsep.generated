@@ -6,18 +6,22 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.GodSlayer;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Projectiles.Summon;
+using ClickerClass.Prefixes.ClickerPrefixes;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using RagnarokMod.Items.BardItems.Accessories;
 using RagnarokMod.Items.BardItems.Armor;
-using gcsep.Content.SoulToggles;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
+using ThoriumMod.Buffs.Summon;
+using ThoriumMod.Projectiles.Minions;
 using ThoriumMod.Utilities;
 
 namespace gcsep.Calamity.Enchantments
@@ -124,33 +128,46 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<ExaltationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<GodSlayerEnchant>();
-
             public override void PostUpdateEquips(Player player)
             {
                 if (player.whoAmI != Main.myPlayer)
                     return;
 
-                // Apply buff
-                if (!player.HasBuff(ModContent.BuffType<VoidEaterMarionetteBuff>()))
-                    player.AddBuff(ModContent.BuffType<VoidEaterMarionetteBuff>(), 3600);
+                int buffType = ModContent.BuffType<VoidEaterMarionetteBuff>();
+                int projType = ModContent.ProjectileType<VoidEaterMarionetteProjectile>();
 
-                // Spawn the minion if missing
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<VoidEaterMarionetteProjectile>()] < 1)
+                // Keep minion alive
+                player.Calamity().hasVoidEaterMarionette = true;
+
+                // Keep buff alive
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 60);
+
+                // Spawn if missing
+                if (player.ownedProjectileCounts[projType] <= 0)
                 {
-                    IEntitySource source = player.GetSource_Misc("MechwormEffect");
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140);
 
                     var proj = Projectile.NewProjectileDirect(
-                        source,
+                        player.GetSource_FromThis(),
                         player.Center,
                         Vector2.Zero,
-                        ModContent.ProjectileType<VoidEaterMarionetteProjectile>(),
+                        projType,
                         damage,
                         0f,
                         player.whoAmI
                     );
 
                     proj.originalDamage = damage;
+                }
+
+                // ⭐ Set segment count EVERY TICK
+                foreach (Projectile p in Main.projectile)
+                {
+                    if (p.active && p.owner == player.whoAmI && p.type == projType)
+                    {
+                        p.minionSlots = 15f; // ⭐ This controls SegmentCount
+                    }
                 }
             }
         }

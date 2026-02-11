@@ -95,16 +95,30 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<ExaltationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<SilvaEnchant>();
+
             public override void PostUpdateEquips(Player player)
             {
+                // Flat stat bonuses
                 player.statLifeMax2 += 40;
                 player.statManaMax2 += 20;
+
+                // Thorium players
+                var thorium = player.GetModPlayer<ThoriumPlayer>();
+                var thorlamity = player.GetModPlayer<ThorlamityPlayer>();
+
+                // Healer tool attack speed
                 player.GetAttackSpeed(ThoriumDamageBase<HealerTool>.Instance) += 0.15f;
-                player.GetModPlayer<ThoriumPlayer>().healBonus += 2;
-                player.GetModPlayer<ThoriumPlayer>().accHexingTalisman = true;
-                player.GetModPlayer<ThorlamityPlayer>().elementalBloom = true;
-                player.GetDamage(ThoriumDamageBase<HealerDamage>.Instance) += 0.2f;
-                player.GetAttackSpeed(ThoriumDamageBase<HealerDamage>.Instance) += 0.1f;
+
+                // Healer bonuses
+                thorium.healBonus += 2;
+                thorium.accHexingTalisman = true;
+
+                // Custom Thorlamity effect
+                thorlamity.elementalBloom = true;
+
+                // Healer damage bonuses
+                player.GetDamage(ThoriumDamageBase<HealerDamage>.Instance) += 0.20f;
+                player.GetAttackSpeed(ThoriumDamageBase<HealerDamage>.Instance) += 0.10f;
                 player.GetCritChance(ThoriumDamageBase<HealerDamage>.Instance) += 12f;
             }
         }

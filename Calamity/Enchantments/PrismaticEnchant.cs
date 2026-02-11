@@ -1,10 +1,11 @@
 ﻿using CalamityMod;
+using CalamityMod.Items.Armor.LunicCorps;
 using CalamityMod.Items.Armor.Prismatic;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -52,12 +53,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<PrismaticEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().prismaticSet = true;
-                player.statManaMax2 += 40;
-                player.manaCost *= 0.85f;
-                player.manaRegenBonus += 8;
-                string text = CalamityKeybinds.ArmorSetBonusHotKey.TooltipHotkeyString();
-                player.setBonus = ModContent.GetInstance<PrismaticHelmet>().GetLocalization("SetBonus").Format(text);
+                ModContent.GetInstance<PrismaticHelmet>().UpdateArmorSet(player);
             }
         }
     }

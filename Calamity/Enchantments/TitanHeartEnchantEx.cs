@@ -1,16 +1,18 @@
 ﻿using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Armor.LunicCorps;
+using CalamityMod.Items.Armor.Sulphurous;
 using CalamityMod.Items.Armor.TitanHeart;
+using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 
 
 namespace gcsep.Calamity.Enchantments
@@ -36,6 +38,7 @@ namespace gcsep.Calamity.Enchantments
             player.AddEffect<MoonCrownEffect>(Item);
             player.AddEffect<JewelEffect>(Item);
             player.AddEffect<TitanHeartEffect>(Item);
+            ModContent.GetInstance<TitanHeartEnchant>().UpdateAccessory(player, hideVisual);
         }
         public class TitanEffect : AccessoryEffect
         {
@@ -43,13 +46,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<TitanHeartEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                player.setBonus = ModContent.GetInstance<TitanHeartMask>().GetLocalization("SetBonus").Format();
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.titanHeartSet = true;
-                player.GetDamage<ThrowingDamageClass>() += 0.15f;
-                calamityPlayer.rogueStealthMax += 1f;
-                calamityPlayer.wearingRogueArmor = true;
-                player.noKnockback = true;
+                ModContent.GetInstance<TitanHeartMask>().UpdateArmorSet(player);
             }
         }
         public class MoonCrownEffect : AccessoryEffect

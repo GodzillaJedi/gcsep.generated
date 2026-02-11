@@ -24,14 +24,21 @@ namespace gcsep.Content.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Generic) += 1.5f;
-            player.GetCritChance(DamageClass.Generic) += 2f;
+            // Flat bonuses (safe)
+            player.GetDamage(DamageClass.Generic) += 1.5f;   // +150% damage
+            player.GetCritChance(DamageClass.Generic) += 2f; // +2% crit
+
+            // Max HP and Mana (safe)
             player.statLifeMax2 += 1000;
             player.statManaMax2 += 1000;
-            player.endurance += 1;
+
+            // Endurance must be clamped
+            player.endurance += 1f;
+            if (player.endurance > 0.95f)
+                player.endurance = 0.95f; // Terraria caps at 95%
+
+            // Life regen (safe)
             player.lifeRegen += 10;
-            player.lifeRegenCount += 10;
-            player.lifeRegenTime += 10;
         }
 
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)

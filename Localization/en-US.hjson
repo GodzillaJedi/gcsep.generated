@@ -1,7 +1,6 @@
 Mods: {
 	gcsep: {
 		Keybinds: {
-			"Dot Mount.DisplayName": Dot  Mount
 			SupernovaeAttack.DisplayName: Supernovae Attack
 			CruserAttack.DisplayName: Cruser Attack
 			NamelessAttack.DisplayName: Nameless Attack
@@ -130,6 +129,11 @@ Mods: {
 			SoulStrength: {
 				DisplayName: Soul Strength
 				Description: Mods.gcsep.Buffs.SoulStrength.Description
+			}
+
+			ReaverOrbBuff: {
+				DisplayName: Reaver Orb
+				Description: The reaver orb will light your way
 			}
 		}
 
@@ -2428,6 +2432,11 @@ Mods: {
 				DisplayName: Monstrosity Enchant
 				Tooltip: ""
 			}
+
+			ReaverRework: {
+				Tooltip: ""
+				DisplayName: Reaver Rework
+			}
 		}
 
 		NPCs: {
@@ -2586,6 +2595,7 @@ Mods: {
 			IllumiteAuraProj.DisplayName: Illumite Aura Proj
 			NamelessMagicCircle.DisplayName: Nameless Magic Circle
 			NamelessBeam.DisplayName: Nameless Beam
+			Typeless.ReaverOrb.DisplayName: Reaver Orb
 		}
 
 		Configs: {

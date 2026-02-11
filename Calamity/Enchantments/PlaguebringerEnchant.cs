@@ -63,9 +63,48 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<AnnihilationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<PlaguebringerEnchant>();
+            public static int BeeMinionDamage = 25;
+
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<PlaguebringerVisor>().UpdateArmorSet(player);
+                var cal = player.Calamity();
+
+                // Enable Calamity set bonus
+                cal.plaguebringerPatronSet = true;
+
+                // Calamity handles dash logic internally — do NOT touch player.dashType
+                cal.DashID = PlaguebringerArmorDash.ID;
+
+                // Only local player handles buff + minion
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                // Apply buff without resetting timer every tick
+                int buffType = ModContent.BuffType<LilPlaguebringerBuff>();
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 2);
+
+                // Spawn minion if missing
+                int projType = ModContent.ProjectileType<PlaguebringerSummon>();
+                if (player.ownedProjectileCounts[projType] <= 0)
+                {
+                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(BeeMinionDamage);
+
+                    var proj = Projectile.NewProjectileDirect(
+                        player.GetSource_FromThis(),
+                        player.Center,
+                        new Vector2(0f, -1f),
+                        projType,
+                        damage,
+                        0f,
+                        player.whoAmI
+                    );
+
+                    proj.originalDamage = BeeMinionDamage;
+                }
+
+                // Lighting effect is fine
+                Lighting.AddLight(player.Center, 0f, 0.39f, 0.24f);
             }
         }
         public class TheBeeEffect : AccessoryEffect
@@ -85,8 +124,10 @@ namespace gcsep.Calamity.Enchantments
             public override void PostUpdateEquips(Player player)
             {
                 int buffType = ModContent.BuffType<ViriliBuff>();
+
+                // Apply buff without resetting timer every tick
                 if (!player.HasBuff(buffType))
-                    player.AddBuff(buffType, 3600);
+                    player.AddBuff(buffType, 2);
 
                 // Only spawn projectile on local player
                 if (player.whoAmI != Main.myPlayer)
@@ -94,13 +135,12 @@ namespace gcsep.Calamity.Enchantments
 
                 int projType = ModContent.ProjectileType<PlaguePrincess>();
 
-                if (player.ownedProjectileCounts[projType] < 1)
+                if (player.ownedProjectileCounts[projType] <= 0)
                 {
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
-                    var source = player.GetSource_Misc("VriliEffect");
 
                     var proj = Projectile.NewProjectileDirect(
-                        source,
+                        player.GetSource_FromThis(),
                         player.Center,
                         -Vector2.UnitY,
                         projType,

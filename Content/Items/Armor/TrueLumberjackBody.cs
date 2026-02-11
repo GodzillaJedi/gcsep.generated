@@ -42,17 +42,28 @@ namespace gcsep.Content.Items.Armor
         }
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Generic) += int.MaxValue / 1000;
-            player.GetCritChance(DamageClass.Generic) += int.MaxValue / 1000;
-            player.statLifeMax2 += int.MaxValue / 100000;
-            player.statManaMax2 += int.MaxValue / 100000;
-            player.endurance += int.MaxValue / 100;
-            //infinitie regen
-            player.statLife = player.statLifeMax2;
-            player.lifeRegenCount += int.MaxValue / 1000;
-            player.lifeRegenTime += int.MaxValue / 1000;
-        }
+            // Effectively infinite damage
+            player.GetDamage(DamageClass.Generic) += 1000f;   // +100000% damage
 
+            // Guaranteed crits
+            player.GetCritChance(DamageClass.Generic) += 100f; // +100% crit
+
+            // Massive but safe max HP/mana
+            player.statLifeMax2 += 100000;
+            player.statManaMax2 += 100000;
+
+            // DR capped at Terraria’s safe maximum
+            player.endurance = 0.95f;
+
+            // Infinite regen (safe version)
+            player.lifeRegen += 9999;
+
+            // Always full HP
+            player.statLife = player.statLifeMax2;
+
+            // Always full mana
+            player.statMana = player.statManaMax2;
+        }
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();

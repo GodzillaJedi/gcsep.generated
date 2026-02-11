@@ -3,17 +3,18 @@ using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Aerospec;
+using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using RagnarokMod.Items.BardItems.Armor;
 using RagnarokMod.Items.HealerItems.Armor;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
+using VitalityMod.Items.Accessories;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -36,21 +37,15 @@ namespace gcsep.Calamity.Enchantments
         {
             if (player.AddEffect<GladiatorsLocketEffect>(Item))
             {
-                float num = 0.2f;
-                float num2 = 0.2f;
-                player.Calamity().gladiatorSword = true;
-                player.GetDamage<GenericDamageClass>() += num - num * (float)player.statLife / (float)player.statLifeMax2;
-                player.moveSpeed += num2 - num2 * (float)player.statLife / (float)player.statLifeMax2;
+                ModContent.GetInstance<GladiatorsLocket>().UpdateAccessory(player, hideVisual);
             }
             if (player.AddEffect<UnstableGraniteEffect>(Item))
             {
-                player.Calamity().unstableGraniteCore = true;
+                ModContent.GetInstance<UnstableGraniteCore>().UpdateAccessory(player, hideVisual);
             }
             if (player.AddEffect<FeatherCrownEffect>(Item))
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.rogueVelocity += 0.15f;
-                calamityPlayer.featherCrown = true;
+                ModContent.GetInstance<FeatherCrown>().UpdateAccessory(player, hideVisual);
             }
             player.AddEffect<AerospecArmorEffects>(Item);
             player.AddEffect<ValkyrieMinionEffect>(Item);

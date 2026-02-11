@@ -2,17 +2,18 @@ using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.SnowRuffian;
+using CalamityMod.Items.Armor.Sulphurous;
 using CalamityMod.Projectiles.Typeless;
+using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -37,7 +38,7 @@ namespace gcsep.Calamity.Enchantments
             player.AddEffect<SnowRuffianArmorEffect>(Item);
             player.AddEffect<ScuttlerEffect>(Item);
             player.AddEffect<CamperEffect>(Item);
-            player.AddEffect<SnowRuffianEnchantEffect>(Item);
+            ModContent.GetInstance<SnowRuffianEnchant>().UpdateAccessory(player, hideVisual);
         }
         public override void AddRecipes()
         {
@@ -59,26 +60,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<SnowRuffianEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.snowRuffianSet = true;
-                calamityPlayer.rogueStealthMax += 0.5f;
-                player.setBonus = ModContent.GetInstance<SnowRuffianMask>().GetLocalization("SetBonus").Format();
-                player.GetDamage<ThrowingDamageClass>() += 0.05f;
-                player.Calamity().wearingRogueArmor = true;
-                if (player.controlJump)
-                {
-                    player.noFallDmg = true;
-                    player.UpdateJumpHeight();
-                    if (shouldBoost && !player.mount.Active)
-                    {
-                        player.velocity.X *= 1.1f;
-                        shouldBoost = false;
-                    }
-                }
-                else if (!shouldBoost && player.velocity.Y == 0f)
-                {
-                    shouldBoost = true;
-                }
+                ModContent.GetInstance<SnowRuffianMask>().UpdateArmorSet(player);
             }
         }
         public class SnowRuffianEnchantEffect : AccessoryEffect

@@ -19,6 +19,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
+using ThoriumMod.Prefixes.BardPrefixes;
 namespace gcsep.Calamity.Enchantments
 {
     [ExtendsFromMod(ModCompatibility.Calamity.Name)]
@@ -178,22 +179,25 @@ namespace gcsep.Calamity.Enchantments
                 if (!player.active || player.dead)
                     return;
 
-                CalamityPlayer calamityPlayer = player.Calamity();
+                CalamityPlayer cal = player.Calamity();
 
                 // Enable effect
-                calamityPlayer.transformer = true;
+                cal.transformer = true;
 
-                // Respect visual toggle
-                calamityPlayer.transformerVisual = true;
+                // Respect accessory visual toggle automatically
+                cal.transformerVisual = false; // AccessoryEffect handles visuals
 
-                // Spawn aura if needed
-                bool noAura = player.ownedProjectileCounts[ModContent.ProjectileType<TransformerAura>()] < 1;
-                bool visualsOn = true;
-                bool offCooldown = calamityPlayer.transformerCooldown == 0;
+                // Only the local player may spawn the aura
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                bool noAura = player.ownedProjectileCounts[ModContent.ProjectileType<TransformerAura>()] <= 0;
+                bool visualsOn = true; // same as transformerVisual
+                bool offCooldown = cal.transformerCooldown == 0;
 
                 if (noAura && visualsOn && offCooldown)
                 {
-                    Projectile.NewProjectile(
+                    Projectile.NewProjectileDirect(
                         player.GetSource_FromThis(),
                         player.Center,
                         Vector2.Zero,

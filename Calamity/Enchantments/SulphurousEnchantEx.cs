@@ -2,19 +2,20 @@ using CalamityMod;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Armor.LunicCorps;
 using CalamityMod.Items.Armor.Sulphurous;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Projectiles.Typeless;
+using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -41,7 +42,7 @@ namespace gcsep.Calamity.Enchantments
             player.AddEffect<AmidiasEffect>(Item);
             player.AddEffect<DiceEffect>(Item);
             player.AddEffect<MedallionEffect>(Item);
-            player.AddEffect<SulphurEnchantEffect>(Item);
+            ModContent.GetInstance<SulphurEnchant>().UpdateAccessory(player, hideVisual);
         }
         public override void AddRecipes()
         {
@@ -66,13 +67,7 @@ namespace gcsep.Calamity.Enchantments
         public override int ToggleItemType => ModContent.ItemType<SulphurousEnchantEx>();
         public override void PostUpdateEquips(Player player)
         {
-            player.setBonus = ModContent.GetInstance<SulphurousHelmet>().GetLocalization("SetBonus").Format();
-            CalamityPlayer calamityPlayer = player.Calamity();
-            calamityPlayer.sulphurSet = true;
-            player.GetJumpState<SulphurJump>().Enable();
-            calamityPlayer.rogueStealthMax += 0.65f;
-            calamityPlayer.wearingRogueArmor = true;
-            player.ignoreWater = true;
+            ModContent.GetInstance<SulphurousHelmet>().UpdateArmorSet(player);
         }
     }
     public class AmidiasEffect : AccessoryEffect
@@ -119,15 +114,6 @@ namespace gcsep.Calamity.Enchantments
                     Projectile.NewProjectile(source_Accessory, vector2.X, vector2.Y, vector3.X / 3f, vector3.Y / 2f, ModContent.ProjectileType<PearlAuraShard>(), damage, 5f, Main.myPlayer);
                 }
             }
-        }
-    }
-    public class SulphurEnchantEffect : AccessoryEffect
-    {
-        public override Header ToggleHeader => Header.GetHeader<ExplorationForceExHeader>();
-        public override int ToggleItemType => ModContent.ItemType<SulphurousEnchantEx>();
-        public override void PostUpdateEquips(Player player)
-        {
-            ModCompatibility.FargoCrossmod.Mod.Find<ModItem>("SulphurEnchant").UpdateAccessory(player, true);
         }
     }
     public class SandCloakEffect : AccessoryEffect

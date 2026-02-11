@@ -2,7 +2,9 @@
 using CalamityMod.Buffs.Summon;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Armor.Fearmonger;
 using CalamityMod.Items.Armor.OmegaBlue;
+using CalamityMod.Items.Armor.Prismatic;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Projectiles.Summon;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
@@ -60,8 +62,10 @@ namespace gcsep.Calamity.Enchantments
             public override void PostUpdateEquips(Player player)
             {
                 int buffType = ModContent.BuffType<MutatedTruffleBuff>();
+
+                // Apply buff without resetting timer every tick
                 if (!player.HasBuff(buffType))
-                    player.AddBuff(buffType, 3600);
+                    player.AddBuff(buffType, 2);
 
                 // Only spawn projectile on local player
                 if (player.whoAmI != Main.myPlayer)
@@ -69,13 +73,12 @@ namespace gcsep.Calamity.Enchantments
 
                 int projType = ModContent.ProjectileType<MutatedTruffleMinion>();
 
-                if (player.ownedProjectileCounts[projType] < 1)
+                if (player.ownedProjectileCounts[projType] <= 0)
                 {
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
-                    var source = player.GetSource_Misc("TruffleEffect");
 
                     var proj = Projectile.NewProjectileDirect(
-                        source,
+                        player.GetSource_FromThis(),
                         player.Center,
                         -Vector2.UnitY,
                         projType,
@@ -114,27 +117,7 @@ namespace gcsep.Calamity.Enchantments
 
             public override void PostUpdateEquips(Player player)
             {
-                // Grab Calamity's player data
-                CalamityPlayer calamityPlayer = player.Calamity();
-                // Apply stat bonuses
-                player.GetArmorPenetration<GenericDamageClass>() += 15f;
-                player.maxMinions += 2;
-                // Set Calamity flags
-                calamityPlayer.wearingRogueArmor = true;
-                calamityPlayer.omegaBlueSet = true;
-                calamityPlayer.WearingPostMLSummonerSet = true;
-                // Visual dust effect when cooldown is active
-                if (calamityPlayer.cooldowns.TryGetValue(global::CalamityMod.Cooldowns.OmegaBlue.ID, out var cooldown)
-                    && cooldown.timeLeft > 1500)
-                {
-                    int dustIndex = Dust.NewDust(player.position, player.width, player.height,
-                                                 DustID.PurificationPowder, 0f, 0f, 100,
-                                                 Color.Transparent, 1.6f);
-                    Main.dust[dustIndex].noGravity = true;
-                    Main.dust[dustIndex].noLight = true;
-                    Main.dust[dustIndex].fadeIn = 1f;
-                    Main.dust[dustIndex].velocity *= 3f;
-                }
+                ModContent.GetInstance<OmegaBlueHelmet>().UpdateArmorSet(player);
             }
         }
     }

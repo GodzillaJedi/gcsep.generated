@@ -7,12 +7,12 @@ using FargowiltasSouls.Content.Items.Materials;
 using FargowiltasSouls.Core;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Calamity.Addons;
+using gcsep.Calamity.Enchantments;
 using gcsep.Calamity.Forces;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using gcsep.CrossMod.CraftingStations;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -38,18 +38,52 @@ namespace gcsep.Calamity.Souls
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            ModContent.GetInstance<ExplorationForceEx>().UpdateAccessory(player, hideVisual);
-            ModContent.GetInstance<DevastationForceEx>().UpdateAccessory(player, hideVisual);
-            ModContent.GetInstance<AnnihilationForce>().UpdateAccessory(player, hideVisual);
-            ModContent.GetInstance<DesolationForce>().UpdateAccessory(player, hideVisual);
-            ModContent.GetInstance<ExaltationForce>().UpdateAccessory(player, hideVisual);
+            //AnnihilationForce
+            ModContent.GetInstance<EmpyreanEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<PlagueReaperEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<PlaguebringerEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<FearfallenEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<BrimflameEnchant>().UpdateAccessory(player, hideVisual);
+            //DesolationForce
+            ModContent.GetInstance<MolluskEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<OmegaBlueEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<FathomSwarmerEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<UmbraphileEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<AstralEnchant>().UpdateAccessory(player, hideVisual);
+            //DevastationForceEX
+            ModContent.GetInstance<HydrothermicEnchantEx>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<TitanHeartEnchantEx>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<DaedalusEnchantEx>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<ReaverEnchantEx>().UpdateAccessory(player, hideVisual);
+            //ExaltationForce
+            ModContent.GetInstance<TarragonEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<BloodflareEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<GodSlayerEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<SilvaEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<AuricTeslaEnchant>().UpdateAccessory(player, hideVisual);
+            //ExplorationForceEX
+            ModContent.GetInstance<WulfrumEnchantEx>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<AerospecEnchantEx>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<DesertProwlerEnchantEx>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<MarniteEnchantEx>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<VictideEnchantEx>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<SulphurousEnchantEx>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<StatigelEnchantEx>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<SnowRuffianEnchantEx>().UpdateAccessory(player, hideVisual);
+            //SalvationForce
+            ModContent.GetInstance<DemonShadeEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<LunicCorpEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<GemTechEnchant>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<PrismaticEnchant>().UpdateAccessory(player, hideVisual);
+            //FargoCrossMod
             ModContent.GetInstance<GaleForce>().UpdateAccessory(player, hideVisual);
             ModContent.GetInstance<ElementsForce>().UpdateAccessory(player, hideVisual);
-            ModContent.GetInstance<SalvationForce>().UpdateAccessory(player, hideVisual);
+            ModContent.GetInstance<BrandoftheBrimstoneWitch>().UpdateAccessory(player, hideVisual);
+            //CalamityMod
             ModContent.GetInstance<TheCommunity>().UpdateAccessory(player, hideVisual);
             ModContent.GetInstance<ShatteredCommunity>().UpdateAccessory(player, hideVisual);
+            //LesserSouls
             ModContent.GetInstance<ElementalArtifact>().UpdateAccessory(player, hideVisual);
-            ModContent.GetInstance<BrandoftheBrimstoneWitch>().UpdateAccessory(player, hideVisual);
             ModContent.GetInstance<PotJT>().UpdateAccessory(player, hideVisual);
             if (ModCompatibility.Catalyst.Loaded &&
                 ModCompatibility.Goozma.Loaded &&

@@ -18,16 +18,16 @@ namespace gcsep.Reworks
         public override void UpdateArmorSet(Player player, string set)
         {
             player.setBonus = "Inflicts Vulnerability Hex on all hits";
-            //for (int index = 3; index < 8 + player.extraAccessorySlots; ++index)
-            //{
-            //    Item obj = player.armor[index];
-            //    if (obj.prefix > 0)
-            //    {
-            //        int type = obj.type;
-            //        player.GrantPrefixBenefits(obj);
-            //        obj.type = type;
-            //    }
-            //}
+            for (int index = 3; index < 8 + player.extraAccessorySlots; ++index)
+            {
+                Item obj = player.armor[index];
+                if (obj.prefix > 0)
+                {
+                    int type = obj.type;
+                    player.GrantPrefixBenefits(obj);
+                    obj.type = type;
+                }
+            }
         }
 
         public override void UpdateEquip(Item Item, Player player)

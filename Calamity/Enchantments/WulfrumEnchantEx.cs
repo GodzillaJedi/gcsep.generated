@@ -66,27 +66,6 @@ namespace gcsep.Calamity.Enchantments
             {
                 ModContent.GetInstance<WulfrumHat>().UpdateArmorSet(player);
             }
-
-            public class WulfrumArmorPlayer : ModPlayer
-            {
-                public bool wulfrumSet;
-                public bool wulfrumHatEquipped;
-
-                public override void ResetEffects()
-                {
-                    wulfrumSet = false;
-                    wulfrumHatEquipped = false;
-                }
-
-                public override void PostUpdateEquips()
-                {
-                    if (wulfrumHatEquipped)
-                    {
-                        // Optional: Additional visual or passive effects
-                        Lighting.AddLight(Player.Center, 0.2f, 0.8f, 0.2f);
-                    }
-                }
-            }
         }
         public class ChiEffect : AccessoryEffect
         {

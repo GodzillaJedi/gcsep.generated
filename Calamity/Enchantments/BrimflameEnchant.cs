@@ -58,11 +58,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<BrimflameEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().brimflameSet = true;
-                player.GetDamage<MagicDamageClass>() += 0.15f;
-                player.GetCritChance<MagicDamageClass>() += 15f;
-                string text = CalamityKeybinds.ArmorSetBonusHotKey.TooltipHotkeyString();
-                player.setBonus = ModContent.GetInstance<BrimflameCowl>().GetLocalization("SetBonus").Format(text);
+                
             }
         }
         public class FlameShellEffect : AccessoryEffect

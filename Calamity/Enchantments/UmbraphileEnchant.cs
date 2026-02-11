@@ -1,12 +1,13 @@
 ﻿using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Armor.LunicCorps;
 using CalamityMod.Items.Armor.Umbraphile;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -51,11 +52,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<UmbraphileEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.umbraphileSet = true;
-                calamityPlayer.rogueStealthMax += 1.1f;
-                player.setBonus = ModContent.GetInstance<UmbraphileHood>().GetLocalization("SetBonus").Format();
-                player.Calamity().wearingRogueArmor = true;
+                ModContent.GetInstance<UmbraphileHood>().UpdateArmorSet(player);
             }
         }
         public class VampiricEffect : AccessoryEffect

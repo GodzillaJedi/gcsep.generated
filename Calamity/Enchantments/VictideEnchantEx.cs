@@ -199,22 +199,19 @@ namespace gcsep.Calamity.Enchantments
                 if (player.whoAmI != Main.myPlayer)
                     return;
 
-                // Apply buff
+                // Apply buff without resetting timer every tick
                 int buffType = ModContent.BuffType<FungalClumpBuff>();
                 if (!player.HasBuff(buffType))
-                    player.AddBuff(buffType, 3600);
+                    player.AddBuff(buffType, 2);
 
                 // Spawn minion if missing
                 int projType = ModContent.ProjectileType<FungalClumpMinion>();
-                if (player.ownedProjectileCounts[projType] < 1)
+                if (player.ownedProjectileCounts[projType] <= 0)
                 {
-                    IEntitySource source = player.GetSource_Misc("ClumpEffect");
-
-                    // Modern damage scaling
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(10f);
 
-                    int p = Projectile.NewProjectile(
-                        source,
+                    var proj = Projectile.NewProjectileDirect(
+                        player.GetSource_FromThis(),
                         player.Center,
                         new Vector2(0f, -1f),
                         projType,
@@ -223,8 +220,7 @@ namespace gcsep.Calamity.Enchantments
                         player.whoAmI
                     );
 
-                    if (Main.projectile.IndexInRange(p))
-                        Main.projectile[p].originalDamage = damage;
+                    proj.originalDamage = damage;
                 }
             }
         }

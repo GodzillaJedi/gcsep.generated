@@ -1,4 +1,5 @@
 using FargowiltasSouls.Content.Items.Materials;
+using gcsep.Content.NPCs.MutantEX.HitPlayer;
 using gcsep.Core;
 using gcsep.CrossMod.CraftingStations;
 using Terraria;
@@ -33,9 +34,21 @@ namespace gcsep.Content.Items.Consumables
         }
         public override void GetHealLife(Player player, bool quickHeal, ref int healValue)
         {
-            healValue = player.statLifeMax2;
-        }
+            var modPlayer = player.GetModPlayer<MonstrHealthPlayer>();
 
+            // If original max life isn't initialized yet, do nothing
+            if (modPlayer.OriginalMaxLife <= 0)
+                return;
+
+            int realMax = modPlayer.OriginalMaxLife - modPlayer.HealthReduction;
+
+            // Heal up to the real max HP
+            healValue = realMax - player.statLife;
+
+            // Never heal negative or zero
+            if (healValue < 1)
+                healValue = 1;
+        }
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe(50);

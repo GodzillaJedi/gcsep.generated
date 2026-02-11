@@ -1,8 +1,15 @@
+using CalamityMod;
+using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using FargowiltasSouls.Core.Toggler.Content;
 using gcsep.Core;
+using Microsoft.Xna.Framework;
+using SacredTools.Common.Players;
+using SacredTools.Common.Systems;
+using SacredTools.Content.Buffs;
 using SacredTools.Content.Items.Accessories;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -60,50 +67,104 @@ namespace gcsep.Crossmod.Shields
     [ExtendsFromMod(ModCompatibility.Calamity.Name, ModCompatibility.SacredTools.Name)]
     public class RampartShieldEffects : GlobalItem
     {
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return GCSEConfig.Instance.Shields;
-        }
+        public override bool IsLoadingEnabled(Mod mod) => GCSEConfig.Instance.Shields;
         public override bool InstancePerEntity => true;
 
-        public override void UpdateAccessory(Item Item, Player player, bool hideVisual)
+        public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
-            if (Item.type == ModContent.ItemType<CelestialShield>()
-                || Item.type == ModContent.ItemType<ReflectionShield>()
-                || Item.type == ModContent.ItemType<RampartofDeities>()
-                || Item.type == ModContent.ItemType<ColossusSoul>())
+            if (item.type == ModContent.ItemType<ColossusSoul>())
             {
-                if ((double)player.statLife <= (double)player.statLifeMax2 * 0.5) { player.AddBuff(62, 5); }
-                player.noKnockback = true;
-                if (!((float)player.statLife > (float)player.statLifeMax2 * 0.25f)) { return; }
-                player.hasPaladinShield = true;
-                if (player.whoAmI == Main.myPlayer || player.miscCounter % 10 != 0) { return; }
-                int myPlayer = Main.myPlayer;
-                if (Main.player[myPlayer].team == player.team && player.team != 0)
-                {
-                    float num = player.position.X - Main.player[myPlayer].position.X;
-                    float num2 = player.position.Y - Main.player[myPlayer].position.Y;
-                    if ((float)Math.Sqrt(num * num + num2 * num2) < 800f)
-                    { Main.player[myPlayer].AddBuff(43, 20); }
-                }
-            }
-            if (Item.type == ModContent.ItemType<ReflectionShield>()
-                || Item.type == ModContent.ItemType<RampartofDeities>()
-                || Item.type == ModContent.ItemType<ColossusSoul>())
-            {
-                ModContent.Find<ModItem>(ModCompatibility.SacredTools.Name, "CelestialShield").UpdateAccessory(player, false);
-            }
-            if (Item.type == ModContent.ItemType<RampartofDeities>()
-                || Item.type == ModContent.ItemType<ColossusSoul>())
-            {
-                ModContent.Find<ModItem>(ModCompatibility.SacredTools.Name, "ReflectionShiels").UpdateAccessory(player, false);
-            }
-            if (Item.type == ModContent.ItemType<ColossusSoul>())
-            {
-                ModContent.Find<ModItem>(ModCompatibility.Calamity.Name, "RampartofDeities").UpdateAccessory(player, false);
+                if (item.type == ModContent.ItemType<CelestialShield>())
+                    player.AddEffect<CelestialShieldEffect>(item);
+
+                // Reflection Shield
+                if (item.type == ModContent.ItemType<ReflectionShield>())
+                    player.AddEffect<ReflectionShieldEffect>(item);
+
+                // Rampart of Deities
+                if (item.type == ModContent.ItemType<RampartofDeities>())
+                    player.AddEffect<RampartOfDeitiesEffect>(item);
             }
         }
-    }
+        public class CelestialShieldEffect : AccessoryEffect
+        {
+            public override Header ToggleHeader => Header.GetHeader<ColossusHeader>();
+            public override void PostUpdateEquips(Player player)
+            {
+                // Panic buff at 50% HP
+                if (player.statLife <= player.statLifeMax2 * 0.5f)
+                    player.AddBuff(BuffID.Panic, 5);
 
+                // Always no knockback
+                player.noKnockback = true;
+
+                // Paladin Shield effect above 25% HP
+                if (player.statLife > player.statLifeMax2 * 0.25f)
+                    player.hasPaladinShield = true;
+
+                // Team shielding pulse
+                if (player.whoAmI == Main.myPlayer && player.miscCounter % 10 == 0)
+                {
+                    Player local = Main.player[Main.myPlayer];
+                    if (local.team == player.team && player.team != 0 &&
+                        Vector2.Distance(local.Center, player.Center) < 800f)
+                    {
+                        local.AddBuff(BuffID.Ironskin, 20);
+                    }
+                }
+            }
+        }
+        public class ReflectionShieldEffect : CelestialShieldEffect
+        {
+            public static readonly int LifeBonus = 100;
+            public override void PostUpdateEquips(Player player)
+            {
+                if (TrueModeSystem.TrueMode)
+                {
+                    player.wolfAcc = true;
+                    player.hideWolf = true;
+                    player.accMerman = true;
+                    player.hideMerman = true;
+                    player.skyStoneEffects = true;
+                    player.noKnockback = true;
+                    player.fireWalk = true;
+                    player.buffImmune[30] = true;
+                    player.buffImmune[36] = true;
+                    player.buffImmune[31] = true;
+                    player.buffImmune[23] = true;
+                    player.buffImmune[22] = true;
+                    player.buffImmune[20] = true;
+                    player.buffImmune[35] = true;
+                    player.buffImmune[32] = true;
+                    player.buffImmune[33] = true;
+                    player.buffImmune[46] = true;
+                    player.statLifeMax2 += LifeBonus;
+                    player.lavaImmune = true;
+                    player.buffImmune[24] = true;
+                    player.buffImmune[47] = true;
+                    player.buffImmune[ModContent.BuffType<FlariumInfernoDebuff>()] = true;
+                    if ((float)player.statLife > (float)player.statLifeMax2 * 0.25f)
+                    {
+                        player.hasPaladinShield = true;
+                    }
+
+                    player.buffImmune[156] = true;
+                    player.GetModPlayer<MiscEffectsPlayer>().reflectionShield = true;
+                }
+            }
+        }
+        public class RampartOfDeitiesEffect : ReflectionShieldEffect
+        {
+            public override void PostUpdateEquips(Player player)
+            {
+                CalamityPlayer calamityPlayer = player.Calamity();
+                player.longInvince = true;
+                calamityPlayer.dAmulet = true;
+                calamityPlayer.rampartOfDeities = true;
+                player.noKnockback = true;
+            }
+        }
+        
+    }
 }
 

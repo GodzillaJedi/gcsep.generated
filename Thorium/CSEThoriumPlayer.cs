@@ -124,24 +124,40 @@ namespace gcsep.Thorium
         }
         public override void PostUpdate()
         {
-            if (SpiritTrapperEnchant && Player.ownedProjectileCounts[ModContent.ProjectileType<SpiritTrapperVisual>()] >= 5)
+            if (SpiritTrapperEnchant)
             {
-                Player.statLifeMax2 += 10;
-                Player.HealEffect(10, true);
-                for (int num23 = 0; num23 < 5; num23++)
+                // Only trigger when the player reaches 5 visual projectiles
+                if (Player.ownedProjectileCounts[ModContent.ProjectileType<SpiritTrapperVisual>()] == 5)
                 {
-                    Terraria.Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<SpiritTrapperVisual>(), 0, 0, Player.whoAmI, (float)num23, 0f);
-                }
-                for (int num24 = 0; num24 < 1000; num24++)
-                {
-                    Terraria.Projectile projectile3 = Main.projectile[num24];
-                    if (projectile3.active && projectile3.type == ModContent.ProjectileType<SpiritTrapperVisual>())
+                    // Apply bonus HP once
+                    Player.statLifeMax2 += 10;
+                    Player.HealEffect(10, true);
+
+                    // Spawn the burst once
+                    for (int i = 0; i < 5; i++)
                     {
-                        projectile3.Kill();
+                        Projectile.NewProjectile(
+                            Player.GetSource_FromThis(),
+                            Player.Center,
+                            Vector2.Zero,
+                            ModContent.ProjectileType<SpiritTrapperVisual>(),
+                            0,
+                            0,
+                            Player.whoAmI,
+                            i,
+                            0f
+                        );
+                    }
+
+                    // Kill all existing visuals once
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        Projectile p = Main.projectile[i];
+                        if (p.active && p.type == ModContent.ProjectileType<SpiritTrapperVisual>())
+                            p.Kill();
                     }
                 }
             }
         }
-
     }    
 }

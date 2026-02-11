@@ -19,68 +19,68 @@ namespace gcsep.Content.Projectiles.Enchantments
 
         public override void SetDefaults()
         {
-            base.Projectile.width = 48;
-            base.Projectile.height = 50;
-            base.Projectile.netImportant = true;
-            base.Projectile.friendly = true;
-            base.Projectile.ignoreWater = true;
-            base.Projectile.timeLeft = 18000;
-            base.Projectile.alpha = 50;
-            base.Projectile.penetrate = -1;
-            base.Projectile.tileCollide = false;
-            base.Projectile.timeLeft *= 5;
+            Projectile.width = 48;
+            Projectile.height = 50;
+            Projectile.netImportant = true;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.timeLeft = 18000 * 5;
+            Projectile.alpha = 50;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
         }
+
         public override void AI()
         {
-            bool flag = base.Projectile.type == ModContent.ProjectileType<ReaverOrb>();
-            Player player = Main.player[base.Projectile.owner];
-            CalamityPlayer calamityPlayer = player.Calamity();
-            GCSEPlayer gCSEPlayer = player.CSE();
-            if (!calamityPlayer.reaverExplore)
+            Player player = Main.player[Projectile.owner];
+            var cal = player.Calamity();
+
+            // Only exist while the armor set is active
+            if (!cal.reaverExplore || player.dead)
             {
-                base.Projectile.active = false;
+                Projectile.Kill();
                 return;
             }
-            if (flag)
-            {
-                if (player.dead)
-                {
-                    player.CSE().rOrb = false;
-                }
-                if (player.CSE().rOrb)
-                {
-                    base.Projectile.timeLeft = 2;
-                }
-            }
+
+            // Keep alive
+            Projectile.timeLeft = 2;
+
+            // Dust burst on spawn
             dust--;
             if (dust >= 0)
             {
-                int num = 50;
-                for (int i = 0; i < num; i++)
+                for (int i = 0; i < 50; i++)
                 {
-                    int num2 = Dust.NewDust(new Vector2(base.Projectile.position.X, base.Projectile.position.Y + 16f), base.Projectile.width, base.Projectile.height - 16, 157);
-                    Dust obj = Main.dust[num2];
-                    obj.velocity *= 2f;
-                    Main.dust[num2].scale *= 1.15f;
+                    int d = Dust.NewDust(
+                        new Vector2(Projectile.position.X, Projectile.position.Y + 16f),
+                        Projectile.width,
+                        Projectile.height - 16,
+                        157
+                    );
+                    Main.dust[d].velocity *= 2f;
+                    Main.dust[d].scale *= 1.15f;
                 }
             }
-            Lighting.AddLight(base.Projectile.Center, 0.5f, 2f, 0.5f);
-            base.Projectile.Center = player.Center + Vector2.UnitY * (player.gfxOffY - 60f);
+
+            // Light + positioning
+            Lighting.AddLight(Projectile.Center, 0.5f, 2f, 0.5f);
+
+            Projectile.Center = player.Center + Vector2.UnitY * (player.gfxOffY - 60f);
+
             if (player.gravDir == -1f)
             {
-                base.Projectile.position.Y += 120f;
-                base.Projectile.rotation = (float)Math.PI;
+                Projectile.position.Y += 120f;
+                Projectile.rotation = MathF.PI;
             }
             else
             {
-                base.Projectile.rotation = 0f;
+                Projectile.rotation = 0f;
             }
-            base.Projectile.position.X = (int)base.Projectile.position.X;
-            base.Projectile.position.Y = (int)base.Projectile.position.Y;
+
+            Projectile.position.X = (int)Projectile.position.X;
+            Projectile.position.Y = (int)Projectile.position.Y;
         }
-        public override bool? CanDamage()
-        {
-            return false;
-        }
+
+        public override bool? CanDamage() => false;
     }
 }

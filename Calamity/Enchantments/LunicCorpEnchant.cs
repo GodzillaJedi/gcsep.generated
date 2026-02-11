@@ -11,6 +11,7 @@ using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
+using RagnarokMod.Items.BardItems.Armor;
 using Redemption.Buffs.Minions;
 using Redemption.Projectiles.Minions;
 using Terraria;
@@ -59,28 +60,43 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<SalvationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<LunicCorpEnchant>();
+
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
+                // Calamity integration
+                CalamityPlayer cal = player.Calamity();
+
+                // Force vanilla dash (Tabi-style)
                 player.dashType = 2;
-                calamityPlayer.DashID = string.Empty;
-                calamityPlayer.copyrightInfringementShield = true;
+                cal.copyrightInfringementShield = true; // Disable Calamity dash so ours works
+
+                // Defensive utility
                 player.noKnockback = true;
                 player.fireWalk = true;
-                player.buffImmune[24] = true;
-                player.buffImmune[46] = true;
-                player.buffImmune[44] = true;
-                player.buffImmune[33] = true;
-                player.buffImmune[36] = true;
-                player.buffImmune[30] = true;
-                player.buffImmune[20] = true;
-                player.buffImmune[32] = true;
-                player.buffImmune[31] = true;
-                player.buffImmune[35] = true;
-                player.buffImmune[23] = true;
-                player.buffImmune[22] = true;
-                player.buffImmune[194] = true;
-                player.buffImmune[156] = true;
+
+                // Debuff immunities
+                int[] immuneBuffs = new int[]
+                {
+                    24,  // On Fire!
+                    46,  // Bleeding
+                    44,  // Broken Armor
+                    33,  // Poisoned
+                    36,  // Slow
+                    30,  // Darkness
+                    20,  // Poison
+                    32,  // Confused
+                    31,  // Cursed
+                    35,  // Silenced
+                    23,  // Burning
+                    22,  // Blackout
+                    194, // Frostburn 2
+                    156  // Weak
+                };
+
+                foreach (int buff in immuneBuffs)
+                    player.buffImmune[buff] = true;
+
+                // Small stat bonus
                 player.statLifeMax2 += 10;
             }
         }
@@ -90,12 +106,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<LunicCorpEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().lunicCorpsSet = true;
-                string text = (CalamityWorld.revenge ? ("\n" + ModContent.GetInstance<LunicCorpsHelmet>().GetLocalization("ShieldAdren")) : "");
-                player.setBonus = ModContent.GetInstance<LunicCorpsHelmet>().GetLocalization("SetBonus").Format(text);
-                player.bulletDamage += 0.1f;
-                player.specialistDamage += 0.1f;
-                player.jumpSpeedBoost += 1f;
+                ModContent.GetInstance<LunicCorpsHelmet>().UpdateArmorSet(player);
             }
         }
         public class NaviEffect : AccessoryEffect

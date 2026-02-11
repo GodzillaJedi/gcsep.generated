@@ -2,9 +2,10 @@ using FargowiltasSouls.Content.Bosses.MutantBoss;
 using FargowiltasSouls.Content.Buffs.Boss;
 using FargowiltasSouls.Content.Buffs.Souls;
 using FargowiltasSouls.Core.Systems;
-using gcsep.Core;
 using gcsep.Content.Buffs;
 using gcsep.Content.NPCs.MutantEX;
+using gcsep.Core;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,31 +16,47 @@ namespace gcsep
     {
         public override void ModifyHurt(ref Player.HurtModifiers modifiers)
         {
-            double damageMult = 1D;
-            modifiers.SourceDamage *= (float)damageMult;
+            // Base damage multiplier (currently unused but kept for future scaling)
+            modifiers.SourceDamage *= 1f;
 
+            // Phantasmal Enchantment: cap incoming damage
             if (Player.CSE().equippedPhantasmalEnchantment)
-            {
                 modifiers.SetMaxDamage(1000);
-            }
+
+            // --- Alternative Siblings Logic ---
             if (GCSEConfig.Instance.AlternativeSiblings)
             {
-                if (Player.HasBuff<MutantDesperationBuff>() && NPC.AnyNPCs(ModContent.NPCType<MutantEX>()))
-                {
+                bool mutantEXAlive = NPC.AnyNPCs(ModContent.NPCType<MutantEX>());
+
+                // MutantEX desperation freeze
+                if (Player.HasBuff<MutantDesperationBuff>() && mutantEXAlive)
                     Player.AddBuff(ModContent.BuffType<TimeFrozenBuff>(), 10);
-                }
-                if (NPC.AnyNPCs(ModContent.NPCType<MutantEX>()))
-                {
+
+                // Monstrosity presence buff
+                if (mutantEXAlive)
                     Player.AddBuff(ModContent.BuffType<MonstrosityPresenceBuff>(), 180);
-                }
-                if (NPC.AnyNPCs(ModContent.NPCType<MutantEX>()) && WorldSavingSystem.MasochistModeReal)
+
+                // Safe increment of monstrosityHits
+                if (mutantEXAlive && WorldSavingSystem.MasochistModeReal)
                 {
                     Player.CSE().monstrosityHits++;
+                    Player.CSE().monstrosityHits = Math.Clamp(Player.CSE().monstrosityHits, 0f, 9999f);
                 }
             }
+
+            // --- Mutant Boss HP Drain ---
             if (NPC.AnyNPCs(ModContent.NPCType<MutantBoss>()))
             {
-                Player.statLife -= Player.statLife / 5;
+                // Reduce HP by 20% of current HP, but never below 1
+                int reduction = Player.statLife / 5;
+                reduction = Math.Max(reduction, 1);
+
+                Player.statLife -= reduction;
+
+                if (Player.statLife < 1)
+                    Player.statLife = 1;
+
+                Player.HealEffect(-reduction, true);
             }
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

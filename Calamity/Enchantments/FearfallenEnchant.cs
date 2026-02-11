@@ -3,12 +3,13 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Fearmonger;
+using CalamityMod.Items.Armor.SnowRuffian;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using RagnarokMod.Items.HealerItems.Armor;
-using gcsep.Content.SoulToggles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -65,44 +66,11 @@ namespace gcsep.Calamity.Enchantments
 
             public override void PostUpdateEquips(Player player)
             {
-                var tp = player.GetModPlayer<ThoriumPlayer>();
-                var cp = player.Calamity();
-
-                List<string> setBonusLines = new();
-
-                // NIGHTFALLEN
-                tp.healBonus++;
-                setBonusLines.Add(ModContent.GetInstance<FearfallenEnchant>().GetLocalizedValue("SetBonus"));
-
-                // FEARMONGER
-                cp.fearmongerSet = true;
-                cp.wearingRogueArmor = true;
-                cp.WearingPostMLSummonerSet = true;
-                player.GetDamage<SummonDamageClass>() += 0.2f;
-                player.maxMinions += 2;
-
-                // Buff Immunities
-                int[] buffImmuneList = new int[13]
+                ModContent.GetInstance<FearmongerGreathelm>().UpdateArmorSet(player);
+                if (ModCompatibility.Ragnarok.Loaded)
                 {
-                    24, 44, 39, 153, 189, 67,
-                    ModContent.BuffType<Shadowflame>(),
-                    ModContent.BuffType<BrimstoneFlames>(),
-                    ModContent.BuffType<HolyFlames>(),
-                    ModContent.BuffType<GodSlayerInferno>(),
-                    46, 47,
-                    ModContent.BuffType<GlacialState>()
-                };
-
-                foreach (int buffID in buffImmuneList)
-                {
-                    player.buffImmune[buffID] = true;
+                    ModContent.GetInstance<NightfallenHelmet>().UpdateArmorSet(player);
                 }
-
-                // Lighting effect
-                Lighting.AddLight(player.Center, 0.3f, 0.18f, 0f);
-
-                // Final set bonus
-                player.setBonus = string.Join("\n", setBonusLines);
             }
         }
         public class VeilEffect : AccessoryEffect

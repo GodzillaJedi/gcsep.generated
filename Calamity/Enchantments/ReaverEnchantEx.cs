@@ -55,34 +55,36 @@ namespace gcsep.Calamity.Enchantments
         }
         public class ReaverOrbEffect : AccessoryEffect
         {
-            public override Header ToggleHeader => Header.GetHeader<DevastationExHeader>(); // Or your appropriate header
-            public override int ToggleItemType => ModContent.ItemType<ReaverEnchantEx>(); // Replace with your toggle item
+            public override Header ToggleHeader => Header.GetHeader<DevastationExHeader>();
+            public override int ToggleItemType => ModContent.ItemType<ReaverEnchantEx>();
 
             public override void PostUpdateEquips(Player player)
             {
                 var cp = player.Calamity();
-                cp.reaverExplore = true;
-                cp.wearingRogueArmor = true;
+                var cse = player.CSE();
 
-                player.setBonus = ModContent.GetInstance<ReaverEnchantEx>().GetLocalizedValue("SetBonus");
-                player.findTreasure = true;
-                player.blockRange += 4;
-                player.aggro -= 200;
+                // Only run if armor set OR enchant/force is active
+                if (!cp.reaverExplore && !cse.rOrb)
+                    return;
 
-                if (player.whoAmI == Main.myPlayer)
+                // Buff
+                int buffType = ModContent.BuffType<ReaverOrbBuff>();
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 2);
+
+                // Projectile
+                int projType = ModContent.ProjectileType<ReaverOrb>();
+                if (player.ownedProjectileCounts[projType] <= 0)
                 {
-                    int buffType = ModContent.BuffType<ReaverOrbBuff>();
-                    if (player.FindBuffIndex(buffType) == -1)
-                    {
-                        player.AddBuff(buffType, 3600);
-                    }
-
-                    int projType = ModContent.ProjectileType<ReaverOrb>();
-                    if (player.ownedProjectileCounts[projType] < 1)
-                    {
-                        var source = player.GetSource_Misc("ReaverExploreEffect");
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
-                    }
+                    Projectile.NewProjectileDirect(
+                        player.GetSource_FromThis(),
+                        player.Center,
+                        Vector2.Zero,
+                        projType,
+                        0,
+                        0f,
+                        player.whoAmI
+                    );
                 }
             }
         }
@@ -99,14 +101,20 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<DevastationExHeader>();
             public override int ToggleItemType => ModContent.ItemType<ReaverEnchantEx>();
+
             public override void PostUpdateEquips(Player player)
             {
+                // Flat stat bonuses
                 player.statLifeMax2 += 50;
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.alwaysHoneyRegen = true;
-                calamityPlayer.honeyTurboRegen = true;
-                calamityPlayer.honeyDewHalveDebuffs = true;
-                calamityPlayer.livingDewHalveDebuffs = true;
+                player.statManaMax2 += 20;
+
+                // Calamity integration
+                CalamityPlayer cal = player.Calamity();
+
+                cal.alwaysHoneyRegen = true;
+                cal.honeyTurboRegen = true;
+                cal.honeyDewHalveDebuffs = true;
+                cal.livingDewHalveDebuffs = true;
             }
         }
         public override void AddRecipes()

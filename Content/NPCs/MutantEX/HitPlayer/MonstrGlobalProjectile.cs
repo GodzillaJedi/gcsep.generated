@@ -1,6 +1,9 @@
 ﻿using FargowiltasSouls;
+using FargowiltasSouls.Content.Bosses.MutantBoss;
+using FargowiltasSouls.Core.Globals;
 using FargowiltasSouls.Core.Systems;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,94 +11,87 @@ namespace gcsep.Content.NPCs.MutantEX.HitPlayer
 {
     internal class MonstrGlobalProjectile : GlobalProjectile
     {
-        private void ApplyHealthReduction(Player player, float val)
+        private void ApplyHealthReduction(Player player, float percent)
         {
             var modPlayer = player.GetModPlayer<MonstrHealthPlayer>();
 
-            if (modPlayer.OriginalMaxLife == 0)
-            {
+            // Store original max life once
+            if (modPlayer.OriginalMaxLife <= 0)
                 modPlayer.OriginalMaxLife = player.statLifeMax2;
-            }
 
-            int damage = (int)(modPlayer.OriginalMaxLife * val);
+            // Calculate reduction
+            int damage = (int)(modPlayer.OriginalMaxLife * percent);
             if (damage < 1) damage = 1;
 
+            // Apply reduction to our own variable
             modPlayer.HealthReduction += damage;
 
-            player.statLifeMax2 = modPlayer.OriginalMaxLife - modPlayer.HealthReduction;
+            // Clamp so HP never becomes 0
+            if (modPlayer.HealthReduction >= modPlayer.OriginalMaxLife - 1)
+                modPlayer.HealthReduction = modPlayer.OriginalMaxLife - 1;
 
-            if (player.statLife > player.statLifeMax2)
-            {
-                player.statLife = player.statLifeMax2;
-            }
+            // Apply to current HP
+            int newMax = modPlayer.OriginalMaxLife - modPlayer.HealthReduction;
+            if (player.statLife > newMax)
+                player.statLife = newMax;
 
-            if (player.statLifeMax2 <= 0)
-            {
-                player.dead = true;
-                player.ghost = true;
-            }
+            // Play hit sound
+            SoundEngine.PlaySound(SoundID.NPCHit18, player.Center);
 
-            Terraria.Audio.SoundEngine.PlaySound(SoundID.NPCHit18, player.Center);
-
+            // Sync multiplayer
             if (Main.netMode != NetmodeID.SinglePlayer)
             {
                 modPlayer.SyncData();
-
                 if (Main.netMode == NetmodeID.Server)
-                {
                     NetMessage.SendData(MessageID.SyncPlayer, -1, -1, null, player.whoAmI);
-                }
             }
         }
 
         public override void AI(Projectile projectile)
         {
-            if (FargoSoulsUtil.BossIsAlive(ref GCSENpcs.mutantEX, ModContent.NPCType<MutantEX>()))
-            {
-                foreach (Player player in Main.player)
-                {
-                    if (!player.active || player.dead) continue;
+            // Only hostile projectiles matter
+            if (!projectile.hostile)
+                return;
 
-                    if (projectile.Hitbox.Intersects(player.Hitbox) && projectile.hostile && !(player.GetModPlayer<MonstrHealthPlayer>().iFrames > 0))
+            // Only check once per projectile
+            if (!FargoSoulsUtil.BossIsAlive(ref GCSENpcs.mutantEX, ModContent.NPCType<MutantEX>()) &&
+                !FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
+            {
+                base.AI(projectile);
+                return;
+            }
+
+            foreach (Player player in Main.player)
+            {
+                if (!player.active || player.dead)
+                    continue;
+
+                var modPlayer = player.GetModPlayer<MonstrHealthPlayer>();
+
+                // iFrames prevent double hits
+                if (modPlayer.iFrames > 0)
+                    continue;
+
+                if (projectile.Hitbox.Intersects(player.Hitbox))
+                {
+                    // MutantEX hit
+                    if (FargoSoulsUtil.BossIsAlive(ref GCSENpcs.mutantEX, ModContent.NPCType<MutantEX>()))
                     {
-                        ApplyHealthReduction(player, WorldSavingSystem.MasochistModeReal ? 0.15f : 0.1f);
-                        Main.NewText("Hit!");
-                        player.GetModPlayer<MonstrHealthPlayer>().iFrames += 20;
-                        projectile.Kill();
-                        return;
+                        ApplyHealthReduction(player, WorldSavingSystem.MasochistModeReal ? 0.15f : 0.10f);
                     }
+
+                    // MutantBoss hit
+                    if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
+                    {
+                        ApplyHealthReduction(player, WorldSavingSystem.MasochistModeReal ? 0.10f : 0.05f);
+                    }
+
+                    modPlayer.iFrames = 20;
+                    projectile.Kill();
+                    return;
                 }
             }
 
-            //if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
-            //{
-            //    foreach (Player player in Main.player)
-            //    {
-            //        if (!player.active || player.dead) continue;
-
-            //        if (projectile.Hitbox.Intersects(player.Hitbox) && projectile.hostile && !(player.GetModPlayer<MonstrHealthPlayer>().iFrames > 0))
-            //        {
-            //            ApplyHealthReduction(player, WorldSavingSystem.MasochistModeReal ? 0.1f : 0.05f);
-            //            Main.NewText("Hit!");
-            //            player.GetModPlayer<MonstrHealthPlayer>().iFrames += 20;
-            //            projectile.Kill();
-            //            return;
-            //        }
-            //    }
-            //}
-            //if (FargoSoulsUtil.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
-            //{
-            //    foreach (Player player in Main.player)
-            //    {
-            //        if (!player.active || player.dead) continue;
-
-            //        if (projectile.Hitbox.Intersects(player.Hitbox) && projectile.hostile && !(player.GetModPlayer<MonstrHealthPlayer>().iFrames > 0))
-            //        {
-            //            player.Heal(-(player.statLifeMax2/10));
-            //            player.GetModPlayer<MonstrHealthPlayer>().iFrames += 20;
-            //        }
-            //    }
-            //}
             base.AI(projectile);
         }
     }

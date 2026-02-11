@@ -1,19 +1,20 @@
 using CalamityMod;
+using CalamityMod.Buffs.Pets;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.DesertProwler;
 using CalamityMod.Items.Pets;
 using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Projectiles.Pets;
+using CalamityMod.Projectiles.Typeless;
 using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.Buffs.Pets;
-using CalamityMod.Projectiles.Pets;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -70,23 +71,41 @@ namespace gcsep.Calamity.Enchantments
             public override void PostUpdateEquips(Player player)
             {
                 player.Calamity().luxorsGift = true;
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<Luxor>()] < 1 && !player.dead)
+                {
+                    Projectile.NewProjectileDirect(player.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<Luxor>(), 0, 0f, player.whoAmI);
+                }
             }
         }
         public class DimeEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<ExplorationForceExHeader>();
             public override int ToggleItemType => ModContent.ItemType<DesertProwlerEnchantEx>();
+
             public override void PostUpdateEquips(Player player)
             {
-                if (player.whoAmI == Main.myPlayer)
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                // Apply buff once, without resetting timer every tick
+                if (!player.HasBuff(ModContent.BuffType<GoldieBuff>()))
+                    player.AddBuff(ModContent.BuffType<GoldieBuff>(), 2); // 2 ticks, auto-refreshes
+
+                // Proper minion damage scaling
+                int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(20);
+
+                // Spawn minion only if missing
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<GoldiePet>()] <= 0)
                 {
-                    if (player.FindBuffIndex(ModContent.BuffType<GoldieBuff>()) == -1)
-                    {
-                        player.AddBuff(ModContent.BuffType<GoldieBuff>(), 3600, true, false);
-                    }
-                    const int damage = 100;
-                    if (player.ownedProjectileCounts[ModContent.ProjectileType<GoldiePet>()] < 1)
-                        Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<GoldiePet>(), damage, 8f, player.whoAmI);
+                    Projectile.NewProjectileDirect(
+                        player.GetSource_FromThis(),
+                        player.Center,
+                        Vector2.Zero,
+                        ModContent.ProjectileType<GoldiePet>(),
+                        damage,
+                        0f,
+                        player.whoAmI
+                    );
                 }
             }
         }

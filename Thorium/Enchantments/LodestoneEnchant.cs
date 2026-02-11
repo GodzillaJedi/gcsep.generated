@@ -108,8 +108,25 @@ namespace gcsep.Thorium.Enchantments
             if (player.AddEffect<LodestoneEffect>(Item))
             {
                 ThoriumPlayer thoriumPlayer = player.GetThoriumPlayer();
-                int stages = 100 / SetLifePercentageInterval;
-                int currentStage = (int)(player.statLife / (player.statLifeMax2 * (SetLifePercentageInterval / 100f)));
+
+                // Prevent division by zero
+                float maxLife = Math.Max(player.statLifeMax2, 1);
+
+                // Convert interval to a fraction safely
+                float intervalFraction = SetLifePercentageInterval / 100f;
+                intervalFraction = Math.Max(intervalFraction, 0.01f); // never allow 0
+
+                // Total number of stages
+                int stages = (int)(1f / intervalFraction);
+
+                // Current stage based on missing life
+                float lifePercent = player.statLife / maxLife;
+                int currentStage = (int)(lifePercent / intervalFraction);
+
+                // Clamp to valid range
+                currentStage = Math.Clamp(currentStage, 0, stages);
+
+                // Missing stages = damage reduction bonus
                 int missingStages = stages - currentStage;
 
                 thoriumPlayer.thoriumEndurance += missingStages * (SetDamageReduction / 100f);

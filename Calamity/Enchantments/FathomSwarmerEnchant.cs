@@ -3,6 +3,7 @@ using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.FathomSwarmer;
+using CalamityMod.Items.Armor.Prismatic;
 using CalamityMod.Projectiles.Rogue;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -54,17 +55,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<FathomSwarmerEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.setBonus = ModContent.GetInstance<FathomSwarmerVisage>().GetLocalizedValue("SetBonus");
-                player.Calamity().fathomSwarmer = true;
-                player.spikedBoots = 2;
-                player.maxMinions += 2;
-                player.GetDamage<SummonDamageClass>() += 0.1f;
-                if (Collision.DrownCollision(player.position, player.width, player.height, player.gravDir))
-                {
-                    player.GetDamage<SummonDamageClass>() += 0.2f;
-                    player.statDefense += 10;
-                    player.lifeRegen += 5;
-                }
+                ModContent.GetInstance<FathomSwarmerVisage>().UpdateArmorSet(player);
             }
         }
         public class SpineEffect : AccessoryEffect

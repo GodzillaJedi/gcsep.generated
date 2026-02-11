@@ -3,17 +3,18 @@ using CalamityMod;
 using CalamityMod.Buffs.StatDebuffs;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Statigel;
+using CalamityMod.Items.Armor.Sulphurous;
+using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using RagnarokMod.Items.BardItems.Armor;
 using RagnarokMod.Items.HealerItems.Armor;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -39,7 +40,7 @@ namespace gcsep.Calamity.Enchantments
             player.AddEffect<PolarizerEffect>(Item);
             player.AddEffect<StatigelArmorEffect>(Item);
             player.AddEffect<SlimeGodEffect>(Item);
-            player.AddEffect<StatigelEffect>(Item);
+            ModContent.GetInstance<StatigelEnchant>().UpdateAccessory(player, hideVisual);
         }
         public override void AddRecipes()
         {
