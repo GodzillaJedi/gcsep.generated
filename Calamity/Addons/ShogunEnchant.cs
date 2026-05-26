@@ -80,16 +80,9 @@ namespace gcsep.Calamity.Addons
         {
             public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<ShogunEnchant>();
-
             public override void PostUpdateEquips(Player player)
             {
-                var jam = player.GetModPlayer<SplendorJamPlayer>();
-
-                // Enable the effect
-                jam.active = true;
-                jam.rainbow = true;
-
-                // DO NOT manually call jam.UpdateEquips()
+                ModContent.GetInstance<SplendorJam>().UpdateAccessory(player, true);
             }
         }
 
