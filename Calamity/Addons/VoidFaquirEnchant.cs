@@ -43,7 +43,8 @@ namespace gcsep.Calamity.Addons
 
         public override void AddRecipes()
         {
-            Recipe recipe = this.CreateRecipe();
+            Recipe recipe = CreateRecipe();
+
             recipe.AddIngredient(ModContent.ItemType<VoidFaquirDevourerHelm>());
             recipe.AddIngredient(ModContent.ItemType<VoidFaquirShadowHelm>());
             recipe.AddIngredient(ModContent.ItemType<VoidFaquirCosmosHood>());

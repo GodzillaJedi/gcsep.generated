@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.BloodHunter.Accessories;
-using VitalityMod.Items.StormCloud;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.BloodHunter;
+using VitalityMod.Content.Items.Accessories.Expert;
+using VitalityMod.Content.Items.Armor.Magic.Skyforged;
 
 namespace gcsep.Vitality.Enchantments
 {

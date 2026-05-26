@@ -3,15 +3,12 @@ using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using SpiritMod.Items.Accessory.TalismanTree.GrislyTongue;
 using SpiritMod.Items.Armor.BotanistSet;
 using SpiritMod.Items.Placeable.Furniture;
-using SpiritMod.Items.Sets.BloodcourtSet.BloodCourt;
 using SpiritMod.Items.Sets.BriarChestLoot;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static gcsep.SpiritMod.Enchantments.BloodcourtEnchant;
 
 namespace gcsep.SpiritMod.Enchantments
 {

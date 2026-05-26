@@ -10,14 +10,22 @@ namespace gcsep.SoA
     [ExtendsFromMod(ModCompatibility.Thorium.Name, ModCompatibility.Calamity.Name)]
     public class CalTorTooltips : GlobalItem
     {
+        static string ExpandedTooltipLoc(string key) =>
+            Language.GetTextValue($"Mods.gcsep.ExpandedTooltips.{key}");
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            string key = "Mods.gcsep.Items.AddedEffects.";
+            if (item.social)
+                return;
 
-            if (item.type == ModContent.ItemType<ColossusSoul>() && !item.social)
+            void AddTooltip(string internalName, string locKey)
             {
-                tooltips.Insert(9, new TooltipLine(Mod, "CalTerrariumDefender", Language.GetTextValue(key + "CalDefender")));
+                tooltips.Add(new TooltipLine(Mod, internalName, ExpandedTooltipLoc(locKey)));
             }
+
+            // Calamity + Thorium synergy for Colossus Soul
+            if (item.type == ModContent.ItemType<ColossusSoul>())
+                AddTooltip("CalTerrariumDefender", "CalDefender");
         }
     }
 }

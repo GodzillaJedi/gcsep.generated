@@ -6,11 +6,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.BloodHunter.Accessories;
-using VitalityMod.BloodHunter.Armor;
-using VitalityMod.Items.Accessories;
-using VitalityMod.Items.Arctic;
-using static gcsep.Vitality.Enchantments.ArcticEnchant;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.BloodHunter;
+using VitalityMod.Content.Items.Armor.BloodHunter.Bloodkeeper;
 
 namespace gcsep.Vitality.Enchantments
 {

@@ -79,9 +79,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<FearfallenEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().spectralVeil = true;
-                player.Calamity().stealthGenMoving += 0.15f;
-                player.Calamity().stealthGenStandstill += 0.15f;
+                ModContent.GetInstance<SpectralVeil>().UpdateAccessory(player, true);
             }
         }
     }

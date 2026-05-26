@@ -3,18 +3,11 @@ using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.Accessories;
-using VitalityMod.Items.AnarchulesBeetle;
-using VitalityMod.Items.ArcaneGold;
-using static gcsep.Vitality.Enchantments.AnarchyEnchant;
+using VitalityMod.Content.Items.Accessories.Combat.Defensive;
+using VitalityMod.Content.Items.Armor.Summoner.ArcaneGold;
 
 namespace gcsep.Vitality.Enchantments
 {
@@ -41,7 +34,7 @@ namespace gcsep.Vitality.Enchantments
             }
             if (player.AddEffect<GildedFists>(Item))
             {
-                ModContent.GetInstance<ProtectorsShield>().UpdateAccessory(player, hideVisual);
+                ModContent.GetInstance<GildedKnuckles>().UpdateAccessory(player, hideVisual);
             }
         }
         public override void AddRecipes()

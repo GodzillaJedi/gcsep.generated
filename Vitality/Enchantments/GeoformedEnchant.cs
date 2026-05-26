@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.GemstoneElemental;
-using VitalityMod.Items.Geoformed;
-using VitalityMod.Items.GlowingMoss;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Generic;
+using VitalityMod.Content.Items.Accessories.Expert;
+using VitalityMod.Content.Items.Armor.Generic.Geoformed;
 
 namespace gcsep.Vitality.Enchantments
 {

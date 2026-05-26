@@ -12,7 +12,29 @@ Mods: {
 			MutantsForgeTile.MapEntry: Mutants Forge Tile
 			RedemptionCraftingStationTile.MapEntry: Redemption Crafting Station Tile
 			SyranCraftingStationTile.MapEntry: Syran Crafting Station Tile
-			CSEStorageUnit.MapEntry: C S E Storage Unit
+			CSEStorageUnit.MapEntry: Community Soul Expansion Storage Unit
+		}
+
+		ExpandedTooltips: {
+			SoAColossus: Effects of Royal Guard
+			SoASupersonic: Effects of Heart of the Plough and Advanced Dash Tech.
+			SoABerserker: Effects of Flora Fist.
+			SoAMaso: Effects of [i:SacredTools/YataMirror] Yata Mirror and [i:SacredTools/PrimordialCore] Primordial Core
+			SoARampart: Effects of [Redacted].
+			SoAWorldshaper: Effects of Rage Suppressor and Celestial Ring.
+			SOTSColossus: Effects of Void Shield.
+			SOTSFlightMastery: Effects of Wings of Light.
+			ThoriumColossus: Effects of Blast Shield.
+			ThoriumUniverse: Effects of Gaurdian Angel and Bard Soul.
+			CalDefender: Effects of [Redacted].
+			MutantsCurse_PostND: "[c/FF0000:Cross-mod Balance:] Can be used after defeating the Nameless Deity"
+			CheatPermissionSlip_PostMonstrocity: "[c/FF0000:Cross-Mod Balance:] Can only be used after defeating the Monstrocity"
+			Orderbringer_Rebalance: "[c/FFFF00:GCSE Balance:] Increased projectile velocity."
+			Voidragon_Rebalance: "[c/FFFF00:GCSE Balance:] Canceled DLC buff."
+			Sylvestaff_No: "[c/FFFF00:GCSE Balance:] No."
+			Sylvestaff_DamageNerf: "[c/FFFF00:GCSE Balance:] Damage decreased by 50%."
+			OmniCannon_Rebalance: "[c/00A36C:Cross-Mod Balance:] Damage decreased by 15% but projectile velocity increased by 60%"
+			QuasarsFlare_Rebalance: "[c/00A36C:Cross-Mod Balance:] Increased projectile velocity by 70%"
 		}
 
 		Buffs: {
@@ -139,53 +161,191 @@ Mods: {
 
 		Items: {
 			AddonsForce: {
-				DisplayName: Addons Force
-				Tooltip: ""
+				DisplayName: Force of Additions
+				Tooltip:
+					'''
+					[i:gcsep/ClamitasEnchant] Effects of Soul of Pyrogen, Hell Flare, and Clamitas Shellmet Armor
+					[i:gcsep/FrozenEnchant] Effects of Frozen Armor
+					[i:gcsep/IntergelacticEnchant] Effects of Influx Cluster and Intergelatic Armor
+					[i:gcsep/MariviumEnchant] Effects of Wyrm Tooth Necklace, Holy Mantle and Marivinium Armor
+					[i:gcsep/ShogunEnchant] Effects of Tendril Cursor Attachment, Splendor Jam, and Shogun Armor
+					[i:gcsep/VoidFaquirEnchant] Effects of Reincarnation Badge and Void Faquir Armor
+					[i:gcsep/VoidFaquirEnchant] Summons a Cruiser that follows your cursor 
+					[i:gcsep/SolynsSigil] Effects of Divine Wings, Portal Skirt, and Deific Touch
+					'Bought the Season Pass for this one'
+					'''
 			}
 
 			ClamitasEnchant: {
-				DisplayName: Clamitas Enchant
-				Tooltip: ""
+				DisplayName: Clamitas Enchantment
+				Tooltip:
+					'''
+					[i:Clamity/ClamitasShellmet] Two Shellfishes assist you in combat
+					[i:Clamity/SoulOfPyrogen] 10% increased melee and rogue damage
+					True melee and stealth strikes summon spears from the depths of Hell
+					[i:Clamity/HellFlare] All attacks and projectiles inflict Hellfire
+					Grants immunity to On fire! and Hellfire
+					Being above 75% life grants 10% increased crit chance
+					Being below 25% life grants 10% increased damage reduction
+					Grants resistance against cold attacks
+					'Seas of Hell's tides now rises'
+					'''
 			}
 
 			FrozenEnchant: {
-				DisplayName: Frozen Enchant
-				Tooltip: ""
+				DisplayName: Frozen Enchantment
+				Tooltip:
+					'''
+					[i:Clamity/FrozenHellstoneVisor] 20% increased true melee damage. 
+					True melee attacks inflict Frostburn. 
+					Enemies are more likely to target you
+					Cannot be frozen.
+					Press {0} to create an ice shield that parries attacks.
+					Failing to parry will cause you to overcool.
+					'Freeze Mother B****'
+					'''
 			}
 
 			IntergelacticEnchant: {
-				DisplayName: Intergelactic Enchant
-				Tooltip: ""
+				DisplayName: Intergelactic Enchantment
+				Tooltip:
+					'''
+					[i:CatalystMod/IntergelacticHeadMelee] Four asteroid rings, knockback immunity and movement‑debuff immunity
+					[i:CatalystMod/IntergelacticHeadRanged] Ranged attacks summon stars (30% damage)
+					[i:CatalystMod/IntergelacticHeadMagic] Magic crits release starbursts, −20% mana cost and doubled potion mana
+					[i:CatalystMod/IntergelacticHeadSummon] +4 minions, minions can crit and you launch stored asteroids
+					[i:CatalystMod/IntergelacticHeadRogue] Steatlh strikes release an asteroid belt
+					All attacks inflict [cbuff:CatalystMod/AstralBlight] 
+					[i:CatalystMod/InfluxCluster] Press the [KEY] to dash towards the cursor as a violent nebula
+					During the dash, you are fully immune to damage
+					50 second cooldown
+					'A galaxies worth of gel at your fingertips'
+					'''
 			}
 
 			MariviumEnchant: {
-				DisplayName: Marivium Enchant
-				Tooltip: ""
+				DisplayName: Marivinium Enchantment
+				Tooltip:
+					'''
+					[i:CalamityEntropy/MariviniumHelmet] +20% Melee Damage Reduce
+					+10 Minion Slot
+					+100% Summon Damage
+					+5% Summon Crit
+					+10% Damage Reduce
+					+135 Rogue Stealth
+					When standing, increase life regen
+					Immunity to most debuffs
+					When using true melee weapons, +10% Damage reduce and 15 defense
+					When using a whip, enhance summoner attributes
+					Stealth strike has a probability of causing an water explosion
+					Obtain 2 layers of shields, which will take 30 seconds to recover after being shattered
+					After shield shattered, treat 100 health points and +50% damage for 10 seconds
+					[i:CalamityEntropy/WyrmToothNecklace] +25% Damage
+					+100 Armor penetration
+					+15% Crit Chance
+					[i:CalamityEntropy/HolyMantle] Provide you with a Holy Shield that can withstand damage once
+					This effect has a 120 second cooldown time
+					Loot from hallow monsters
+					'Abyssal Strength'
+					'''
 			}
 
 			ShogunEnchant: {
-				DisplayName: Shogun Enchant
-				Tooltip: ""
+				DisplayName: Shogun Enchantment
+				Tooltip:
+					'''
+					[i:CalamityHunt/ShogunHelm] 17% increased damage and +5 max minions
+					{$CommonItemTooltip.FlightAndSlowfall}
+					Wearing any wings overrides this flight
+					{$CommonItemTooltip.PressDownToHover}
+					Allows the ability to dash and enhances other dashes
+					Hold DOWN to fastfall
+					Increases jump speed 
+					Grants immunity to many endgame and movement-based debuffs
+					[i:CalamityHunt/TendrilCursorAttachment] Attaches hanging chromatic tendrils to your mouse cursor
+					The amount of tendrils depends on the slot this item is placed in
+					[i:CalamityHunt/SplendorJam] Activates the Stress Bar
+					Stress builds up passively, though standing close to enemies speeds up the rate at which it increases
+					You emit light that scales with your Stress level
+					Grants a Spectacle at 0%, 25%, 50%, 75%, and 100% Stress
+					At 25% Stress your weapons will produce explosions
+					At 75% Stress your explosions will become larger and deal more damage
+					Double tap DOWN while Stress is above 25% to enter Malice Mode
+					Malice Mode significantly increases your damage, as well as granting flat damage, armor penetration, and critical strike
+					These boosts and their duration scale with the amount of stress you have
+					'Anxious yet Honorable'
+					'''
 			}
 
 			SolynsSigil: {
 				DisplayName: Solyns Sigil
-				Tooltip: ""
+				Tooltip:
+					'''
+					[i:NoxusBoss/DeificTouch] Reveals paradise behind your cursor
+					[i:NoxusBoss/PortalSkirt] Summons a portal at your waist
+					[i:NoxusBoss/DivineWings] Horizontal speed: 16.67
+					Acceleration multiplier: 3.7
+					Sublime vertical speed
+					Flight time: ∞
+					'Learner Terrarian has now become the Master'
+					'''
 			}
 
 			VoidFaquirEnchant: {
-				DisplayName: Void Faquir Enchant
-				Tooltip: ""
+				DisplayName: Void Faquir Enchantment
+				Tooltip:
+					'''
+					+20 Armor Penetration
+					Hitting the target will increase void energy
+					Provides movement and flight speed bonuses based on the amount of void energy
+					Press the armor bonus key to activate Void energy Summon a Void Wraith to assist in battle and fly indefinitely for 10 seconds
+					Void Wrairh damage type depends on the weapon in hand
+					[i:CalamityEntropy/VoidFaquirDevourerHelm] +24% Attack Speed
+					+10% Damage Reduce
+					Accumulates more void energy when hitting targets.
+					[i:CalamityEntropy/VoidFaquirShadowHelm] Projectile damage increases with time
+					[i:CalamityEntropy/VoidFaquirCosmosHood] -25% Mana Cost
+					Magic Projectiles hits enemies will reduce your Mana Sickness by 0.5s
+					[i:CalamityEntropy/VoidFaquirLurkerMask]+15% movement speed
+					+135 Max Stealth
+					Stealth strikes will accumulate more void energy
+					[i:CalamityEntropy/VoidFaquirEvokerHelm] +7 Max Minions
+					+80% Summon Damage
+					Summon a Void Symbiont fight for you
+					[i:CalamityEntropy/ReincarnationBadge] Press [KEY] to Ascend.
+					In this state, you are not affected by gravity, and push away surrounding projectiles
+					Press 'Cruiser Attack' to summon a Void Cruiser to follow your cursor
+					'Wrath from the void'
+					'''
 			}
 
 			AerospecEnchantEx: {
-				DisplayName: Aerospec Enchant Ex
+				DisplayName: Aerospec Enchantment EX
 				Tooltip: ""
 			}
 
 			AstralEnchant: {
-				DisplayName: Astral Enchant
-				Tooltip: ""
+				DisplayName: Astral Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/AstralHelm] Increases your max number of minions by 3
+					10% increased damage and critical strike chance
+					Detects nearby creatures, enemy projectiles, danger sources, and treasure
+					Whenever you crit an enemy, a barrage of stars will rain down
+					This effect has a 1 second cooldown before it can trigger again
+					[i:CalamityMod/InterstellarStompers] 6% increased movement speed, 20% increased jump speed, and negates fall damage
+					Hold ▼ Down to increase your maximum fall speed
+					Pressing Interstellar Stompers Hotkey while midair charges up a superspeed slam over 0.33 seconds
+					While falling, you ram through enemies and don't take contact damage
+					Once you hit the ground, you create an explosion at your feet
+					The explosion scales in both damage and size the longer you slam for
+					Temporary 40% increased jump speed after slamming into the ground
+					[i:CalamityMod/UrsaSergeant] Attacks maul enemies with astral claw stripes
+					Taking damage reduces the cooldown, but inflicts you with Astral Infection
+					Enemy kills also reduce the cooldown
+					Swipes will be translucent and silent if visibility is disabled
+					'Walk on Astral shores'
+					'''
 			}
 
 			AuricTeslaEnchant: {
@@ -199,8 +359,33 @@ Mods: {
 			}
 
 			BrimflameEnchant: {
-				DisplayName: Brimflame Enchant
-				Tooltip: ""
+				DisplayName: Brimflame Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/BrimflameCowl] Grants an additional 15% increased damage and magic crit
+					Press Armor Set Bonus to trigger a brimflame frenzy effect
+					While under this effect, you get an additional 40% increase to magic damage
+					However, this comes at the cost of rapid life loss and no mana regeneration
+					This can be toggled off, however, a brimflame frenzy has a 30 second cooldown
+					[i:CalamityMod/FlameLickedShell] 	Grants immunity to knockback
+					Pressing Activate Accessory Parry will activate a parry, encasing you in rocks
+					Being hit shortly after encasement will implode the rocks
+					Upon implosion, a ring of brimstone hellfire is launched outwards and you receive 90% DR for that hit
+					After imploding, this damage reduction effect goes on cooldown
+					Damage parried whilst on cooldown summons weaker brimstone flames, and will not be reduced
+					[i:CalamityMod/Abaddon] 8% increased critical strike chance
+					Critical strikes explode, igniting nearby foes with [cbuff:CalamityMod/BrimstoneFlames]
+					Reduces damage taken from [cbuff:CalamityMod/BrimstoneFlames] by 50%
+					[i:CalamityMod/SlagsplitterPauldron] Your dashes become empowered by flame, erupting on contact with enemies
+					Grants immunity to knockback and 10% damage reduction while dashing
+					Enemies hit by your dashes have their armor crushed
+					Visual effects are reduced if visibility is disabled
+					[i:CalamityMod/VoidofCalamity] 12% increased damage
+					Brimstone fire rains down after getting hit
+					[i:CalamityMod/SigilofCalamitas] 15% increased magic damage and 10% decreased mana usage
+					+100 max mana
+					Increases pickup range for mana stars
+					'''
 			}
 
 			DaedalusEnchantEx: {
@@ -214,23 +399,73 @@ Mods: {
 			}
 
 			DesertProwlerEnchantEx: {
-				DisplayName: Desert Prowler Enchant Ex
+				DisplayName: Desert Prowler Enchantment EX
 				Tooltip: ""
 			}
 
 			EmpyreanEnchant: {
-				DisplayName: Empyrean Enchant
-				Tooltip: ""
+				DisplayName: Empyrean Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/EmpyreanMask] 9% increased rogue damage and velocity
+					+115 maximum stealth
+					Rogue projectiles have special effects on enemy hits
+					Imbued with cosmic wrath and rage when you are damaged
+					[i:CalamityMod/HeartofDarkness] You constantly gain rage over time, and rage does not fade away when out of combat
+					[i:CalamityMod/DarkMatterSheath] +10 maximum stealth
+					Stealth generation is boosted while moving if not attacking
+					Stealth strikes only expend 50% of your max stealth
+					6% increased rogue damage and rogue crit chance
+					'''
 			}
 
 			FathomSwarmerEnchant: {
-				DisplayName: Fathom Swarmer Enchant
-				Tooltip: ""
+				DisplayName: Fathom Swarmer Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/FathomSwarmerVisage] 10% increased summon damage and +2 max minions
+					Grants the ability to climb walls
+					20% increased summon damage, +10 defense and +2.5 HP/s life regen while underwater
+					Provides a moderate amount of light and moderately reduces breath loss in the abyss
+					[i:CalamityMod/CorrosiveSpine] 	5% increased movement speed
+					25% increased Sickness and Water debuff damage
+					All attacks irradiate enemies and reduces the severity of the sulphuric waters
+					You burst into radioactive clouds when struck
+					[i:CalamityMod/DiamondOfTheDeep] 60% increased Water debuff damage
+					Slowly accrue up to three different abyssal spirits
+					Dash to disperse the spirits and have them attack enemies
+					When dispersed [c/CB7AD7:below 50% life], the spirits support you instead
+					The spirits appear in order and have different effects based on color:
+					[c/3CB371: Explodes on impact and inflicts Crush Depth] / [c/CB7AD7:Heals for 8 HP]
+					[c/FF4500: Pierces enemies and inflicts Hellfire] / [c/CB7AD7:Increases defense by 10 temporarily]
+					[c/1E90FF: Hits multiple times and inflicts Hadopelagic Pressure] / [c/CB7AD7:Heals 5% of max HP]
+					Spirits are transparent and silent when visibility is toggled off
+					'Just keep on swimming down and down'
+					'''
 			}
 
 			FearfallenEnchant: {
-				DisplayName: Fearfallen Enchant
-				Tooltip: ""
+				DisplayName: Fearfallen Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/FearmongerGreathelm] 20% increased summon damage and +2 max minions
+					Minions no longer deal less damage while wielding non-summoner weapons
+					Immunity to all forms of frost and flame
+					Minion attacks grant +3.5 HP/s life regen and massively accelerate life regen
+					15% increased damage reduction during the Pumpkin and Frost Moons
+					This extra damage reduction ignores the soft cap
+					Xx If you have Ragnarok Installed xX
+					[i:RagnarokMod/NightfallenHelmet] 35% decreased non-radiant damage
+					35% increased radiant damage and 16% increased criticial radiant strike chance
+					Healing spells will heal an additional 1 life
+					Maximum mana increased by 60
+					Xx If you have Ragnarok Installed xX
+					[i:CalamityMod/SpectralVeil] Pressing Spectral Veil Teleport consumes 25% of your maximum stealth to teleport, rendering you invulnerable
+					If you dodge something while invulnerable, you instantly gain full stealth
+					Teleportation is disabled while Chaos State is active
+					Stealth generates 15% faster
+					'Your enemies shall fall to their fear'
+					'''
 			}
 
 			GemTechEnchant: {
@@ -244,8 +479,8 @@ Mods: {
 			}
 
 			HydrothermicEnchantEx: {
-				DisplayName: Hydrothermic Enchant Ex
-				Tooltip: ""
+				DisplayName: Hydrothermic Enchantment EX
+				Tooltip: "[i:]"
 			}
 
 			LunicCorpEnchant: {
@@ -254,28 +489,93 @@ Mods: {
 			}
 
 			MarniteEnchantEx: {
-				DisplayName: Marnite Enchant Ex
+				DisplayName: Marnite Enchantment EX
 				Tooltip: ""
 			}
 
 			MolluskEnchant: {
-				DisplayName: Mollusk Enchant
-				Tooltip: ""
+				DisplayName: Mollusk Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/MolluskShellmet] Two shellfishes aid you in combat
+					10% increased damage
+					Your horizontal movement is slowed
+					[i:CalamityMod/AquaticEmblem] Most ocean enemies become friendly and allows breathing underwater
+					Being underwater gradually increases defense but slows movement speed over 10 seconds
+					This effect slowly vanishes outside of water and resets while mounted
+					Maximum defense boost is 20 and movement speed reduction is 10%
+					Provides a small amount of light and moderately reduces breath loss in the abyss
+					[i:CalamityMod/GiantPearl] You have a light aura around you
+					Enemies within the aura are slowed down
+					Increases visibility range in the abyss
+					'Wading through the shallows'
+					'''
 			}
 
 			OmegaBlueEnchant: {
-				DisplayName: Omega Blue Enchant
-				Tooltip: ""
+				DisplayName: Omega Blue Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/OmegaBlueHelmet] Increases armor penetration by 15
+					10% increased damage and critical strike chance and +2 max minions
+					Short-ranged tentacles heal you by sucking enemy life
+					Press Armor Set Bonus to activate abyssal madness for 5 seconds
+					Abyssal madness increases damage, critical strike chance, and tentacle aggression/range
+					This effect has a 25 second cooldown
+					[i:CalamityMod/OldDukeScales] Grants immunity to knockback
+					10% increased damage reduction, max movement speed, and acceleration
+					25% increased dash velocity and length
+					Adds a stamina tracker to the cooldown rack
+					[i:CalamityMod/ReaperToothNecklace] 20% increased damage
+					Increases armor penetration by 15
+					[i:CalamityMod/MutatedTruffle] Summons a younger fishron to irradiate your foes
+					The fishron will cycle between charging, projectiles, and a typhoon
+					Requires 3 minion slots to be used
+					There can only be one minion
+					'The [i:gcsep/MariviumEnchant] Marivinium Enchantment is gonna sue this one'
+					'''
 			}
 
 			PlaguebringerEnchant: {
-				DisplayName: Plaguebringer Enchant
-				Tooltip: ""
+				DisplayName: Plaguebringer Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/PlaguebringerVisor] Grants a plague dash which can slam through enemies without taking damage
+					Summons a lil' plaguebringer which swarms your foes with little bees
+					+3 max minions
+					[i:CalamityMod/TheBee] When at full HP, your damage is increased based on your damage reduction
+					Damage taken at full HP is halved
+					Any energy shields must be fully charged for this effect to apply
+					This has a 6 second cooldown
+					[i:CalamityMod/InfectedRemote] Summons a humanoid-hybrid Plaguebringer, codenamed 'Virili', to aid you in battle
+					Virili requires 3 minion slots to summon, and can only be summoned once
+					Virili uses a variety of attacks which she cycles through on a timer
+					All attacks spread the plague, as was her original design intention
+					'There's a single label on the back:
+					WARNING: Subject is extremely corrosive and contagious. Avoid direct contact.'
+					'A certain viral hivemind in one body would be tickled pink'
+					'''
 			}
 
 			PlagueReaperEnchant: {
-				DisplayName: Plague Reaper Enchant
-				Tooltip: ""
+				DisplayName: Plague Reaper Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/PlagueReaperMask] 25% reduced ammo usage and 5% increased flight time
+					Enemies receive 10% more damage from ranged projectiles when afflicted by the Plague
+					Getting hit causes plague cinders to rain from above
+					Press Armor Set Bonus to blind yourself for 5 seconds but massively boost your ranged damage
+					This has a 25 second cooldown
+					[i:CalamityMod/AlchemicalDecanter] All attacks inflict the [cbuff:CalamityMod/Plague] and reduces damage taken from the [cbuff:CalamityMod/Plague] by 50%
+					Projectiles spawn plague seekers on enemy hits
+					Releases plague bees and douses you in [cbuff:Honey] when damaged
+					[i:CalamityMod/PlaguedFuelPack] 8% increased rogue damage and 15% increased rogue projectile velocity
+					Stealth generates 10% faster
+					Press [KEY] to consume 25% of your maximum stealth to perform a swift upwards diagonal dash
+					This dash leaves a trail of plagued clouds
+					This effect has a 1 second cooldown before it can be used again
+					'My good doctor my cure is most effective'
+					'''
 			}
 
 			PrismaticEnchant: {
@@ -284,7 +584,7 @@ Mods: {
 			}
 
 			ReaverEnchantEx: {
-				DisplayName: Reaver Enchant Ex
+				DisplayName: Reaver Enchantment EX
 				Tooltip: ""
 			}
 
@@ -294,17 +594,17 @@ Mods: {
 			}
 
 			SnowRuffianEnchantEx: {
-				DisplayName: Snow Ruffian Enchant Ex
+				DisplayName: Snow Ruffian Enchantment EX
 				Tooltip: ""
 			}
 
 			StatigelEnchantEx: {
-				DisplayName: Statigel Enchant Ex
+				DisplayName: Statigel Enchantment EX
 				Tooltip: ""
 			}
 
 			SulphurousEnchantEx: {
-				DisplayName: Sulphurous Enchant Ex
+				DisplayName: Sulphurous Enchantment EX
 				Tooltip: ""
 			}
 
@@ -314,37 +614,91 @@ Mods: {
 			}
 
 			TitanHeartEnchantEx: {
-				DisplayName: Titan Heart Enchant Ex
+				DisplayName: Titan Heart Enchantment EX
 				Tooltip: ""
 			}
 
 			UmbraphileEnchant: {
-				DisplayName: Umbraphile Enchant
-				Tooltip: ""
+				DisplayName: Umbraphile Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/UmbraphileHood] +110 maximum stealth
+					Rogue weapons have a chance to create explosions on hit
+					Stealth strikes always create an explosion
+					[i:CalamityMod/VampiricTalisman] Rogue critical strikes steal enemy life
+					Stealth strikes grant 15% critical strike chance and increased lifesteal to non-stealth strikes for 10 seconds
+					Stealth strikes inflict Heavy Bleeding and Armor Crunch, and deal 8% more damage
+					[i:CalamityMod/CoinofDeceit] Stealth strikes only expend 90% of your max stealth
+					6% increased rogue crit chance
+					'The power of the Shadows ar yours'
+					'''
 			}
 
 			VictideEnchantEx: {
-				DisplayName: Victide Enchant Ex
+				DisplayName: Victide Enchantment EX
 				Tooltip: ""
 			}
 
 			WulfrumEnchantEx: {
-				DisplayName: Wulfrum Enchant Ex
-				Tooltip: ""
+				DisplayName: Wulfrum Enchantment EX
+				Tooltip:
+					'''
+					[i:CalamityMod/WulfrumHat]{$CommonItemTooltip.PercentIncreasedSummonDamage}
+					Comes equipped with hair extensions
+					SetBonus:
+					[c/{0}:Wulfrum Bastion - {1} to equip a power armor, costing one] [i:CalamityMod/WulfrumMetalScrap] [c/{0}:{$Items.Materials.WulfrumMetalScrap.DisplayName}]
+					[c/6EC05D:While active, you can only use the integrated fusion cannon, but your defensive stats are increased]
+					[c/6EC05D:The armor lasts up to {2} {^2:second;seconds}, but each hit loses {3} {^3:second;seconds} of duration]
+					[c/BEBEBE:Hold Shift to see the stats of the fusion cannon] 
+					[i:CalamityMod/WulfrumAcrobaticsPack] Provides a wulfrum slingshot grappling hook
+					This slingshot's stats scale with your equipped hook
+					If the hook has special effects, the slingshot also benefits from them
+					The slingshot allows for advanced rope-swinging physics
+					Hold {$Key.UP} or {$Key.DOWN} to retract or extend the slingshot's rope
+					Automatically grapples nearby walls if a lethal fall is detected
+					This safety feature won't activate if {$Key.DOWN} is held
+					8% increased movement speed
+					[i:CalamityMod/TrinketofChi] Increases damage reduction by 8% if you avoid taking damage for 10 seconds
+					This buff expires on hit
+					+1 HP/s life regen for you and your teammates
+					'''
+				SetBonus:
+					'''
+					[c/{0}:Wulfrum Bastion - {1} to equip a power armor, costing one] [i:CalamityMod/WulfrumMetalScrap] [c/{0}:{$Items.Materials.WulfrumMetalScrap.DisplayName}]
+					[c/6EC05D:While active, you can only use the integrated fusion cannon, but your defensive stats are increased]
+					[c/6EC05D:The armor lasts up to {2} {^2:second;seconds}, but each hit loses {3} {^3:second;seconds} of duration]
+					[c/BEBEBE:Hold Shift to see the stats of the fusion cannon]
+					'''
 			}
 
 			AnnihilationForce: {
-				DisplayName: Annihilation Force
-				Tooltip: ""
+				DisplayName: Force of Annihlation
+				Tooltip:
+					'''
+					[i:gcsep/EmpyreanEnchant] Effects of Dark Heart, Dark Matter Sheath and Empyrean Armor
+					[i:gcsep/PlagueReaperEnchant] Effects of Plague Fuel Pack, Alchemical Decanter, and Plague Reaper Armor
+					[i:gcsep/PlaguebringerEnchant] Effects of The Bee and Plaguebringer Armor
+					[i:gcsep/PlaguebringerEnchant] Summons [cbuff:CalamityMod/ViriliBuff] to fight for you
+					[i:gcsep/FearfallenEnchant] Effects of Spectral Veil, Nightfallen and Fearmonger Armors
+					[i:gcsep/BrimflameEnchant] Effects of Flame-Licked Shell, Abaddon, Slagspitter Pauldron, Void of Calamity, Sigil of Calamitas, and Brimflame Armor
+					'''
 			}
 
 			DesolationForce: {
-				DisplayName: Desolation Force
-				Tooltip: ""
+				DisplayName: Force of Desolation
+				Tooltip:
+					'''
+					[i:gcsep/AstralEnchant] Effects of Interstellar Stompers, Ursa Sergeant, and Astral Armor
+					[i:gcsep/UmbraphileEnchant] Effects of Vampiric Talisman, Coin of Deceit, and Umbraphile Hood
+					[i:gcsep/FathomSwarmerEnchant] Effects of Diamond of the Deep, Corrosive Spine, and Fathom Swarmer Visage
+					[i:gcsep/MolluskEnchant] Effects of Giant Pearl, Aquatic Emblem, and Mollusk Shell Armor
+					[i:gcsep/OmegaBlueEnchant] Effects of Old Duke Scales, Reaper Tooth Necklace, and Omega Blue Armor
+					[i:gcsep/OmegaBlueEnchant] Summons a [cbuff:CalamityMod/MutatedTruffleBuff] to fight for you
+					'''
 			}
 
 			DevastationForceEx: {
-				DisplayName: Devastation Force Ex
+				DisplayName: Force of Devastation EX
 				Tooltip: ""
 			}
 
@@ -364,7 +718,7 @@ Mods: {
 			}
 
 			CalamitySoul: {
-				DisplayName: Calamity Soul
+				DisplayName: Soul of Calamity
 				Tooltip: ""
 			}
 
@@ -374,7 +728,7 @@ Mods: {
 			}
 
 			PotJT: {
-				DisplayName: Pot J T
+				DisplayName: Pendant of the Godseeker
 				Tooltip: ""
 			}
 
@@ -409,7 +763,7 @@ Mods: {
 			}
 
 			DragonEnchantC: {
-				DisplayName: Dragon Enchant C
+				DisplayName: Dragon Enchant(Consolaria)
 				Tooltip: ""
 			}
 
@@ -429,12 +783,12 @@ Mods: {
 			}
 
 			TitanEnchantC: {
-				DisplayName: Titan Enchant C
+				DisplayName: Titan Enchant (Consolaria)
 				Tooltip: ""
 			}
 
 			WarlockEnchantC: {
-				DisplayName: Warlock Enchant C
+				DisplayName: Warlock Enchant (Consolaria)
 				Tooltip: ""
 			}
 
@@ -604,7 +958,7 @@ Mods: {
 			}
 
 			GtTETFinal: {
-				DisplayName: Gt T E T Final
+				DisplayName: Guide to Expert Throwing Final Volume
 				Tooltip: ""
 			}
 
@@ -1159,7 +1513,7 @@ Mods: {
 			}
 
 			SoASoul: {
-				DisplayName: So A Soul
+				DisplayName: Soul of the Twin Worlds
 				Tooltip: ""
 			}
 
@@ -1774,7 +2128,7 @@ Mods: {
 			}
 
 			TitanEnchantT: {
-				DisplayName: Titan Enchant T
+				DisplayName: Titan Enchantment(Thorium)
 				Tooltip: ""
 			}
 
@@ -2019,12 +2373,12 @@ Mods: {
 			}
 
 			MotDE: {
-				DisplayName: Mot D E
+				DisplayName: Mark of the Dream Eater
 				Tooltip: ""
 			}
 
 			ThoriumSoul: {
-				DisplayName: Thorium Soul
+				DisplayName: Soul of Yggdrasil
 				Tooltip: ""
 			}
 
@@ -2115,12 +2469,20 @@ Mods: {
 
 			Calavia: {
 				DisplayName: Calavia
-				Tooltip: ""
+				Tooltip:
+					'''
+					'A Certain Space Bounty Hunter is gonna sue this one'
+					Spawns Calavia NPC
+					'''
 			}
 
 			Politician: {
 				DisplayName: Politician
-				Tooltip: ""
+				Tooltip:
+					'''
+					'Scum of Terraria this one is a projenitor of vaudevillian he is'
+					Spawns Politican NPC
+					'''
 			}
 
 			Gambler: {
@@ -2175,7 +2537,7 @@ Mods: {
 
 			LivingWoodEnchantR: {
 				Tooltip: ""
-				DisplayName: Living Wood Enchant R
+				DisplayName: Living Wood Enchantment(Redemption)
 			}
 
 			SoulOfDiversity: {
@@ -2430,7 +2792,7 @@ Mods: {
 
 			MonstrosityEnchant: {
 				DisplayName: Monstrosity Enchant
-				Tooltip: ""
+				Tooltip: "[i:gcsep/TrueMonstrosityMask] Effects of Monstrocity Armor"
 			}
 
 			ReaverRework: {
@@ -2439,11 +2801,89 @@ Mods: {
 			}
 		}
 
+		Toggler: {
+			//calamityaddons
+			PyrogenEffect: Soul of Pyrogen
+			HellFlareEffect: Hell Flare
+			ClamitasEffect: Hellfire Shells
+			FrozenEffect: Ice Shield
+			IntergelacticArmorsEffect: Intergelatic Armor
+			IntergelacticSummonEffect: Asteroid Cluster
+			InfluxEffect: Influx Cluster
+			HolyMantleEffect: Holy Mantle
+			WyrmToothEffect: Wyrm Tooth Necklace
+			MarviumEffect: Marvium Shields
+			ShogunEffect: Shogun Armor
+			TendrilsEffect: Tendril Cursor
+			SplendorEffect: Splendor Jam
+			SkirtEffect: Portal Skirt
+			DeificEffect: Deific Touch
+			DivineEffect: Divine Wings
+			VoidFaquirArmorEffect: Void Faquir Gauge
+			VoidSymbiontEffect: Void Symbiont
+			ReincarnationBadgeEffect: Reincarnation Badge
+			SolynsSigilHeader: Solyn's Sigil
+			AddonsForceHeader: Force of Additions
+			//calamity
+			//Annihilation
+			DarkHeartCalamityEffect: Dark Heart
+			DarkSheathEffect: Dark Matter Sheath
+			EmpyreanEffect: Empyrean Rage
+			PlagueReaperEffect: Plague Reaper Blackout
+			AlchemicalEffect: Alchemical Decanter
+			FuelPackEffect: Plague Feul Pack
+			PlaguebringerEffect: Lil Plaguebringer
+			TheBeeEffect: The Bee
+			ViriliEffect: Virili Minion
+			FearfallenArmorsEffect: Nightfallen and Fearmonger Armor
+			VeilEffect: Spectral Veil
+			BrimflameEffect: Brimflame Cowl
+			FlameShellEffect: Flame Licked Shell
+			AbaddonEffect: Abaddon
+			SlagSpitterEffect: Slagspitter Pauldron
+			VoidCalamityEffect: Void of Calamity
+			SigilEffect: Sigil of Calamitas
+			AnnihilationForceHeader: Force of Annihilation
+			//Desolation
+			AstralEffect: Astral Armor
+			UrsaEffect: Ursa Sergeant
+			InterstellarEffect: Interstellar Stompers
+			UmbraphileEffect: Umbraphile Armor
+			VampiricEffect: Vampiric Talisman
+			DecietEffect: Coin of Deceit
+			ReaperEffect: Reaper Tooth Necklace
+			OldScaleEffect: Old Duke Scales
+			OmegaBlueEffect: Omega Blue Tentacles
+			TruffleEffect: Baby Boomer
+			AmuletEffect: Diamond of the Deep
+			SpineEffect: Corrosive Spine
+			SwarmerEffect: Fathom Swarmer Armor
+			ShellfishEffect: Abyssal Shellfish
+			EmblemEffect: Aquatic Emblem
+			PearlEffect: Giant Pearl
+			//DevastationEX
+			VoidEffect: Void of Extinction
+			EtherealEffect: Ethereal Extorter
+			HydrothermicArmorsEffect: Hydrothermic Armor
+			HydrothermicVentEffect: Hydrothermic Vent
+			TitanEffect: Titan Armor
+			MoonCrownEffect: Moonstone Crown
+			JewelEffect: Infected Jewel
+			FrostFlareEffect: Frost Flare
+			DaedalusArmorEffect: Daedalus Armor
+			DaeadlusCrystalEffect: Daedalus Crystal
+			OrnateEffect: Ornate Shield
+			ReaverArmorEffect: Reaver Armor
+			ReaverOrbEffect: Reaver Orb
+			VexationEffect: Necklace of Vexation
+			DewEffect: Living Dew
+		}
+
 		NPCs: {
 			CeilingOfMoonLord.DisplayName: Ceiling Of Moon Lord
 			CeilingOfMoonLordEye.DisplayName: Ceiling Of Moon Lord Eye
 			CeilingOfMoonLordFace.DisplayName: Ceiling Of Moon Lord Face
-			DukeFishronEX.DisplayName: Duke Fishron E X
+			DukeFishronEX.DisplayName: Duke Fishron EX
 			Echdeath.DisplayName: Echdeath
 			GunCelebration.DisplayName: Gun Celebration
 			GunMagnum.DisplayName: Gun Magnum
@@ -2471,7 +2911,7 @@ Mods: {
 					Princess_LovesNPC: I like {NPCName}.
 				}
 
-				Census.SpawnCondition: Conditions unknown
+				Census.SpawnCondition: Conditions [Redacted]
 			}
 
 			MutantAuraOfSupression.DisplayName: Mutant Aura Of Supression
@@ -2593,14 +3033,12 @@ Mods: {
 			SwampyRenewalSupremeProj.DisplayName: Swampy Renewal Supreme Proj
 			CyberHitbox.DisplayName: Cyber Hitbox
 			IllumiteAuraProj.DisplayName: Illumite Aura Proj
-			NamelessMagicCircle.DisplayName: Nameless Magic Circle
-			NamelessBeam.DisplayName: Nameless Beam
 			Typeless.ReaverOrb.DisplayName: Reaver Orb
 		}
 
 		Configs: {
 			GCSEConfig: {
-				DisplayName: G C S E Config
+				DisplayName: GodzillaJedi's Community Soul Expansion Plus Config
 
 				Headers: {
 					General: General Header
@@ -2716,7 +3154,7 @@ Mods: {
 				}
 
 				SOTS: {
-					Label: S O T S
+					Label: Secrets of the Shadows
 					Tooltip: ""
 				}
 

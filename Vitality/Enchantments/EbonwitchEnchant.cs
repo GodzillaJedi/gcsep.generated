@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.BloodHunter.Armor;
-using VitalityMod.Items.Accessories;
+using VitalityMod.Content.Items.Accessories.Combat.Defensive;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Melee;
+using VitalityMod.Content.Items.Armor.BloodHunter.Ebonwitch;
 
 namespace gcsep.Vitality.Enchantments
 {

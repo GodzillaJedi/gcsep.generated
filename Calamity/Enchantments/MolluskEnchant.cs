@@ -57,8 +57,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<MolluskEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().giantPearl = true;
-                Lighting.AddLight((int)player.Center.X / 16, (int)player.Center.Y / 16, 0.45f, 0.8f, 0.8f);
+                ModContent.GetInstance<GiantPearl>().UpdateAccessory(player, true);
             }
         }
         public class EmblemEffect : AccessoryEffect
@@ -67,16 +66,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<MolluskEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().aquaticEmblem = true;
-                player.npcTypeNoAggro[65] = true;
-                player.npcTypeNoAggro[220] = true;
-                player.npcTypeNoAggro[64] = true;
-                player.npcTypeNoAggro[67] = true;
-                player.npcTypeNoAggro[221] = true;
-                if (player.IsUnderwater())
-                {
-                    player.gills = true;
-                }
+                ModContent.GetInstance<AquaticEmblem>().UpdateAccessory(player, true);
             }
         }
         public class ShellfishEffect : AccessoryEffect

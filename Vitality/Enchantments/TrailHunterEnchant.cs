@@ -6,9 +6,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.BloodHunter.Armor;
-using VitalityMod.Items.MosquitoMonarch;
-using static gcsep.Vitality.Enchantments.OccultEnchant;
+using VitalityMod.Content.Items.Accessories.Expert;
+using VitalityMod.Content.Items.Armor.BloodHunter.Trailhunter;
 
 namespace gcsep.Vitality.Enchantments
 {
@@ -28,8 +27,8 @@ namespace gcsep.Vitality.Enchantments
         public override Color nameColor => Color.LightPink;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.AddEffect<OcculticEffect>(Item);
-            if (player.AddEffect<WizardryEffect>(Item))
+            player.AddEffect<TrailhunterEffect>(Item);
+            if (player.AddEffect<SanRingEffect>(Item))
             {
                 ModContent.GetInstance<SanguineRing>().UpdateAccessory(player, hideVisual);
             }

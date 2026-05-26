@@ -64,20 +64,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<FathomSwarmerEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.moveSpeed += 0.05f;
-                player.Calamity().corrosiveSpine = true;
-                if (player.immune && Main.rand.NextBool(15))
-                {
-                    IEntitySource source_Accessory = player.GetSource_Accessory(EffectItem(player));
-                    int num = Main.rand.Next(2, 5);
-                    for (int i = 0; i < num; i++)
-                    {
-                        int type = Utils.SelectRandom<int>(Main.rand, ModContent.ProjectileType<Corrocloud1>(), ModContent.ProjectileType<Corrocloud2>(), ModContent.ProjectileType<Corrocloud3>());
-                        float num2 = Main.rand.NextFloat(3f, 11f);
-                        int damage = (int)player.GetTotalDamage<RogueDamageClass>().ApplyTo(80f);
-                        Projectile.NewProjectile(source_Accessory, player.Center, Vector2.One.RotatedByRandom(6.2831854820251465) * num2, type, damage, 0f, player.whoAmI);
-                    }
-                }
+                ModContent.GetInstance<CorrosiveSpine>().UpdateAccessory(player, true);
             }
         }
         public class AmuletEffect : AccessoryEffect

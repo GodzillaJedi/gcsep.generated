@@ -6,6 +6,7 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Demonshade;
 using CalamityMod.Items.Armor.Mollusk;
 using CalamityMod.Items.Armor.Plaguebringer;
+using CalamityMod.Items.Armor.PlagueReaper;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Projectiles.Summon;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
@@ -63,48 +64,9 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<AnnihilationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<PlaguebringerEnchant>();
-            public static int BeeMinionDamage = 25;
-
             public override void PostUpdateEquips(Player player)
             {
-                var cal = player.Calamity();
-
-                // Enable Calamity set bonus
-                cal.plaguebringerPatronSet = true;
-
-                // Calamity handles dash logic internally — do NOT touch player.dashType
-                cal.DashID = PlaguebringerArmorDash.ID;
-
-                // Only local player handles buff + minion
-                if (player.whoAmI != Main.myPlayer)
-                    return;
-
-                // Apply buff without resetting timer every tick
-                int buffType = ModContent.BuffType<LilPlaguebringerBuff>();
-                if (!player.HasBuff(buffType))
-                    player.AddBuff(buffType, 2);
-
-                // Spawn minion if missing
-                int projType = ModContent.ProjectileType<PlaguebringerSummon>();
-                if (player.ownedProjectileCounts[projType] <= 0)
-                {
-                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(BeeMinionDamage);
-
-                    var proj = Projectile.NewProjectileDirect(
-                        player.GetSource_FromThis(),
-                        player.Center,
-                        new Vector2(0f, -1f),
-                        projType,
-                        damage,
-                        0f,
-                        player.whoAmI
-                    );
-
-                    proj.originalDamage = BeeMinionDamage;
-                }
-
-                // Lighting effect is fine
-                Lighting.AddLight(player.Center, 0f, 0.39f, 0.24f);
+                ModContent.GetInstance<PlaguebringerVisor>().UpdateArmorSet(player);
             }
         }
         public class TheBeeEffect : AccessoryEffect
@@ -113,7 +75,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<PlaguebringerEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().theBee = true;
+                ModContent.GetInstance<TheBee>().UpdateAccessory(player, true);
             }
         }
         public class ViriliEffect : AccessoryEffect

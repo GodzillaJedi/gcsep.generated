@@ -6,8 +6,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.BloodHunter.Accessories;
-using VitalityMod.BloodHunter.Armor;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.BloodHunter;
+using VitalityMod.Content.Items.Armor.BloodHunter.Darkblood;
 
 namespace gcsep.Vitality.Enchantments
 {

@@ -1,6 +1,4 @@
 using CalamityBardHealer.Items;
-using CalamityMod;
-using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Aerospec;
 using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
@@ -14,7 +12,6 @@ using RagnarokMod.Items.HealerItems.Armor;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.Accessories;
 
 namespace gcsep.Calamity.Enchantments
 {

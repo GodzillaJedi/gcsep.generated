@@ -10,27 +10,30 @@ namespace gcsep.SoA
     [ExtendsFromMod(ModCompatibility.SacredTools.Name)]
     public class ThoriumSoulsTooltips : GlobalItem
     {
-        static string ExpandedTooltipLoc(string line) => Language.GetTextValue($"Mods.gcsep.ExpandedTooltips.{line}");
+        static string ExpandedTooltipLoc(string key) =>
+            Language.GetTextValue($"Mods.gcsep.ExpandedTooltips.{key}");
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            string key = "Mods.gcsep.Items.AddedEffects.";
+            if (item.social)
+                return;
 
-            if (item.type == ModContent.ItemType<ColossusSoul>() && !item.social)
+            void AddTooltip(string internalName, string locKey)
             {
-                tooltips.Insert(8, new TooltipLine(Mod, "ThoriumColossusSoul", Language.GetTextValue(key + "ThoriumColossus")));
+                tooltips.Add(new TooltipLine(Mod, internalName, ExpandedTooltipLoc(locKey)));
             }
 
-            if (item.type == ModContent.ItemType<UniverseSoul>() && !item.social)
-            {
-                tooltips.Insert(15, new TooltipLine(Mod, "ThoriumUniverseSoul",
-                    Language.GetTextValue(key + "ThoriumUniverse")));
-            }
+            // Thorium Colossus Soul
+            if (item.type == ModContent.ItemType<ColossusSoul>())
+                AddTooltip("ThoriumColossusSoul", "ThoriumColossus");
 
-            if (item.type == ModContent.ItemType<DimensionSoul>() && !item.social)
-            {
-                tooltips.Insert(15, new TooltipLine(Mod, "ThoriumDimestionSoul",
-                    Language.GetTextValue(key + "ThoriumColossus")));
-            }
+            // Thorium Universe Soul
+            if (item.type == ModContent.ItemType<UniverseSoul>())
+                AddTooltip("ThoriumUniverseSoul", "ThoriumUniverse");
+
+            // Thorium Dimension Soul
+            if (item.type == ModContent.ItemType<DimensionSoul>())
+                AddTooltip("ThoriumDimensionSoul", "ThoriumColossus");
         }
     }
 }

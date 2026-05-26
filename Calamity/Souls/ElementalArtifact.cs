@@ -16,9 +16,9 @@ namespace gcsep.Calamity.Souls
     {
         public override void SetDefaults()
         {
-            this.Item.value = Item.buyPrice(1, 0, 0, 0);
-            this.Item.rare = ItemRarityID.Red;
-            this.Item.accessory = true;
+            Item.value = Item.buyPrice(1, 0, 0, 0);
+            Item.rare = ItemRarityID.Red;
+            Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -50,7 +50,7 @@ namespace gcsep.Calamity.Souls
             public override int ToggleItemType => ModContent.ItemType<ChaosStone>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().ChaosStone = true;
+                ModContent.GetInstance<ChaosStone>().UpdateAccessory(player, true);
             }
         }
         public class CryoStoneEffect : CalamitySoulEffect
@@ -58,18 +58,15 @@ namespace gcsep.Calamity.Souls
             public override int ToggleItemType => ModContent.ItemType<CryoStone>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().CryoStone = true;
-                player.Calamity().ColdDebuffMultiplier += 0.5f;
+                ModContent.GetInstance<CryoStone>().UpdateAccessory(player, true);
             }
         }
         public class AeroStoneEffect : CalamitySoulEffect
         {
             public override int ToggleItemType => ModContent.ItemType<AeroStone>();
-            public static int FlightTimeBoostFlat = 50;
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().aeroStone = true;
-                player.wingTimeMax += FlightTimeBoostFlat;
+                ModContent.GetInstance<AeroStone>().UpdateAccessory(player, true);
             }
         }
         public class BloomStoneEffect : CalamitySoulEffect
@@ -77,11 +74,7 @@ namespace gcsep.Calamity.Souls
             public override int ToggleItemType => ModContent.ItemType<BloomStone>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                Lighting.AddLight((int)player.Center.X / 16, (int)player.Center.Y / 16, 0.25f, 0.4f, 0.2f);
-                calamityPlayer.healingPotionMultiplier += 0.5f;
-                calamityPlayer.bloomStone = true;
-                calamityPlayer.bloomStoneHookVisuals = true;
+                ModContent.GetInstance<BloomStone>().UpdateAccessory(player, true);
             }
         }
     }

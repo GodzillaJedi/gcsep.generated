@@ -1,12 +1,13 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Astral;
+using CalamityMod.Items.Armor.OmegaBlue;
 using CalamityMod.Items.Fishing.AstralCatches;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -31,39 +32,34 @@ namespace gcsep.Calamity.Enchantments
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.AddEffect<AstralEffect>(Item);
-            if (player.AddEffect<UrsaEffect>(Item))
-            {
-                ModContent.GetInstance<UrsaSergeant>().UpdateAccessory(player, hideVisual);
-            }
-            if (player.AddEffect<InterstellarEffect>(Item))
-            {
-                ModContent.GetInstance<InterstellarStompers>().UpdateAccessory(player, hideVisual);
-            }
+            player.AddEffect<UrsaEffect>(Item);
+            player.AddEffect<InterstellarEffect>(Item);
         }
         public class UrsaEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<DesolationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<AstralEnchant>();
+            public override void PostUpdateEquips(Player player)
+            {
+                ModContent.GetInstance<UrsaSergeant>().UpdateAccessory(player, true);
+            }
         }
         public class InterstellarEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<DesolationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<AstralEnchant>();
+            public override void PostUpdateEquips(Player player)
+            {
+                ModContent.GetInstance<InterstellarStompers>().UpdateAccessory(player, true);
+            }
         }
         public class AstralEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<DesolationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<AstralEnchant>();
-
             public override void PostUpdateEquips(Player player)
             {
-                player.setBonus = Language.GetTextValue("Mods.gcsep.Calamity.Effects.AstralEffect.SetBonus");
-                player.Calamity().astralStarRain = true;
-                player.moveSpeed += 0.05f;
-                player.GetDamage<GenericDamageClass>() += 0.35f;
-                player.maxMinions += 3;
-                player.GetCritChance<GenericDamageClass>() += 25f;
-                player.Calamity().wearingRogueArmor = true;
+                ModContent.GetInstance<AstralHelm>().UpdateArmorSet(player);
             }
         }
         public override void AddRecipes()

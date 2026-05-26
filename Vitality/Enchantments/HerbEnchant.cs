@@ -6,8 +6,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.Accessories;
-using VitalityMod.Items.Armor;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Summoner;
+using VitalityMod.Content.Items.Armor.Generic.Herb;
 
 namespace gcsep.Vitality.Enchantments
 {

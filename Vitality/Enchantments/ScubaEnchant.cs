@@ -6,7 +6,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.Scuba;
+using VitalityMod.Content.Items.Armor.Generic.Scuba;
+using VitalityMod.Content.Items.Armor.Ranged.Robin;
 
 namespace gcsep.Vitality.Enchantments
 {
@@ -26,10 +27,7 @@ namespace gcsep.Vitality.Enchantments
         public override Color nameColor => Color.DarkGray;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (player.AddEffect<ScubaEffect>(Item))
-            {
-                ModContent.GetInstance<ScubaHelmet>().UpdateArmorSet(player);
-            }
+            player.AddEffect<ScubaEffect>(Item);
         }
         public override void AddRecipes()
         {
@@ -45,6 +43,10 @@ namespace gcsep.Vitality.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<TrawlerHeader>();
             public override int ToggleItemType => ModContent.ItemType<ScubaEnchant>();
+            public override void PostUpdateEquips(Player player)
+            {
+                ModContent.GetInstance<ScubaHelmet>().UpdateArmorSet(player);
+            }
         }
     }
 }

@@ -94,7 +94,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<ReaverEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().vexation = true;
+                ModContent.GetInstance<NecklaceofVexation>().UpdateAccessory(player, true);
             }
         }
         public class DewEffect : AccessoryEffect
@@ -104,17 +104,7 @@ namespace gcsep.Calamity.Enchantments
 
             public override void PostUpdateEquips(Player player)
             {
-                // Flat stat bonuses
-                player.statLifeMax2 += 50;
-                player.statManaMax2 += 20;
-
-                // Calamity integration
-                CalamityPlayer cal = player.Calamity();
-
-                cal.alwaysHoneyRegen = true;
-                cal.honeyTurboRegen = true;
-                cal.honeyDewHalveDebuffs = true;
-                cal.livingDewHalveDebuffs = true;
+                ModContent.GetInstance<LivingDew>().UpdateAccessory(player, true);
             }
         }
         public override void AddRecipes()

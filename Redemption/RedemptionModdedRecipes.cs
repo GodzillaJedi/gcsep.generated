@@ -14,6 +14,7 @@ using Terraria;
 using Terraria.ModLoader;
 using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Souls;
 using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Essences;
+using Redemption.Items.Weapons.PostML.Melee;
 
 namespace gcsep.Redemption
 {
@@ -46,7 +47,7 @@ namespace gcsep.Redemption
                 }
                 if (recipe.HasResult(ModContent.ItemType<BerserkerSoul>()))
                 {
-                    if (ModCompatibility.Redemption.Loaded) { recipe.AddIngredient(ModCompatibility.Redemption.Mod.Find<ModItem>("PZGauntlet"), 1); recipe.AddIngredient(ModCompatibility.Redemption.Mod.Find<ModItem>("MutagenMelee"), 1); recipe.RemoveIngredient(ModContent.ItemType<BarbariansEssence>()); }
+                    if (ModCompatibility.Redemption.Loaded) { recipe.AddIngredient(ModCompatibility.Redemption.Mod.Find<ModItem>("XeniumLance"), 1); recipe.AddIngredient(ModCompatibility.Redemption.Mod.Find<ModItem>("MutagenMelee"), 1); recipe.RemoveIngredient(ModContent.ItemType<BarbariansEssence>()); }
                 }
                 if (recipe.HasResult(ModContent.ItemType<ColossusSoul>()))
                 {

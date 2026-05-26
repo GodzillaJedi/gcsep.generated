@@ -10,19 +10,36 @@ namespace gcsep.SOTS
     [ExtendsFromMod(ModCompatibility.SOTS.Name)]
     public class SOTSTooltips : GlobalItem
     {
+        static string ExpandedTooltipLoc(string key) =>
+            Language.GetTextValue($"Mods.gcsep.ExpandedTooltips.{key}");
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            string key = "Mods.gcsep.Items.AddedEffects.";
+            if (item.social)
+                return;
 
-            if (item.type == ModContent.ItemType<ColossusSoul>() && !item.social)
+            void AddTooltip(string internalName, string locKey)
             {
-                tooltips.Insert(8, new TooltipLine(Mod, "SOTSColossusSoul", Language.GetTextValue(key + "SOTSColossus")));
-                tooltips.Insert(4, new TooltipLine(Mod, "SOTSFlightMasterySoul", Language.GetTextValue(key + "SOTSFlightMastery")));
+                tooltips.Add(new TooltipLine(Mod, internalName, ExpandedTooltipLoc(locKey)));
             }
 
-            if (item.type == ModContent.ItemType<DimensionSoul>() && !item.social)
+            // Colossus Soul
+            if (item.type == ModContent.ItemType<ColossusSoul>())
             {
-                tooltips.Insert(15, new TooltipLine(Mod, "SOTSDimensionSoul", Language.GetTextValue(key + "SOTSFlightMastery") + "\n" + Language.GetTextValue(key + "SOTSColossus")));
+                AddTooltip("SOTSColossusSoul", "SOTSColossus");
+            }
+            //Flight Mastey Soul
+            if (item.type == ModContent.ItemType<FlightMasterySoul>())
+            {
+                AddTooltip("SOTSFlightMasterySoul", "SOTSFlightMastery");
+            }
+            // Dimension Soul
+            if (item.type == ModContent.ItemType<DimensionSoul>())
+            {
+                tooltips.Add(new TooltipLine(Mod, "SOTSDimensionSoul",
+                    ExpandedTooltipLoc("SOTSFlightMastery") + "\n" +
+                    ExpandedTooltipLoc("SOTSColossus")
+                ));
             }
         }
     }

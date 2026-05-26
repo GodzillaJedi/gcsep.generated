@@ -10,6 +10,7 @@ using gcsep.Content.Items.Accessories;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ContinentOfJourney.Items;
 
 namespace gcsep.Homeward
 {
@@ -117,7 +118,7 @@ namespace gcsep.Homeward
 
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("DivineNecklace").UpdateAccessory(player, true);
+                ModContent.GetInstance<DivineNecklace>().UpdateAccessory(player, true);
             }
         }
         public class ArrowCaseEffect : AccessoryEffect
@@ -127,7 +128,7 @@ namespace gcsep.Homeward
 
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("ArrowCase").UpdateAccessory(player, true);
+                ModContent.GetInstance<ArrowCase>().UpdateAccessory(player, true);
             }
         }
         public class EdgewalkerEffect : AccessoryEffect
@@ -137,7 +138,7 @@ namespace gcsep.Homeward
 
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("Edgewalker").UpdateAccessory(player, true);
+                ModContent.GetInstance<Edgewalker>().UpdateAccessory(player, true);
             }
         }
         public class EruditeBookmarkEffect : AccessoryEffect
@@ -147,7 +148,7 @@ namespace gcsep.Homeward
 
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("EruditeBookmark").UpdateAccessory(player, true);
+                ModContent.GetInstance<EruditeBookmark>().UpdateAccessory(player, true);
             }
         }
         [ExtendsFromMod(ModCompatibility.Homeward.Name)]
@@ -158,7 +159,7 @@ namespace gcsep.Homeward
 
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("RejuvenatedCross").UpdateAccessory(player, true);
+                ModContent.GetInstance<RejuvenatedCross>().UpdateAccessory(player, true);
             }
         }
         public class OneGiantLeapEffect : AccessoryEffect
@@ -167,7 +168,7 @@ namespace gcsep.Homeward
             public override Header ToggleHeader => Header.GetHeader<ColossusHeader>();
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("OneGiantLeap").UpdateAccessory(player, true);
+                ModContent.GetInstance<OneGiantLeap>().UpdateAccessory(player, true);
             }
         }
         [ExtendsFromMod(ModCompatibility.Homeward.Name)]
@@ -178,7 +179,7 @@ namespace gcsep.Homeward
 
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("PhilosophersStone").UpdateAccessory(player, true);
+                ModContent.GetInstance<PhilosophersStone>().UpdateAccessory(player, true);
             }
         }
         [ExtendsFromMod(ModCompatibility.Homeward.Name)]
@@ -189,7 +190,7 @@ namespace gcsep.Homeward
 
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("CommandersGaunlet").UpdateAccessory(player, true);
+                ModContent.GetInstance<CommandersGaunlet>().UpdateAccessory(player, true);
             }
         }
         [ExtendsFromMod(ModCompatibility.Homeward.Name)]
@@ -201,7 +202,7 @@ namespace gcsep.Homeward
             public override void PostUpdateEquips(Player player)
             {
                 //no free 15% stat boosts
-                ModCompatibility.Homeward.Mod.Find<ModItem>("DivineEmblem").UpdateAccessory(player, true);
+                ModContent.GetInstance<GodlyRing>().UpdateAccessory(player, true);
             }
         }
         [ExtendsFromMod(ModCompatibility.Homeward.Name)]
@@ -212,7 +213,7 @@ namespace gcsep.Homeward
 
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("WalnutOnFire").UpdateAccessory(player, true);
+                ModContent.GetInstance<WalnutOnFire>().UpdateAccessory(player, true);
             }
         }
         [ExtendsFromMod(ModCompatibility.Homeward.Name)]
@@ -223,7 +224,7 @@ namespace gcsep.Homeward
 
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("StarQuiver").UpdateAccessory(player, true);
+                ModContent.GetInstance<StarQuiver>().UpdateAccessory(player, true);
             }
         }
         [ExtendsFromMod(ModCompatibility.Homeward.Name)]
@@ -234,7 +235,7 @@ namespace gcsep.Homeward
 
             public override void PostUpdateEquips(Player player)
             {
-                ModCompatibility.Homeward.Mod.Find<ModItem>("TheBatter").UpdateAccessory(player, true);
+                ModContent.GetInstance<TheBatter>().UpdateAccessory(player, true);
             }
         }
         public class BerserkerGloveEffect : AccessoryEffect

@@ -6,7 +6,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.AnarchulesBeetle;
+using VitalityMod.Content.Items.Accessories.Expert;
+using VitalityMod.Content.Items.Armor.Melee.Anarchy;
 
 namespace gcsep.Vitality.Enchantments
 {

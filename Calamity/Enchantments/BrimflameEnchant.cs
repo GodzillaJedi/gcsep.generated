@@ -2,6 +2,7 @@
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Brimflame;
+using CalamityMod.Items.Armor.Plaguebringer;
 using CalamityMod.Projectiles.Typeless;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -58,7 +59,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<BrimflameEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                
+                ModContent.GetInstance<BrimflameCowl>().UpdateArmorSet(player);
             }
         }
         public class FlameShellEffect : AccessoryEffect
@@ -67,7 +68,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<BrimflameEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().flameLickedShell = true;
+                ModContent.GetInstance<FlameLickedShell>().UpdateAccessory(player, true);
             }
         }
         public class AbaddonEffect : AccessoryEffect
@@ -76,8 +77,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<BrimflameEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().abaddon = true;
-                player.GetCritChance<GenericDamageClass>() += 8f;
+                ModContent.GetInstance<Abaddon>().UpdateAccessory(player, true);
             }
         }
         public class SlagSpitterEffect : AccessoryEffect
@@ -86,9 +86,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<BrimflameEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.sPauldron = true;
-                calamityPlayer.sPauldronVisual = true;
+                ModContent.GetInstance<SlagsplitterPauldron>().UpdateAccessory(player, true);
             }
         }
         public class VoidCalamityEffect : AccessoryEffect
@@ -97,17 +95,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<BrimflameEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().voidOfCalamity = true;
-                player.GetDamage<GenericDamageClass>() += 0.12f;
-                if (player.whoAmI == Main.myPlayer)
-                {
-                    IEntitySource source_Accessory = player.GetSource_Accessory(EffectItem(player));
-                    if (player.immune && player.miscCounter % 10 == 0)
-                    {
-                        int damage = (int)player.GetBestClassDamage().ApplyTo(30f);
-                        CalamityUtils.ProjectileRain(source_Accessory, player.Center, 400f, 100f, 500f, 800f, 22f, ModContent.ProjectileType<StandingFire>(), damage, 5f, player.whoAmI);
-                    }
-                }
+                ModContent.GetInstance<VoidofCalamity>().UpdateAccessory(player, true);
             }
         }
         public class SigilEffect : AccessoryEffect
@@ -116,10 +104,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<BrimflameEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.manaMagnet = true;
-                player.statManaMax2 += 100;
-                player.GetDamage<MagicDamageClass>() += 0.15f;
-                player.manaCost *= 0.9f;
+                ModContent.GetInstance<SigilofCalamitas>().UpdateAccessory(player, true);
             }
         }
     }

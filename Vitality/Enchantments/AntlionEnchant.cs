@@ -6,9 +6,10 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.Accessories;
-using VitalityMod.Items.AnarchulesBeetle;
-using VitalityMod.Items.GrandAntlion;
+using VitalityMod.Content.Items.Accessories.Combat.Defensive;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Summoner;
+using VitalityMod.Content.Items.Accessories.Movement.Other;
+using VitalityMod.Content.Items.Armor.Ranged.Antlion;
 
 namespace gcsep.Vitality.Enchantments
 {

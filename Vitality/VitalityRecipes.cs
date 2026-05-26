@@ -6,7 +6,7 @@ using gcsep.Vitality.Enchantments;
 using gcsep.Vitality.Forces;
 using Terraria;
 using Terraria.ModLoader;
-using VitalityMod.Items.Souls;
+using VitalityMod.Content.Items.Materials;
 
 namespace gcsep.Vitality
 {

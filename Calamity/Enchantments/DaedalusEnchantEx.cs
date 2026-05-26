@@ -37,7 +37,7 @@ namespace gcsep.Calamity.Enchantments
             player.AddEffect<FrostFlareEffect>(Item);
             player.AddEffect<DaedalusArmorEffect>(Item);
             player.AddEffect<DaeadlusCrystalEffect>(Item);
-            player.AddEffect<DaedalusEffect>(Item);
+            ModContent.GetInstance<DaedalusEnchant>().UpdateAccessory(player, hideVisual);
         }
         public class FrostFlareEffect : AccessoryEffect
         {
@@ -45,7 +45,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<DaedalusEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().frostFlare = true;
+                ModContent.GetInstance<FrostFlare>().UpdateAccessory(player, true);
             }
         }
         public class DaedalusArmorEffect : AccessoryEffect
@@ -81,12 +81,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<DaedalusEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().DashID = OrnateShieldDash.ID;
-                player.dashType = 0;
-                player.buffImmune[46] = true;
-                player.buffImmune[47] = true;
-                player.buffImmune[44] = true;
-                player.buffImmune[324] = true;
+                ModContent.GetInstance<OrnateShield>().UpdateAccessory(player, true);
             }
         }
         public override void AddRecipes()

@@ -1,18 +1,11 @@
-﻿using CalamityMod;
-using CalamityMod.CalPlayer;
-using CalamityMod.Cooldowns;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Armor.Demonshade;
-using CalamityMod.Items.Armor.Plaguebringer;
+﻿using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.PlagueReaper;
-using CalamityMod.Projectiles.Rogue;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -22,13 +15,6 @@ namespace gcsep.Calamity.Enchantments
     [JITWhenModsEnabled(ModCompatibility.Calamity.Name)]
     public class PlagueReaperEnchant : BaseEnchant
     {
-        private Mod calamity;
-
-        public override void Load()
-        {
-            if (ModLoader.HasMod("CalamityMod"))
-                calamity = ModLoader.GetMod("CalamityMod");
-        }
         public override void SetDefaults()
         {
             Item.width = 20;
@@ -72,7 +58,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<PlagueReaperEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().alchFlask = true;
+                ModContent.GetInstance<AlchemicalDecanter>().UpdateAccessory(player, true);
             }
         }
         public class FuelPackEffect : AccessoryEffect
@@ -81,12 +67,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<PlagueReaperEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().hasJetpack = true;
-                player.GetDamage<ThrowingDamageClass>() += 0.08f;
-                player.Calamity().rogueVelocity += 0.15f;
-                player.Calamity().plaguedFuelPack = true;
-                player.Calamity().stealthGenStandstill += 0.1f;
-                player.Calamity().stealthGenMoving += 0.1f;
+                ModContent.GetInstance<PlaguedFuelPack>().UpdateAccessory(player, true);
             }
         }
     }

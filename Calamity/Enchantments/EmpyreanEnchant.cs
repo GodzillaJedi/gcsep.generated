@@ -8,6 +8,7 @@ using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
+using NoxusBoss.Content.Items.Accessories.Wings;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -62,7 +63,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<EmpyreanEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().heartOfDarkness = true;
+                ModContent.GetInstance<HeartofDarkness>().UpdateAccessory(player, true);
             }
         }
         public class DarkSheathEffect : AccessoryEffect
@@ -71,12 +72,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<EmpyreanEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.stealthStrikeHalfCost = true;
-                calamityPlayer.rogueStealthMax += 0.1f;
-                calamityPlayer.darkGodSheath = true;
-                player.GetCritChance<ThrowingDamageClass>() += 6f;
-                player.GetDamage<ThrowingDamageClass>() += 0.06f;
+                ModContent.GetInstance<DarkMatterSheath>().UpdateAccessory(player, true);
             }
         }
     }

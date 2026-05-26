@@ -1,8 +1,6 @@
 ﻿using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Armor.LunicCorps;
-using CalamityMod.Items.Armor.Sulphurous;
 using CalamityMod.Items.Armor.TitanHeart;
 using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
@@ -37,7 +35,6 @@ namespace gcsep.Calamity.Enchantments
             player.AddEffect<TitanEffect>(Item);
             player.AddEffect<MoonCrownEffect>(Item);
             player.AddEffect<JewelEffect>(Item);
-            player.AddEffect<TitanHeartEffect>(Item);
             ModContent.GetInstance<TitanHeartEnchant>().UpdateAccessory(player, hideVisual);
         }
         public class TitanEffect : AccessoryEffect
@@ -55,9 +52,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<TitanHeartEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.rogueVelocity += 0.15f;
-                calamityPlayer.moonCrown = true;
+                ModContent.GetInstance<MoonstoneCrown>().UpdateAccessory(player, true);
             }
         }
         public class JewelEffect : AccessoryEffect
@@ -66,7 +61,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<TitanHeartEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().infectedJewel = true;
+                ModContent.GetInstance<InfectedJewel>().UpdateAccessory(player, true);
             }
         }
         public override void AddRecipes()

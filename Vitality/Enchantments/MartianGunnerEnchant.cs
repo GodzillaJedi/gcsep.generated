@@ -8,11 +8,9 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Buffs;
-using VitalityMod.Items.GlowingMoss;
-using VitalityMod.Items.LivingWood;
-using VitalityMod.Items.Martian;
-using VitalityMod.Projectiles.Minions;
+using VitalityMod.Content.Items.Armor.Ranged.MartianGunner;
+using VitalityMod.Content.Items.Weapons.Summoner.Sentries;
+using VitalityMod.Content.Projectiles.Summoner.Sentries;
 
 namespace gcsep.Vitality.Enchantments
 {
@@ -36,14 +34,8 @@ namespace gcsep.Vitality.Enchantments
             if (player.AddEffect<XenoniteCluster>(Item))
             {
                 IEntitySource source_ItemUse = player.GetSource_ItemUse(Item);
-
-                if (player.FindBuffIndex(ModContent.BuffType<XenoniteStaffBuff>()) == -1)
-                {
-                    player.AddBuff(ModContent.BuffType<XenoniteStaffBuff>(), 3600);
-                }
-
                 // Check the same projectile type you spawn
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<XenoniteStaffProj>()] < 1)
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<XenoniteClusterProj>()] < 1)
                 {
                     int baseDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(25f);
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
@@ -54,7 +46,7 @@ namespace gcsep.Vitality.Enchantments
                         player.Center.Y,
                         0f,
                         -1f,
-                        ModContent.ProjectileType<XenoniteStaffProj>(),
+                        ModContent.ProjectileType<XenoniteClusterProj>(),
                         damage,
                         0f,
                         player.whoAmI
@@ -84,7 +76,7 @@ namespace gcsep.Vitality.Enchantments
             public override int ToggleItemType => ModContent.ItemType<MartianGunnerEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<LivingWoodHood>().UpdateArmorSet(player);
+                ModContent.GetInstance<MartianGunnerHelmet>().UpdateArmorSet(player);
             }
         }
         public class XenoniteCluster : AccessoryEffect

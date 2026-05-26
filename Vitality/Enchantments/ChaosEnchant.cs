@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.Accessories;
-using VitalityMod.Items.Chaos;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Generic;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Magic;
+using VitalityMod.Content.Items.Armor.Magic.Chaos;
 
 namespace gcsep.Vitality.Enchantments
 {

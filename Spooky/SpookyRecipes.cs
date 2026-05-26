@@ -2,8 +2,6 @@
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using gcsep.Core;
 using gcsep.Spooky.Forces;
-using SOTS.Items.Fragments;
-using SpiritMod.Items.BossLoot.AtlasDrops;
 using Spooky.Content.Items.SpookyBiome.Armor;
 using Spooky.Content.Items.SpookyHell.Armor;
 using Spooky.Content.Items.SpookyHell.Misc;

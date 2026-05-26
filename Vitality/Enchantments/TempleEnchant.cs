@@ -6,9 +6,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.BloodHunter.Accessories;
-using VitalityMod.Items.Armor;
-using VitalityMod.Items.Dreadnaught;
+using VitalityMod.Content.Items.Accessories.Expert;
+using VitalityMod.Content.Items.Armor.Melee.Temple;
 
 namespace gcsep.Vitality.Enchantments
 {

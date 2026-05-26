@@ -56,14 +56,7 @@ namespace gcsep.Calamity.Addons
             public override int ToggleItemType => ModContent.ItemType<FrozenEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.GetDamage(ModContent.GetInstance<TrueMeleeDamageClass>()) += 0.2f;
-                player.GetAttackSpeed<MeleeDamageClass>() += 0.2f;
-                player.Clamity().inflicingMeleeFrostburn = true;
-                player.Clamity().frozenParrying = true;
-                player.buffImmune[44] = true;
-                player.buffImmune[324] = true;
-                player.buffImmune[47] = true;
-                player.aggro += 400;
+                ModContent.GetInstance<FrozenHellstoneVisor>().UpdateArmorSet(player);
             }
         }
     }

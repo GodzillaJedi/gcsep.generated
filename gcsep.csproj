@@ -45,9 +45,6 @@
 	  <Reference Include="CatalystMod">
 	    <HintPath>lib\CatalystMod.dll</HintPath>
 	  </Reference>
-	  <Reference Include="CheatSheet">
-	    <HintPath>lib\CheatSheet.dll</HintPath>
-	  </Reference>
 	  <Reference Include="Clamity">
 	    <HintPath>lib\Clamity.dll</HintPath>
 	  </Reference>
@@ -76,13 +73,10 @@
 	    <HintPath>lib\FargowiltasSouls.dll</HintPath>
 	  </Reference>
 	  <Reference Include="GMR">
-	    <HintPath>..\..\ModReader\GMR\GMR.dll</HintPath>
+	    <HintPath>lib\GMR.dll</HintPath>
 	  </Reference>
 	  <Reference Include="gunrightsmod">
 	    <HintPath>lib\gunrightsmod.dll</HintPath>
-	  </Reference>
-	  <Reference Include="HEROsMod">
-	    <HintPath>lib\HEROsMod.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Luminance">
 	    <HintPath>lib\Luminance.dll</HintPath>
@@ -115,10 +109,10 @@
 	    <HintPath>lib\SOTS.dll</HintPath>
 	  </Reference>
 	  <Reference Include="SOTSBardHealer">
-	    <HintPath>..\..\ModReader\SOTSBardHealer\SOTSBardHealer.dll</HintPath>
+	    <HintPath>lib\SOTSBardHealer.dll</HintPath>
 	  </Reference>
 	  <Reference Include="SpiritBardHealer">
-	    <HintPath>..\..\ModReader\SpiritBardHealer\SpiritBardHealer.dll</HintPath>
+	    <HintPath>lib\SpiritBardHealer.dll</HintPath>
 	  </Reference>
 	  <Reference Include="SpiritMod">
 	    <HintPath>lib\SpiritMod.dll</HintPath>
@@ -140,6 +134,9 @@
 	  </Reference>
 	  <Reference Include="VitalityMod">
 	    <HintPath>lib\VitalityMod.dll</HintPath>
+	  </Reference>
+	  <Reference Include="VitalityMusic">
+	    <HintPath>lib\VitalityMusic.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

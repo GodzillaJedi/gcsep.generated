@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.BloodHunter.Armor;
-using VitalityMod.Items.Accessories;
+using VitalityMod.Content.Items.Accessories.Combat.Defensive;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Summoner;
+using VitalityMod.Content.Items.Armor.BloodHunter.Shadewitch;
 
 namespace gcsep.Vitality.Enchantments
 {
@@ -43,8 +44,8 @@ namespace gcsep.Vitality.Enchantments
             recipe.AddIngredient(ModContent.ItemType<ShadewitchHat>());
             recipe.AddIngredient(ModContent.ItemType<ShadewitchCoat>());
             recipe.AddIngredient(ModContent.ItemType<ShadewitchLeggings>());
-            recipe.AddIngredient(ModContent.ItemType<SolarbrandRing>());
-            recipe.AddIngredient(ModContent.ItemType<RingoftheLords>());
+            recipe.AddIngredient(ModContent.ItemType<CarefreeMelody>());
+            recipe.AddIngredient(ModContent.ItemType<Grimmchild>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();

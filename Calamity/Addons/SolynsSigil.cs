@@ -37,7 +37,8 @@ namespace gcsep.Calamity.Addons
 
         public override void AddRecipes()
         {
-            Recipe recipe = this.CreateRecipe();
+            Recipe recipe = CreateRecipe();
+
             recipe.AddIngredient(ModContent.ItemType<PortalSkirt>());
             recipe.AddIngredient(ModContent.ItemType<DeificTouch>());
             recipe.AddIngredient(ModContent.ItemType<DivineWings>());
@@ -52,7 +53,7 @@ namespace gcsep.Calamity.Addons
             public override int ToggleItemType => ModContent.ItemType<PortalSkirt>();
             public override void PostUpdateEquips(Player player)
             {
-                player.GetValueRef<bool>("WearingPortalSkirt").Value = true;
+                ModContent.GetInstance<PortalSkirt>().UpdateAccessory(player, true);
             }
         }
 
@@ -62,22 +63,16 @@ namespace gcsep.Calamity.Addons
             public override int ToggleItemType => ModContent.ItemType<DeificTouch>();
             public override void PostUpdateEquips(Player player)
             {
-                player.GetValueRef<bool>("DeificTouch").Value = true;
+                ModContent.GetInstance<DeificTouch>().UpdateAccessory(player, true);
             }
         }
         public class DivineEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<SolynsSigilHeader>();
             public override int ToggleItemType => ModContent.ItemType<DivineWings>();
-
             public override void PostUpdateEquips(Player player)
             {
-                player.noFallDmg = true;
-                CalamityCompatibility.GrantInfiniteCalFlight(player);
-                if (player.active && !player.dead)
-                {
-                    Lighting.AddLight(player.Center, Vector3.One);
-                }
+                ModContent.GetInstance<DivineWings>().UpdateAccessory(player, true);
             }
         }
     }

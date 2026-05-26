@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.Accessories;
-using VitalityMod.Items.Olympian;
+using VitalityMod.Content.Items.Accessories.Combat.Defensive;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Generic;
+using VitalityMod.Content.Items.Armor.Melee.Olympian;
 
 namespace gcsep.Vitality.Enchantments
 {

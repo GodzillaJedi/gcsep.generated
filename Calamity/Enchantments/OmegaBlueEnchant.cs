@@ -97,8 +97,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<OmegaBlueEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.GetDamage<GenericDamageClass>() += 0.15f;
-                player.GetArmorPenetration<GenericDamageClass>() += 15f;
+                ModContent.GetInstance<ReaperToothNecklace>().UpdateAccessory(player, true);
             }
         }
         public class OldScaleEffect : AccessoryEffect
@@ -107,7 +106,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<OmegaBlueEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.GetModPlayer<OldDukeScalesPlayer>().OldDukeScalesOn = true;
+                ModContent.GetInstance<OldDukeScales>().UpdateAccessory(player, true);
             }
         }
         public class OmegaBlueEffect : AccessoryEffect

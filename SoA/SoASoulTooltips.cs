@@ -10,65 +10,49 @@ namespace gcsep.SoA
     [ExtendsFromMod(ModCompatibility.SacredTools.Name)]
     public class SoASoulsTooltips : GlobalItem
     {
-        static string ExpandedTooltipLoc(string line) => Language.GetTextValue($"Mods.gcsep.ExpandedTooltips.{line}");
+        static string ExpandedTooltipLoc(string key) =>
+            Language.GetTextValue($"Mods.gcsep.ExpandedTooltips.{key}");
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            string key = "Mods.gcsep.Items.AddedEffects.";
-
-            if (item.type == ModContent.ItemType<ColossusSoul>() && !item.social)
+            void AddTooltip(string internalName, string locKey)
             {
-                tooltips.Insert(8, new TooltipLine(Mod, "SoAColossusSoul", Language.GetTextValue(key + "SoAColossus")));
+                tooltips.Add(new TooltipLine(Mod, internalName, ExpandedTooltipLoc(locKey)));
             }
 
-            if (item.type == ModContent.ItemType<SupersonicSoul>() && !item.social)
+            if (item.social)
+                return;
+
+            if (item.type == ModContent.ItemType<ColossusSoul>())
+                AddTooltip("SoAColossusSoul", "SoAColossus");
+
+            if (item.type == ModContent.ItemType<SupersonicSoul>())
+                AddTooltip("SoASupersonicSoul", "SoASupersonic");
+
+            if (item.type == ModContent.ItemType<BerserkerSoul>())
+                AddTooltip("SoABerserkerSoul", "SoABerserker");
+
+            if (item.type == ModContent.ItemType<MasochistSoul>())
+                AddTooltip("SoAMasoSoul", "SoAMaso");
+
+            if (item.type == ModContent.ItemType<UniverseSoul>())
             {
-                tooltips.Insert(8, new TooltipLine(Mod, "SoASupersonicSoul", Language.GetTextValue(key + "SoASupersonic")));
+                tooltips.Add(new TooltipLine(Mod, "SoAUniverseSoul",
+                    ExpandedTooltipLoc("SoABerserker")
+                // + "\n" + ExpandedTooltipLoc("SoASniper")
+                // + "\n" + ExpandedTooltipLoc("SoAWizard")
+                // + "\n" + ExpandedTooltipLoc("SoAConjurist")
+                ));
             }
 
-            if (item.type == ModContent.ItemType<BerserkerSoul>() && !item.social)
+            if (item.type == ModContent.ItemType<DimensionSoul>())
             {
-                tooltips.Insert(9, new TooltipLine(Mod, "SoABerserkerSoul", Language.GetTextValue(key + "SoABerserker")));
-            }
-
-            if (item.type == ModContent.ItemType<MasochistSoul>() && !item.social)
-            {
-                tooltips.Insert(9, new TooltipLine(Mod, "SoAMasoSoul", Language.GetTextValue(key + "SoAMaso")));
-            }
-
-            //if (item.type == ModContent.ItemType<ArchWizardsSoul>() && !item.social)
-            //{
-            //    tooltips.Insert(8, new TooltipLine(Mod, "SoAWizardSoul", Language.GetTextValue(key + "SoAWizard")));
-            //}
-
-            //if (item.type == ModContent.ItemType<SnipersSoul>() && !item.social)
-            //{
-            //    tooltips.Insert(8, new TooltipLine(Mod, "SoASniperSoul", Language.GetTextValue(key + "SoASniper")));
-            //}
-
-            //if (item.type == ModContent.ItemType<ConjuristsSoul>() && !item.social)
-            //{
-            //    tooltips.Insert(7, new TooltipLine(Mod, "SoAConjurSoul", Language.GetTextValue(key + "SoAConjurist")));
-            //}
-
-            if (item.type == ModContent.ItemType<UniverseSoul>() && !item.social)
-            {
-                tooltips.Insert(15, new TooltipLine(Mod, "SoAUniverseSoul",
-                    Language.GetTextValue(key + "SoABerserker")// + "\n" +
-                                                               //Language.GetTextValue(key + "SoASniper") + "\n" +
-                                                               //Language.GetTextValue(key + "SoAWizard") + "\n" +
-                                                               //Language.GetTextValue(key + "SoAConjurist")
-                    ));
-            }
-
-            if (item.type == ModContent.ItemType<DimensionSoul>() && !item.social)
-            {
-                tooltips.Insert(15, new TooltipLine(Mod, "SoADimestionSoul",
-                    //Language.GetTextValue(key + "SoATrawler") + "\n" +
-                    Language.GetTextValue(key + "SoASupersonic") + "\n" +
-                    Language.GetTextValue(key + "SoAColossus") + "\n" +
-                    // Language.GetTextValue(key + "SoAFlight") + "\n" +
-                    Language.GetTextValue(key + "SoAWorldshaper")
-                    ));
+                tooltips.Add(new TooltipLine(Mod, "SoADimensionSoul",
+                    // ExpandedTooltipLoc("SoATrawler") + "\n" +
+                    ExpandedTooltipLoc("SoASupersonic") + "\n" +
+                    ExpandedTooltipLoc("SoAColossus") + "\n" +
+                    ExpandedTooltipLoc("SoAWorldshaper")
+                ));
             }
         }
     }

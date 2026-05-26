@@ -1,8 +1,11 @@
 ﻿using CalamityMod;
+using CalamityMod.Buffs.StatBuffs;
 using CalamityMod.CalPlayer;
+using CalamityMod.Cooldowns;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
+using ContinentOfJourney.Items.Accessories;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Core;
 using Terraria;
@@ -58,9 +61,10 @@ namespace gcsep.Calamity.Souls
         public class AquaticHeartEffect : CalamitySoulEffect
         {
             public override int ToggleItemType => ModContent.ItemType<AquaticHeart>();
+
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().aquaticHeart = true;
+                ModContent.GetInstance<AquaticHeart>().UpdateAccessory(player, true);
             }
         }
         public class HideofAstrumDeusEffect : CalamitySoulEffect
@@ -68,12 +72,7 @@ namespace gcsep.Calamity.Souls
             public override int ToggleItemType => ModContent.ItemType<HideofAstrumDeus>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.hideOfDeus = true;
-                if (calamityPlayer.hideOfDeusMeleeBoostTimer > 0)
-                {
-                    player.GetDamage<TrueMeleeDamageClass>() += 0.3f;
-                }
+                ModContent.GetInstance<HideofAstrumDeus>().UpdateAccessory(player, true);
             }
         }
         public class ToxicHeartEffect : CalamitySoulEffect
@@ -81,10 +80,7 @@ namespace gcsep.Calamity.Souls
             public override int ToggleItemType => ModContent.ItemType<ToxicHeart>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.toxicHeart = true;
-                calamityPlayer.toxicHeartVisuals = true;
-                calamityPlayer.SicknessDebuffMultiplier += 0.5f;
+                ModContent.GetInstance<ToxicHeart>().UpdateAccessory(player, true);
             }
         }
         public class AuricSoulEffect : CalamitySoulEffect
@@ -92,7 +88,7 @@ namespace gcsep.Calamity.Souls
             public override int ToggleItemType => ModContent.ItemType<AuricSoulArtifact>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().auricSArtifact = true;
+                ModContent.GetInstance<AuricSoulArtifact>().UpdateAccessory(player, true);
             }
         }
         public class SkullCrownEffect : CalamitySoulEffect
@@ -100,10 +96,7 @@ namespace gcsep.Calamity.Souls
             public override int ToggleItemType => ModContent.ItemType<OccultSkullCrown>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.laudanum = true;
-                calamityPlayer.heartOfDarkness = true;
-                calamityPlayer.stressPills = true;
+                ModContent.GetInstance<OccultSkullCrown>().UpdateAccessory(player, true);
             }
         }
         public class TheEvolutionEffect : CalamitySoulEffect
@@ -111,7 +104,7 @@ namespace gcsep.Calamity.Souls
             public override int ToggleItemType => ModContent.ItemType<TheEvolution>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().evolution = true;
+                ModContent.GetInstance<TheEvolution>().UpdateAccessory(player, true);
             }
         }
         public class LeviathanAmbergrisEffect : CalamitySoulEffect
@@ -119,9 +112,7 @@ namespace gcsep.Calamity.Souls
             public override int ToggleItemType => ModContent.ItemType<LeviathanAmbergris>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.lAmbergris = true;
-                calamityPlayer.lAmbergrisVisual = true;
+                ModContent.GetInstance<LeviathanAmbergris>().UpdateAccessory(player, true);
             }
         }
     }

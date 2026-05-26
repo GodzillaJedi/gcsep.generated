@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.Accessories;
-using VitalityMod.Items.MoonlightDragonfly;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Summoner;
+using VitalityMod.Content.Items.Accessories.Expert;
+using VitalityMod.Content.Items.Armor.Summoner.MoonMoth;
 
 namespace gcsep.Vitality.Enchantments
 {

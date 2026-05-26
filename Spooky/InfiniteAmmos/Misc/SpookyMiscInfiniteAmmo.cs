@@ -1,7 +1,7 @@
 using Fargowiltas.Items.Ammos;
 using gcsep.Core;
-using Spooky.Content.Items.SpiderCave.OldHunter;
-using Spooky.Content.Items.SpookyBiome;
+using Spooky.Content.Items.Catacomb;
+using Spooky.Content.Items.Slingshots.Ammo;
 using Spooky.Content.Items.SpookyHell;
 using Terraria.ModLoader;
 

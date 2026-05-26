@@ -1,16 +1,10 @@
 ﻿using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Core;
 using gcsep.Calamity.Enchantments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static gcsep.Calamity.Enchantments.AstralEnchant;
-using static gcsep.Calamity.Enchantments.FathomSwarmerEnchant;
-using static gcsep.Calamity.Enchantments.MolluskEnchant;
-using static gcsep.Calamity.Enchantments.OmegaBlueEnchant;
-using static gcsep.Calamity.Enchantments.UmbraphileEnchant;
 
 namespace gcsep.Calamity.Forces
 {

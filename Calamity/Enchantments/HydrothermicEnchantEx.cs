@@ -1,17 +1,18 @@
 ﻿using CalamityBardHealer.Items;
+using CalamityHunt.Content.Items.Accessories;
 using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Hydrothermic;
+using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -36,7 +37,7 @@ namespace gcsep.Calamity.Enchantments
             player.AddEffect<EtherealEffect>(Item);
             player.AddEffect<HydrothermicArmorsEffect>(Item);
             player.AddEffect<HydrothermicVentEffect>(Item);
-            player.AddEffect<HydrothermicEffect>(Item);
+            ModContent.GetInstance<HydrothermicEnchant>().UpdateAccessory(player, hideVisual);
         }
         public override void AddRecipes()
         {
@@ -65,10 +66,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<HydrothermicEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.voidOfExtinction = true;
-                calamityPlayer.abaddon = true;
-                player.GetCritChance<GenericDamageClass>() += 13f;
+                ModContent.GetInstance<VoidofExtinction>().UpdateAccessory(player, true);
             }
         }
         public class EtherealEffect : AccessoryEffect
@@ -77,10 +75,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<HydrothermicEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
-                calamityPlayer.etherealExtorter = true;
-                player.GetDamage<ThrowingDamageClass>() += 0.08f;
-                calamityPlayer.rogueStealthMax += 0.05f;
+                ModContent.GetInstance<EtherealExtorter>().UpdateAccessory(player, true);
             }
         }
         public class HydrothermicArmorsEffect : AccessoryEffect

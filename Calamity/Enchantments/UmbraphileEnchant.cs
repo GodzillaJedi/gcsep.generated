@@ -61,8 +61,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<UmbraphileEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().vampiricTalisman = true;
-                player.GetDamage<ThrowingDamageClass>() += 0.12f;
+                ModContent.GetInstance<VampiricTalisman>().UpdateAccessory(player, true);
             }
         }
         public class DecietEffect : AccessoryEffect
@@ -71,8 +70,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<UmbraphileEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().stealthStrike90Cost = true;
-                player.GetCritChance<ThrowingDamageClass>() += 6f;
+                ModContent.GetInstance<CoinofDeceit>().UpdateAccessory(player, true);
             }
         }
     }

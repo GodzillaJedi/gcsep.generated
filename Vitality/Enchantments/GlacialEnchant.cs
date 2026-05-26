@@ -6,8 +6,10 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using VitalityMod.Items.Accessories;
-using VitalityMod.Items.Glacial;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Generic;
+using VitalityMod.Content.Items.Accessories.Combat.Offensive.Ranged;
+using VitalityMod.Content.Items.Accessories.Movement.Boots;
+using VitalityMod.Content.Items.Armor.Generic.Glacial;
 
 namespace gcsep.Vitality.Enchantments
 {
