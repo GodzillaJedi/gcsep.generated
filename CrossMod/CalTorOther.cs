@@ -28,10 +28,10 @@ namespace gcsep.FargoCrossmod
                     recipe.AddTile(TileID.LunarCraftingStation);
                 }
 
-                if (recipe.HasResult(ModContent.ItemType<StatisCurse>()) && !recipe.HasIngredient(ModContent.ItemType<GalacticaSingularity>()))
+                if (recipe.HasResult(ModContent.ItemType<StatisCurse>()) && !recipe.HasIngredient(ModContent.ItemType<EssenceofSunlight>()))
                 {
                     recipe.RemoveIngredient(ItemID.FragmentStardust);
-                    recipe.AddIngredient<GalacticaSingularity>(5);
+                    recipe.AddIngredient<EssenceofSunlight>(5);
                     recipe.AddIngredient<Necroplasm>(3);
                 }
 

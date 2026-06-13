@@ -44,7 +44,7 @@ namespace gcsep.Calamity.Souls
 
             recipe.AddIngredient<ElementalArtifact>();
             recipe.AddIngredient<OccultSkullCrown>();
-            recipe.AddIngredient<AuricSoulArtifact>();
+            recipe.AddIngredient<FadedIdolatry>();
             recipe.AddIngredient<LeviathanAmbergris>();
             recipe.AddIngredient<TheEvolution>();
             recipe.AddIngredient<AquaticHeart>();
@@ -85,10 +85,10 @@ namespace gcsep.Calamity.Souls
         }
         public class AuricSoulEffect : CalamitySoulEffect
         {
-            public override int ToggleItemType => ModContent.ItemType<AuricSoulArtifact>();
+            public override int ToggleItemType => ModContent.ItemType<FadedIdolatry>();
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<AuricSoulArtifact>().UpdateAccessory(player, true);
+                ModContent.GetInstance<FadedIdolatry>().UpdateAccessory(player, true);
             }
         }
         public class SkullCrownEffect : CalamitySoulEffect

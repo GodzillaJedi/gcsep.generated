@@ -1,4 +1,5 @@
-﻿using CalamityMod.Items.Materials;
+﻿using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Materials;
 using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Essences;
 using gcsep.Core;
 using Redemption.Items.Materials.PostML;
@@ -39,7 +40,7 @@ namespace gcsep.Redemption.Mutagens
 
         public override void AddRecipes()
         {
-            CreateRecipe().AddIngredient(ModContent.ItemType<MeldConstruct>(), 10).AddIngredient(ModContent.ItemType<EmptyMutagen>()).AddIngredient(ModContent.ItemType<OutlawsEssence>())
+            CreateRecipe().AddIngredient(ModContent.ItemType<DarkMatterSheath>(), 10).AddIngredient(ModContent.ItemType<EmptyMutagen>()).AddIngredient(ModContent.ItemType<OutlawsEssence>())
                 .AddTile(412)
                 .Register();
         }

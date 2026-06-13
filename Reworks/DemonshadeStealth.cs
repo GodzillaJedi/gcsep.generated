@@ -1,5 +1,5 @@
 using CalamityMod;
-using CalamityMod.Buffs.Summon;
+using gcsep.Content.Buffs.Minions;
 using gcsep.Core;
 using Terraria;
 using Terraria.ModLoader;

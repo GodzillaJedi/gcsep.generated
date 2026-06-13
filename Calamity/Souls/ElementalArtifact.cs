@@ -36,7 +36,7 @@ namespace gcsep.Calamity.Souls
             recipe.AddIngredient<CryoStone>();
             recipe.AddIngredient<ChaosStone>();
             recipe.AddIngredient<BloomStone>();
-            recipe.AddIngredient<GalacticaSingularity>(5);
+            recipe.AddIngredient<EssenceofSunlight>(5);
 
             recipe.AddTile(TileID.LunarCraftingStation);
 

@@ -51,7 +51,7 @@ namespace gcsep.gunrightsmod.Enchantments
             recipe.AddIngredient<PurifiedSaltLeggings>();
             recipe.AddIngredient<RockSaltEnchant>();
             recipe.AddIngredient<ThePurifier>();
-            recipe.AddIngredient<SpiritProtectionCharm>();
+            //recipe.AddIngredient<SpiritProtectionCharm>();
             recipe.AddTile(TileID.CrystalBall);
             recipe.Register();
         }

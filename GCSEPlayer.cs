@@ -34,6 +34,7 @@ namespace gcsep
         public bool starlightFruit;
         public bool eternalMonolith;
         public bool rOrb;
+        public bool rDevil;
 
         public int Screenshake;
         private float blindTime;
@@ -47,6 +48,7 @@ namespace gcsep
         public bool equippedMonstrosityEnchantment;
         public bool equippedGemTechEnchantment;
         public bool equippedVoidFaquirEnchantment;
+        public bool equippedDemonshadeEnchantment;
 
         public float monstrosityHits;
         public void DiscordWhiteTheme(float duration, float sharpness)
@@ -403,6 +405,7 @@ namespace gcsep
             equippedPhantasmalEnchantment = false;
             equippedAbominableEnchantment = false;
             equippedNekomiEnchantment = false;
+            rDevil = false;
             throwerVelocity = 1f;
             CyclonicFin = false;
             lumberjackSet = false;

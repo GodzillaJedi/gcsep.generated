@@ -6,7 +6,6 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.GodSlayer;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Projectiles.Summon;
-using ClickerClass.Prefixes.ClickerPrefixes;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
@@ -14,14 +13,10 @@ using gcsep.Core;
 using Microsoft.Xna.Framework;
 using RagnarokMod.Items.BardItems.Accessories;
 using RagnarokMod.Items.BardItems.Armor;
-using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
-using ThoriumMod.Buffs.Summon;
-using ThoriumMod.Projectiles.Minions;
 using ThoriumMod.Utilities;
 
 namespace gcsep.Calamity.Enchantments
@@ -76,7 +71,7 @@ namespace gcsep.Calamity.Enchantments
             recipe.AddIngredient(ModContent.ItemType<GodSlayerChestplate>());
             recipe.AddIngredient(ModContent.ItemType<GodSlayerLeggings>());
             recipe.AddIngredient(ModContent.ItemType<VeneratedLocket>());
-            recipe.AddIngredient(ModContent.ItemType<DimensionalSoulArtifact>());
+            recipe.AddIngredient(ModContent.ItemType<CrushingEgo>());
             recipe.AddIngredient(ModContent.ItemType<VoidEaterMarionette>());
 
             recipe.AddTile(calamity, "DraedonsForge");
@@ -192,7 +187,7 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<GodSlayerEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().dArtifact = true;
+                player.Calamity().crushingEgo = true;
             }
         }
     }

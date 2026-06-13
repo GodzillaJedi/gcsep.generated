@@ -1,6 +1,9 @@
 ﻿using CalamityMod;
+using CalamityMod.Buffs.Summon;
+using CalamityMod.Projectiles.Summon;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.Buffs;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
@@ -31,33 +34,7 @@ namespace gcsep.Vitality.Enchantments
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.AddEffect<MartianGunnerEffect>(Item);
-            if (player.AddEffect<XenoniteCluster>(Item))
-            {
-                IEntitySource source_ItemUse = player.GetSource_ItemUse(Item);
-                // Check the same projectile type you spawn
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<XenoniteClusterProj>()] < 1)
-                {
-                    int baseDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(25f);
-                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
-
-                    int projIndex = Projectile.NewProjectile(
-                        source_ItemUse,
-                        player.Center.X,
-                        player.Center.Y,
-                        0f,
-                        -1f,
-                        ModContent.ProjectileType<XenoniteClusterProj>(),
-                        damage,
-                        0f,
-                        player.whoAmI
-                    );
-
-                    if (Main.projectile.IndexInRange(projIndex))
-                    {
-                        Main.projectile[projIndex].originalDamage = baseDamage;
-                    }
-                }
-            }
+            player.AddEffect<XenoniteCluster>(Item);
         }
         public override void AddRecipes()
         {
@@ -84,6 +61,37 @@ namespace gcsep.Vitality.Enchantments
             public override Header ToggleHeader => Header.GetHeader<EvilForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<MartianGunnerEnchant>();
             public override bool MinionEffect => true;
+            public override void PostUpdateEquips(Player player)
+            {
+                int buffType = ModContent.BuffType<XenoniteClusterBuff>();
+
+                // Apply buff without resetting timer every tick
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 2);
+
+                // Only spawn projectile on local player
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                int projType = ModContent.ProjectileType<XenoniteClusterProj>();
+
+                if (player.ownedProjectileCounts[projType] <= 0)
+                {
+                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
+
+                    var proj = Projectile.NewProjectileDirect(
+                        player.GetSource_FromThis(),
+                        player.Center,
+                        -Vector2.UnitY,
+                        projType,
+                        damage,
+                        0f,
+                        player.whoAmI
+                    );
+
+                    proj.originalDamage = damage;
+                }
+            }
         }
     }
 }

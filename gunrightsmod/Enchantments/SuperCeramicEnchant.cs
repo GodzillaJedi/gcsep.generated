@@ -50,7 +50,7 @@ namespace gcsep.gunrightsmod.Enchantments
             recipe.AddIngredient<SuperCeramicLeggings>();
             recipe.AddIngredient<CeramicMachete>();
             recipe.AddIngredient<CopperShortmachinegun>();
-            recipe.AddIngredient<CeramicHorseshoeBalloon>();
+            recipe.AddIngredient<CeramicBloonFactory>();
             recipe.AddTile(TileID.CrystalBall);
             recipe.Register();
         }

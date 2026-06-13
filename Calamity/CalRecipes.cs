@@ -27,9 +27,9 @@ namespace gcsep.Calamity
     {
         public override void AddRecipes()
         {
-            Recipe.Create(ModContent.ItemType<SCalMask>(), 1).AddIngredient<AshesofAnnihilation>(10).AddIngredient<EssenceofHavoc>(8).AddIngredient<GalacticaSingularity>(5).AddIngredient<BrimflameCowl>(1).AddTile<CosmicAnvil>().Register();
-            Recipe.Create(ModContent.ItemType<SCalRobes>(), 1).AddIngredient<AshesofAnnihilation>(15).AddIngredient<EssenceofHavoc>(10).AddIngredient<GalacticaSingularity>(7).AddIngredient<BrimflameRobes>(1).AddTile<CosmicAnvil>().Register();
-            Recipe.Create(ModContent.ItemType<SCalBoots>(), 1).AddIngredient<AshesofAnnihilation>(12).AddIngredient<EssenceofHavoc>(7).AddIngredient<GalacticaSingularity>(6).AddIngredient<BrimflameBoots>(1).AddTile<CosmicAnvil>().Register();
+            Recipe.Create(ModContent.ItemType<SCalMask>(), 1).AddIngredient<AshesofAnnihilation>(10).AddIngredient<EssenceofHavoc>(8).AddIngredient<EssenceofSunlight>(5).AddIngredient<BrimflameCowl>(1).AddTile<CosmicAnvil>().Register();
+            Recipe.Create(ModContent.ItemType<SCalRobes>(), 1).AddIngredient<AshesofAnnihilation>(15).AddIngredient<EssenceofHavoc>(10).AddIngredient<EssenceofSunlight>(7).AddIngredient<BrimflameRobes>(1).AddTile<CosmicAnvil>().Register();
+            Recipe.Create(ModContent.ItemType<SCalBoots>(), 1).AddIngredient<AshesofAnnihilation>(12).AddIngredient<EssenceofHavoc>(7).AddIngredient<EssenceofSunlight>(6).AddIngredient<BrimflameBoots>(1).AddTile<CosmicAnvil>().Register();
         }
 
         public override void AddRecipeGroups()

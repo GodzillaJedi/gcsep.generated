@@ -157,6 +157,16 @@ Mods: {
 				DisplayName: Reaver Orb
 				Description: The reaver orb will light your way
 			}
+
+			XenoniteClusterBuff: {
+				Description: Mods.gcsep.Buffs.XenoniteClusterBuff.Description
+				DisplayName: Xenonite Cluster Buff
+			}
+
+			DemonshadeSetDevilBuff: {
+				Description: Mods.gcsep.Buffs.DemonshadeSetDevilBuff.Description
+				DisplayName: Demonshade Set Devil Buff
+			}
 		}
 
 		Items: {
@@ -2862,7 +2872,7 @@ Mods: {
 			EmblemEffect: Aquatic Emblem
 			PearlEffect: Giant Pearl
 			//DevastationEX
-			VoidEffect: Void of Extinction
+			ApolloEffect: Apollyon
 			EtherealEffect: Ethereal Extorter
 			HydrothermicArmorsEffect: Hydrothermic Armor
 			HydrothermicVentEffect: Hydrothermic Vent
@@ -3033,7 +3043,11 @@ Mods: {
 			SwampyRenewalSupremeProj.DisplayName: Swampy Renewal Supreme Proj
 			CyberHitbox.DisplayName: Cyber Hitbox
 			IllumiteAuraProj.DisplayName: Illumite Aura Proj
-			Typeless.ReaverOrb.DisplayName: Reaver Orb
+
+			Typeless: {
+				ReaverOrb.DisplayName: Reaver Orb
+				DemonshadeRedDevil.DisplayName: Demonshade Red Devil
+			}
 		}
 
 		Configs: {

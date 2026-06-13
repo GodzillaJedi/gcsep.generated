@@ -5,7 +5,6 @@ using gcsep.Core;
 using gunrightsmod.Content.Items;
 using gunrightsmod.Content.Items.Armor;
 using Microsoft.Xna.Framework;
-using OrchidMod.Content.Guardian.Armors.Misc;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

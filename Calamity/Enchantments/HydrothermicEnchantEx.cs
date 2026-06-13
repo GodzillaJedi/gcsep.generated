@@ -33,7 +33,7 @@ namespace gcsep.Calamity.Enchantments
         public override Color nameColor => new(248, 182, 89);
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.AddEffect<VoidEffect>(Item);
+            player.AddEffect<ApolloEffect>(Item);
             player.AddEffect<EtherealEffect>(Item);
             player.AddEffect<HydrothermicArmorsEffect>(Item);
             player.AddEffect<HydrothermicVentEffect>(Item);
@@ -55,18 +55,18 @@ namespace gcsep.Calamity.Enchantments
             recipe.AddIngredient(ModContent.ItemType<HydrothermicArmor>());
             recipe.AddIngredient(ModContent.ItemType<HydrothermicSubligar>());
             recipe.AddIngredient(ModContent.ItemType<EtherealExtorter>());
-            recipe.AddIngredient(ModContent.ItemType<VoidofExtinction>());
+            recipe.AddIngredient(ModContent.ItemType<Apollyon>());
             recipe.AddIngredient(ModContent.ItemType<HydrothermicEnchant>());
             recipe.AddTile(TileID.CrystalBall);
             recipe.Register();
         }
-        public class VoidEffect : AccessoryEffect
+        public class ApolloEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<DevastationExHeader>();
             public override int ToggleItemType => ModContent.ItemType<HydrothermicEnchantEx>();
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<VoidofExtinction>().UpdateAccessory(player, true);
+                ModContent.GetInstance<Apollyon>().UpdateAccessory(player, true);
             }
         }
         public class EtherealEffect : AccessoryEffect
