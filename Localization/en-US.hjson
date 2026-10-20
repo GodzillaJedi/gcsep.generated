@@ -3048,6 +3048,8 @@ Mods: {
 				ReaverOrb.DisplayName: Reaver Orb
 				DemonshadeRedDevil.DisplayName: Demonshade Red Devil
 			}
+
+			DemonshadeRedDevil.DisplayName: Demonshade Red Devil
 		}
 
 		Configs: {

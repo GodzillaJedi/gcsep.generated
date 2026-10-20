@@ -3,14 +3,16 @@ using CalamityEntropy.Content.Items.Accessories;
 using CalamityEntropy.Content.Items.Armor.VoidFaquir;
 using CalamityEntropy.Content.Items.Weapons;
 using CalamityEntropy.Content.Items.Weapons.Chainsaw;
+using CalamityEntropy.Content.Projectiles;
 using CalamityEntropy.Content.Rarities;
 using CalamityMod;
 using CalamityMod.Items.Accessories;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.Buffs;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,7 +37,7 @@ namespace gcsep.Calamity.Addons
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<GCSEPlayer>().equippedVoidFaquirEnchantment = true;
+            player.AddEffect<VoidFaquirCruiserSkill>(Item);
             player.AddEffect<VoidFaquirArmorEffect>(Item);
             player.AddEffect<VoidSymbiontEffect>(Item);
             player.AddEffect<ReincarnationBadgeEffect>(Item);
@@ -81,6 +83,37 @@ namespace gcsep.Calamity.Addons
             public override void PostUpdateEquips(Player player)
             {
                 ModContent.GetInstance<VoidFaquirEvokerHelm>().UpdateArmorSet(player);
+            }
+        }
+        public class VoidFaquirCruiserSkill : AccessoryEffect
+        {
+            public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>(); // Adjust subheading as needed
+            public override int ToggleItemType => ModContent.ItemType<VoidFaquirEnchant>(); // Replace with your true Item Class type
+            public override bool ActiveSkill => true;
+            public override void ActiveSkillJustPressed(Player player, bool stunned)
+            {
+                if (stunned)
+                    return;
+
+                if (player.whoAmI == Main.myPlayer)
+                {
+                    int buf = ModContent.BuffType<GojiPrice>();
+                    if (!player.HasBuff(buf))
+                    {
+                        player.AddBuff(buf, 120); 
+                    }
+
+                    Vector2 position = player.Center;
+                    Vector2 velocity = Vector2.Normalize(Main.MouseWorld - player.Center) * 10f;
+                    int type = ModContent.ProjectileType<CruiserShadow>();
+                    int damage = 100;
+                    float knockBack = 2f;
+
+                    
+                    var source = GetSource_EffectItem(player);
+
+                    Projectile.NewProjectile(source, position, velocity, type, damage, knockBack, player.whoAmI);
+                }
             }
         }
         public class ReincarnationBadgeEffect : AccessoryEffect

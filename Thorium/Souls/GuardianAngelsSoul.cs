@@ -1,14 +1,18 @@
+using CalamityMod.Items.Accessories;
 using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Content.Items.Accessories.Souls;
 using FargowiltasSouls.Content.Items.Materials;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using FargowiltasSouls.Core.Toggler.Content;
 using gcsep.Core;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using ThoriumMod;
+using ThoriumMod.Buffs.Healer;
 using ThoriumMod.Items.HealerItems;
 using ThoriumMod.Items.Terrarium;
+using ThoriumMod.Projectiles.Healer;
 
 namespace gcsep.Thorium.Souls
 {
@@ -50,41 +54,37 @@ namespace gcsep.Thorium.Souls
             player.GetAttackSpeed((DamageClass)ThoriumDamageBase<HealerTool>.Instance) += 0.20f;
             player.GetModPlayer<ThoriumPlayer>().healBonus += 20;
 
-            //support stash
-            thoriumPlayer.accSupportSash = true;
-            //ModContent.Find<ModItem>(((ModType)this).Mod.Name, "SupportSash").UpdateAccessory(player, true);
-
             //saving grace
-            //thoriumPlayer.crossHeal = true;
-            //thoriumPlayer.healBloom = true;
+            ModContent.GetInstance<SavingGrace>().UpdateAccessory(player, true);
 
             //soul guard
-            thoriumPlayer.graveGoods = true;
+            ModContent.GetInstance<SoulGuard>().UpdateAccessory(player, true);
 
-            //for (int i = 0; i < 255; i++)
-            //{
-            //    Player player2 = Main.player[i];
-            //    if (player2.active && player2 != player && Vector2.Distance(player2.Center, player.Center) < 400f)
-            //    {
-            //player2.AddBuff(thorium.BuffType("AegisAura"), 30, false);
-            //    }
-            //}
+            for (int i = 0; i < Main.maxPlayers; i++)
+            {
+                Player player2 = Main.player[i];
+                if (player2.active && player2 != player && Vector2.Distance(player2.Center, player.Center) < 400f)
+                {
+                    player2.AddBuff(ModContent.BuffType<ProtectiveEnergy>(), 30);
+                }
+            }
+
 
             //archdemon's curse
-            thoriumPlayer.darkAura = true;
+            ModContent.GetInstance<ArchDemonCurse>().UpdateAccessory(player, true);
 
             //archangels heart
-            thoriumPlayer.healBonus += 20;
+            ModContent.GetInstance<ArchangelHeart>().UpdateAccessory(player, true);
 
             //medical bag
-            thoriumPlayer.medicalAcc = true;
+            ModContent.GetInstance<MedicalBag>().UpdateAccessory(player, true);
 
 
             //head mirror arrow 
             if (player.AddEffect<GuardianEffect>(Item))
             {
-                ModContent.Find<ModItem>(this.thorium.Name, "MedicalBag").UpdateAccessory(player, true);
-                /*float num = 0f;
+                ModContent.GetInstance<MedicalBag>().UpdateAccessory(player, true);
+                float num = 0f;
                 int num2 = player.whoAmI;
                 for (int i = 0; i < 255; i++)
                 {
@@ -106,7 +106,7 @@ namespace gcsep.Thorium.Souls
                         projectile.timeLeft = 2;
                         projectile.ai[1] = num2;
                     }
-                }*/
+                }
             }
         }
 
@@ -122,7 +122,6 @@ namespace gcsep.Thorium.Souls
 
             recipe.AddIngredient(null, "HealerEssence");
             recipe.AddIngredient<AbomEnergy>(10);
-            recipe.AddIngredient<SupportSash>();
             recipe.AddIngredient<SavingGrace>();
             recipe.AddIngredient<SoulGuard>();
             recipe.AddIngredient<ArchDemonCurse>();

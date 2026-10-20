@@ -2,11 +2,14 @@
 using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.GemTech;
+using CalamityMod.Projectiles.Rogue;
+using CalamityMod.Rarities;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.Buffs;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,14 +32,14 @@ namespace gcsep.Calamity.Enchantments
             Item.height = 20;
             Item.accessory = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ModContent.RarityType<ExoticRainbow>();
             Item.value = 50000000;
         }
 
         public override Color nameColor => new(244, 25, 255);
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<GCSEPlayer>().equippedGemTechEnchantment = true;
+            player.AddEffect<GemTechSupernovaSkill>(Item);
             player.AddEffect<GemArmorEffect>(Item);
             player.AddEffect<ShadowFlameEffect>(Item);
         }
@@ -70,6 +73,36 @@ namespace gcsep.Calamity.Enchantments
                 }
 
                 player.setBonus = "Mucho Texto";
+            }
+        }
+        public class GemTechSupernovaSkill : AccessoryEffect
+        {
+            public override Header ToggleHeader => Header.GetHeader<SalvationForceHeader>();
+            public override int ToggleItemType => ModContent.ItemType<GemTechEnchant>(); // Replace with your true Item Class type
+            public override bool ActiveSkill => true;
+            public override void ActiveSkillJustPressed(Player player, bool stunned)
+            {
+                if (stunned)
+                    return;
+
+                if (player.whoAmI == Main.myPlayer)
+                {
+                    int buff = ModContent.BuffType<GojiPrice>();
+                    if (!player.HasBuff(buff))
+                    {
+                        player.AddBuff(buff, 120);
+                    }
+
+                    Vector2 position = player.Center;
+                    Vector2 velocity = Vector2.Normalize(Main.MouseWorld - player.Center) * 10f;
+                    int type = ModContent.ProjectileType<SupernovaStealthBoom>();
+                    int damage = 100;
+                    float knockBack = 2f;
+
+                    var source = GetSource_EffectItem(player);
+
+                    Projectile.NewProjectile(source, position, velocity, type, damage, knockBack, player.whoAmI);
+                }
             }
         }
         public class ShadowFlameEffect : AccessoryEffect

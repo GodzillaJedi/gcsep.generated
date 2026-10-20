@@ -82,27 +82,25 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<AnnihilationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<PlaguebringerEnchant>();
-
+            public override bool MinionEffect => true; 
             public override void PostUpdateEquips(Player player)
             {
                 int buffType = ModContent.BuffType<ViriliBuff>();
+                int projType = ModContent.ProjectileType<PlaguePrincess>();
 
-                // Apply buff without resetting timer every tick
                 if (!player.HasBuff(buffType))
-                    player.AddBuff(buffType, 2);
+                    player.AddBuff(buffType, 60);
 
-                // Only spawn projectile on local player
                 if (player.whoAmI != Main.myPlayer)
                     return;
 
-                int projType = ModContent.ProjectileType<PlaguePrincess>();
-
-                if (player.ownedProjectileCounts[projType] <= 0)
+                if (player.ownedProjectileCounts[projType] <= 0 && !player.dead)
                 {
+                    var source = GetSource_EffectItem(player);
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
 
                     var proj = Projectile.NewProjectileDirect(
-                        player.GetSource_FromThis(),
+                        source,
                         player.Center,
                         -Vector2.UnitY,
                         projType,
@@ -112,6 +110,32 @@ namespace gcsep.Calamity.Enchantments
                     );
 
                     proj.originalDamage = damage;
+                }
+            }
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<ViriliEffect>())
+                {
+                    int buffType = ModContent.BuffType<ViriliBuff>();
+                    int projType = ModContent.ProjectileType<PlaguePrincess>();
+
+                    int buffIndex = player.FindBuffIndex(buffType);
+                    if (buffIndex != -1)
+                    {
+                        player.DelBuff(buffIndex);
+                    }
+
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        Projectile p = Main.projectile[i];
+                        if (p.active && p.owner == player.whoAmI && p.type == projType)
+                        {
+                            p.Kill();
+                        }
+                    }
                 }
             }
         }

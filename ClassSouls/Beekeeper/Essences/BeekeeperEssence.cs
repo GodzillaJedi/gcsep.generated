@@ -1,6 +1,12 @@
-using BombusApisBee.BeeDamageClass;
-using BombusApisBee.Items.Accessories.BeeKeeperDamageClass;
-using BombusApisBee.Items.Weapons.BeeKeeperDamageClass;
+using BombusApisBee.Content.Dungeon.Items.Skelecomb;
+using BombusApisBee.Content.Forest.Items.Beemerang;
+using BombusApisBee.Content.Forest.Items.HoneyedEmblem;
+using BombusApisBee.Content.Forest.Items.PetrifiedHoneycomb;
+using BombusApisBee.Content.Forest.Items.TraitorSaxophone;
+using BombusApisBee.Content.Jungle.Items.Ambrosia;
+using BombusApisBee.Content.Jungle.Items.Beemstick;
+using BombusApisBee.Content.Jungle.Items.NectarBolt;
+using BombusApisBee.Core.BeekeeperClass;
 using FargowiltasSouls.Content.Items.Accessories.Essences;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
@@ -29,16 +35,16 @@ namespace gcsep.ClassSouls.Beekeeper.Essences
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage<HymenoptraDamageClass>() += 0.18f;
-            player.GetCritChance<HymenoptraDamageClass>() += 0.10f;
-            player.GetModPlayer<BeeDamagePlayer>().BeeResourceMax2 += 50;
+            player.GetDamage<BeekeeperDamageClass>() += 0.18f;
+            player.GetCritChance<BeekeeperDamageClass>() += 0.10f;
+            player.GetModPlayer<BeekeeperPlayer>().BeeResourceMax2 += 50;
         }
 
         public override Color nameColor => new(255, 128, 0);
 
         public override void AddRecipes()
         {
-            Recipe recipe = this.CreateRecipe();
+            Recipe recipe = CreateRecipe();
 
             recipe.AddIngredient<HoneyedEmblem>();
 

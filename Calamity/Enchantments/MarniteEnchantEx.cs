@@ -2,15 +2,17 @@
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.MarniteArchitect;
+using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using gcsep.Content.SoulToggles;
+using System;
+using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -28,7 +30,41 @@ namespace gcsep.Calamity.Enchantments
             Item.rare = ItemRarityID.Red;
             Item.value = 50000000;
         }
+        public override void Load()
+        {
+            if (ModLoader.HasMod("CalamityMod"))
+            {
+                var activateLiftMethod = typeof(MarniteArchitectHeadgear).GetMethod("ActivateLift", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (activateLiftMethod != null)
+                {
+                    MonoModHooks.Add(activateLiftMethod, BypassMarniteMountArmorCheck);
+                }
+            }
+        }
+        private delegate void orig_ActivateLift(MarniteArchitectHeadgear self, On_Player.orig_QuickMount orig, Player player);
+        private static void BypassMarniteMountArmorCheck(orig_ActivateLift orig, MarniteArchitectHeadgear self, On_Player.orig_QuickMount origHook, Player player)
+        {
+            if (player.HasEffect<LiftEffect>())
+            {
+                if (!player.mount.Active && player.miscEquips[3].IsAir)
+                {
+                    if (!player.frozen && !player.tongued && !player.webbed && !player.stoned && player.gravDir != -1f && !player.dead && !player.noItems)
+                    {
+                        int liftMountID = ModContent.MountType<MarniteLift>();
+                        if (player.mount.CanMount(liftMountID, player))
+                        {
+                            player.mount.SetMount(liftMountID, player);
+                            Terraria.Audio.SoundEngine.PlaySound(in MarniteArchitectHeadgear.LiftSpawnSound, player.Center);
+                            return; 
+                        }
+                    }
+                }
+                origHook(player); 
+                return;
+            }
 
+            orig(self, origHook, player); 
+        }
         public override Color nameColor => new(153, 200, 193);
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -52,9 +88,17 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<ExplorationForceExHeader>();
             public override int ToggleItemType => ModContent.ItemType<MarniteEnchantEx>();
+
             public override void PostUpdateEquips(Player player)
             {
-                player.setBonus = "Marnite Lift";
+                if (Main.myPlayer == player.whoAmI)
+                {
+                    Player.tileRangeX += MarniteArchitectHeadgear.TileRangeBoost;
+                    Player.tileRangeY += MarniteArchitectHeadgear.TileRangeBoost;
+                }
+                Color color = Color.Lerp(new Color(255, 243, 161), new Color(137, 162, 255), 0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 3f));
+                player.setBonus = ModContent.GetInstance<MarniteArchitectHeadgear>().GetLocalization("SetBonus").Format(color.Hex3(), (MarniteArchitectHeadgear.MaxLiftHeight + MarniteArchitectHeadgear.LiftHeightOffset).ToTiles());
+
                 player.GetModPlayer<MarniteArchitectPlayer>().setEquipped = true;
             }
         }

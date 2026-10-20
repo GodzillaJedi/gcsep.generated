@@ -8,11 +8,13 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Auric;
 using CalamityMod.Projectiles.Pets;
 using CalamityMod.Projectiles.Typeless;
+using CalamityMod.Rarities;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
+using NoxusBoss.Content.Rarities;
 using RagnarokMod.Items.BardItems.Armor;
 using RagnarokMod.Items.HealerItems.Armor;
 using Terraria;
@@ -39,7 +41,7 @@ namespace gcsep.Calamity.Enchantments
             Item.height = 20;
             Item.accessory = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ModContent.RarityType<BurnishedAuric>();
             Item.value = 50000000;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -123,7 +125,6 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<ExaltationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<AuricTeslaEnchant>();
-
             public override void PostUpdateEquips(Player player)
             {
                 var calamityPlayer = player.Calamity();
@@ -135,27 +136,62 @@ namespace gcsep.Calamity.Enchantments
                 if (player.whoAmI != Main.myPlayer)
                     return;
 
-                // Apply buff if missing
                 if (!player.HasBuff(buffType))
                 {
-                    player.AddBuff(buffType, 18000);
+                    player.AddBuff(buffType, 3600); 
                 }
 
-                // Refresh buff and spawn minion
                 int buffIndex = player.FindBuffIndex(buffType);
                 if (buffIndex != -1)
                 {
-                    player.buffTime[buffIndex] = 2;
+                    
+                    player.buffTime[buffIndex] = 60;
                     calamityPlayer.spiritOriginPet = true;
 
-                    if (player.ownedProjectileCounts[minionType] <= 0)
+                    if (player.ownedProjectileCounts[minionType] <= 0 && !player.dead)
                     {
+                        var source = GetSource_EffectItem(player); 
+
                         Projectile.NewProjectile(
-                            player.GetSource_Buff(buffIndex),
+                            source,
                             player.Center,
                             -Vector2.UnitY * 3f,
                             minionType,
-                            0, 0f, player.whoAmI);
+                            0,
+                            0f,
+                            player.whoAmI
+                        );
+                    }
+                }
+            }
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<SpiritOriginEffect>())
+                {
+                    var calamityPlayer = player.Calamity();
+
+                    calamityPlayer.spiritOrigin = false;
+                    calamityPlayer.spiritOriginPet = false;
+
+                    int buffType = ModContent.BuffType<ArcherofLunamoon>();
+                    int minionType = ModContent.ProjectileType<DaawnlightSpiritOriginMinion>();
+
+                    int buffIndex = player.FindBuffIndex(buffType);
+                    if (buffIndex != -1)
+                    {
+                        player.DelBuff(buffIndex);
+                    }
+
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        Projectile p = Main.projectile[i];
+                        if (p.active && p.owner == player.whoAmI && p.type == minionType)
+                        {
+                            p.Kill();
+                        }
                     }
                 }
             }

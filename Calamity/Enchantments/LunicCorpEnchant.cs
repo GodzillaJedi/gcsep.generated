@@ -113,20 +113,62 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<SalvationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<LunicCorpEnchant>();
+            public override bool MinionEffect => true; 
             public override void PostUpdateEquips(Player player)
             {
                 if (player.whoAmI == Main.myPlayer)
                 {
-                    IEntitySource source_ItemUse = player.GetSource_ItemUse(EffectItem(player));
-                    if (player.FindBuffIndex(ModContent.BuffType<NaturePixieBuff>()) == -1)
+                    int buffType = ModContent.BuffType<NaturePixieBuff>();
+                    int projType = ModContent.ProjectileType<NaturePixie>();
+
+                    if (!player.HasBuff(buffType))
                     {
-                        player.AddBuff(ModContent.BuffType<NaturePixieBuff>(), 3600);
+                        player.AddBuff(buffType, 60);
                     }
 
-                    if (player.ownedProjectileCounts[ModContent.ProjectileType<NaturePixie>()] < 1)
+                    if (player.ownedProjectileCounts[projType] < 1 && !player.dead)
                     {
-                        int num = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
-                        Projectile.NewProjectileDirect(source_ItemUse, player.Center, -Vector2.UnitY, ModContent.ProjectileType<NaturePixie>(), num, 0f, player.whoAmI).originalDamage = num;
+                        var source = GetSource_EffectItem(player);
+                        int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
+
+                        var proj = Projectile.NewProjectileDirect(
+                            source,
+                            player.Center,
+                            -Vector2.UnitY,
+                            projType,
+                            damage,
+                            0f,
+                            player.whoAmI
+                        );
+
+                        proj.originalDamage = damage;
+                    }
+                }
+            }
+
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<NaviEffect>())
+                {
+                    int buffType = ModContent.BuffType<NaturePixieBuff>();
+                    int projType = ModContent.ProjectileType<NaturePixie>();
+
+                    int buffIndex = player.FindBuffIndex(buffType);
+                    if (buffIndex != -1)
+                    {
+                        player.DelBuff(buffIndex);
+                    }
+
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        Projectile p = Main.projectile[i];
+                        if (p.active && p.owner == player.whoAmI && p.type == projType)
+                        {
+                            p.Kill();
+                        }
                     }
                 }
             }

@@ -1,7 +1,4 @@
-﻿using System;
-using CalamityMod;
-using CalamityMod.CalPlayer;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,6 +29,7 @@ namespace gcsep.Content.Projectiles.Enchantments
             Projectile.penetrate = -1;
             Projectile.netImportant = true;
             Projectile.timeLeft = 18000;
+            Projectile.minion = true;
         }
 
         public override void AI()
@@ -39,14 +37,13 @@ namespace gcsep.Content.Projectiles.Enchantments
             Player player = Main.player[Projectile.owner];
             GCSEPlayer gPlayer = player.GetModPlayer<GCSEPlayer>();
 
-            // ❗ Minion should only exist while rDevil is true
+            // Minion only exists while rDevil is true
             if (!gPlayer.rDevil)
             {
                 Projectile.active = false;
                 return;
             }
 
-            // Keep minion alive
             if (player.dead)
                 gPlayer.rDevil = false;
 
@@ -54,7 +51,7 @@ namespace gcsep.Content.Projectiles.Enchantments
                 Projectile.timeLeft = 2;
 
             // -----------------------------------------
-            // SPAWN DUST (fixed, optimized)
+            // SPAWN DUST (small, non-laggy burst)
             // -----------------------------------------
             if (spawnDustTimer > 0)
             {
@@ -83,14 +80,15 @@ namespace gcsep.Content.Projectiles.Enchantments
             }
 
             // -----------------------------------------
-            // ANIMATION
+            // ANIMATION (5-frame vertical sheet)
             // -----------------------------------------
             Projectile.frameCounter++;
-            if (Projectile.frameCounter > 8)
+            if (Projectile.frameCounter >= 6) // tweak for speed
             {
                 Projectile.frameCounter = 0;
                 Projectile.frame++;
-                if (Projectile.frame > 4)
+
+                if (Projectile.frame >= Main.projFrames[Projectile.type])
                     Projectile.frame = 0;
             }
 
@@ -99,6 +97,22 @@ namespace gcsep.Content.Projectiles.Enchantments
             // -----------------------------------------
             float lightScale = Main.rand.NextFloat(0.90f, 1.10f) * Main.essScale;
             Lighting.AddLight(Projectile.Center, 1f * lightScale, 0f, 0.15f * lightScale);
+
+            // -----------------------------------------
+            // FACING (flip left/right)
+            // -----------------------------------------
+            if (Projectile.velocity.X > 0.1f)
+            {
+                Projectile.direction = 1;
+                Projectile.spriteDirection = -1;
+            }
+            else if (Projectile.velocity.X < -0.1f)
+            {
+                Projectile.direction = -1;
+                Projectile.spriteDirection = 1;
+            }
+
+            Projectile.rotation = Projectile.velocity.X * 0.04f;
 
             // -----------------------------------------
             // TARGET ACQUISITION
@@ -128,7 +142,8 @@ namespace gcsep.Content.Projectiles.Enchantments
                     if (n.CanBeChasedBy(Projectile))
                     {
                         float dist = Vector2.Distance(n.Center, Projectile.Center);
-                        if (dist < targetDist && Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1))
+                        if (dist < targetDist &&
+                            Collision.CanHitLine(Projectile.Center, 1, 1, n.Center, 1, 1))
                         {
                             targetDist = dist;
                             targetPos = n.Center;
@@ -172,7 +187,8 @@ namespace gcsep.Content.Projectiles.Enchantments
                 Vector2 dir = player.Center - Projectile.Center + new Vector2(0f, -30f);
                 float dist = dir.Length();
 
-                if (dist < 150f && returning && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
+                if (dist < 150f && returning &&
+                    !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                 {
                     State = 0f;
                     Projectile.netUpdate = true;
@@ -197,42 +213,42 @@ namespace gcsep.Content.Projectiles.Enchantments
             }
 
             // -----------------------------------------
-            // ATTACK LOGIC
+            // ATTACK LOGIC & COOLDOWN REFRESH
             // -----------------------------------------
-            if (Timer > 0f)
-                Timer += Main.rand.Next(1, 3);
 
-            if (Timer > 80f)
+            // If the cooldown timer is ticking down, decrease it by 1 every frame
+            if (Timer > 0f)
             {
-                Timer = 0f;
-                Projectile.netUpdate = true;
+                Timer--;
             }
 
-            if (State == 0f && foundTarget && Timer == 0f)
+            // Fire attack if the cooldown reaches 0, we are close, and a target exists
+            if (State == 0f && foundTarget && Timer <= 0f)
             {
-                Timer++;
+                // Set the attack cooldown (e.g., 35 frames between shots)
+                Timer = 35f;
 
-                if (Main.myPlayer == Projectile.owner &&
-                    Collision.CanHitLine(Projectile.Center, 1, 1, targetPos, 1, 1))
+                if (Main.myPlayer == Projectile.owner)
                 {
                     Vector2 vel = Vector2.Normalize(targetPos - Projectile.Center) * 24f;
 
-                    int p = Projectile.NewProjectile(
+                    // Spawning vanilla ProjectileID.UnholyTrident (114)
+                    int pIndex = Projectile.NewProjectile(
                         Projectile.GetSource_FromThis(),
                         Projectile.Center,
                         vel,
-                        114,
+                        ProjectileID.UnholyTridentFriendly, // Clear integer translation mapping
                         Projectile.damage,
                         0f,
                         Projectile.owner
                     );
 
-                    if (p.WithinBounds(Main.maxProjectiles))
+                    // Fixed array bounds index check structure safely mapped to engine loops
+                    if (pIndex >= 0 && pIndex < Main.maxProjectiles)
                     {
-                        Main.projectile[p].timeLeft = 300;
-                        Main.projectile[p].usesLocalNPCImmunity = true;
-                        Main.projectile[p].localNPCHitCooldown = 10;
-                        Main.projectile[p].DamageType = DamageClass.Generic;
+                        Projectile proj = Main.projectile[pIndex];
+                        proj.timeLeft = 300;
+                        proj.DamageType = DamageClass.Summon; // Correctly classify damage tracking
                     }
 
                     Projectile.netUpdate = true;
@@ -242,5 +258,4 @@ namespace gcsep.Content.Projectiles.Enchantments
 
         public override bool? CanDamage() => false;
     }
-
 }

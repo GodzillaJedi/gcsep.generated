@@ -1,4 +1,5 @@
 ﻿using CalamityMod.Projectiles.Summon;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -6,14 +7,30 @@ namespace gcsep.Reworks
 {
     public class VoidEaterMarionetteGlobal : GlobalProjectile
     {
-        public override bool AppliesToEntity(Projectile entity, bool lateInstantiation)
+        public override void OnSpawn(Projectile projectile, Terraria.DataStructures.IEntitySource source)
         {
-            return entity.type == ModContent.ProjectileType<VoidEaterMarionetteProjectile>();
+            if (ModLoader.HasMod("CalamityMod") &&
+                projectile.type == ModContent.ProjectileType<VoidEaterMarionetteProjectile>())
+            {
+                projectile.minionSlots = 5f;
+            }
         }
-
-        public override void SetDefaults(Projectile projectile)
+        public override void PostAI(Projectile projectile)
         {
-            projectile.minionSlots = 1f; // ⭐ REQUIRED
+            if (ModLoader.HasMod("CalamityMod") &&
+                projectile.type == ModContent.ProjectileType<VoidEaterMarionetteProjectile>())
+            {
+                Player player = Main.player[projectile.owner];
+
+                
+                int dynamicSegments = 5 + player.maxMinions;
+
+                
+                int finalSegmentCount = Math.Clamp(dynamicSegments, 5, 15);
+
+                
+                projectile.minionSlots = finalSegmentCount;
+            }
         }
     }
 }

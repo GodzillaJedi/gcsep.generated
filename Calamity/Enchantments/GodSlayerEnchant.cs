@@ -6,6 +6,7 @@ using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.GodSlayer;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Projectiles.Summon;
+using CalamityMod.Rarities;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
@@ -40,7 +41,7 @@ namespace gcsep.Calamity.Enchantments
             Item.height = 20;
             Item.accessory = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.value = 50000000;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -123,6 +124,11 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<ExaltationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<GodSlayerEnchant>();
+
+            // Fargo marks this true internally if it consumes slots or acts as a minion companion
+            public override bool MinionEffect => true;
+
+            // 1. THIS RUNS ONLY IF EQUIPPED AND CHECKED IN THE UI
             public override void PostUpdateEquips(Player player)
             {
                 if (player.whoAmI != Main.myPlayer)
@@ -131,20 +137,19 @@ namespace gcsep.Calamity.Enchantments
                 int buffType = ModContent.BuffType<VoidEaterMarionetteBuff>();
                 int projType = ModContent.ProjectileType<VoidEaterMarionetteProjectile>();
 
-                // Keep minion alive
                 player.Calamity().hasVoidEaterMarionette = true;
 
-                // Keep buff alive
                 if (!player.HasBuff(buffType))
                     player.AddBuff(buffType, 60);
 
-                // Spawn if missing
-                if (player.ownedProjectileCounts[projType] <= 0)
+                if (player.ownedProjectileCounts[projType] <= 0 && !player.dead)
                 {
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140);
 
+                    var source = GetSource_EffectItem(player);
+
                     var proj = Projectile.NewProjectileDirect(
-                        player.GetSource_FromThis(),
+                        source,
                         player.Center,
                         Vector2.Zero,
                         projType,
@@ -155,13 +160,33 @@ namespace gcsep.Calamity.Enchantments
 
                     proj.originalDamage = damage;
                 }
+            }
 
-                // ⭐ Set segment count EVERY TICK
-                foreach (Projectile p in Main.projectile)
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<MechwormEffect>())
                 {
-                    if (p.active && p.owner == player.whoAmI && p.type == projType)
+                    player.Calamity().hasVoidEaterMarionette = false;
+
+                    int buffType = ModContent.BuffType<VoidEaterMarionetteBuff>();
+                    int projType = ModContent.ProjectileType<VoidEaterMarionetteProjectile>();
+
+                    int buffIndex = player.FindBuffIndex(buffType);
+                    if (buffIndex != -1)
                     {
-                        p.minionSlots = 15f; // ⭐ This controls SegmentCount
+                        player.DelBuff(buffIndex);
+                    }
+
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        Projectile p = Main.projectile[i];
+                        if (p.active && p.owner == player.whoAmI && p.type == projType)
+                        {
+                            p.Kill();
+                        }
                     }
                 }
             }

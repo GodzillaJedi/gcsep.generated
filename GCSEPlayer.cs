@@ -1,4 +1,4 @@
-using BombusApisBee.BeeDamageClass;
+using BombusApisBee.Core.BeekeeperClass;
 using CalamityMod.CalPlayer;
 using FargowiltasSouls;
 using FargowiltasSouls.Content.Bosses.MutantBoss;
@@ -343,7 +343,7 @@ namespace gcsep
         [JITWhenModsEnabled(ModCompatibility.BeekeeperClass.Name)]
         public void Beekeeper(Player Player, int bonus)
         {
-            Player.GetModPlayer<BeeDamagePlayer>().BeeResourceMax2 += bonus;
+            Player.GetModPlayer<BeekeeperPlayer>().BeeResourceMax2 += bonus;
         }
 
         [JITWhenModsEnabled(ModCompatibility.Calamity.Name)]

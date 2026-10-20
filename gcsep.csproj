@@ -21,6 +21,9 @@
 		<None Remove="Thorium\Swarm\**" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Reference Include="AAModClassic">
+	    <HintPath>lib\AAModClassic.dll</HintPath>
+	  </Reference>
 	  <Reference Include="AlchemistNPCLite">
 	    <HintPath>lib\AlchemistNPCLite.dll</HintPath>
 	  </Reference>
@@ -97,7 +100,7 @@
 	    <HintPath>lib\RagnarokMod.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Redemption">
-	    <HintPath>..\..\ModReader\Redemption\Redemption.dll</HintPath>
+	    <HintPath>lib\Redemption.dll</HintPath>
 	  </Reference>
 	  <Reference Include="RedemptionBardHealer">
 	    <HintPath>..\..\ModReader\RedemptionBardHealer\RedemptionBardHealer.dll</HintPath>

@@ -14,7 +14,7 @@ namespace gcsep.Thorium
         public override bool InstancePerEntity => true;
         public override void AI(Projectile projectile)
         {
-            if (projectile.type == ModContent.ProjectileType<PlasmaShot>())
+            if (projectile.type == ModContent.ProjectileType<PlasmaStaffPro>())
             {
                 projectile.velocity *= 1.1f;
             }

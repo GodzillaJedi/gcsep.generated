@@ -40,10 +40,9 @@ namespace gcsep.Calamity.Addons
         {
             Recipe recipe = CreateRecipe();
 
-            recipe.AddIngredient(ModContent.ItemType<FrozenHellstoneVisor>());
+            recipe.AddIngredient(ModContent.ItemType<FrozenHellstoneHeadMelee>());
             recipe.AddIngredient(ModContent.ItemType<FrozenHellstoneChestplate>());
             recipe.AddIngredient(ModContent.ItemType<FrozenHellstoneGreaves>());
-            recipe.AddIngredient(ModContent.ItemType<FrozenVolcano>());
             recipe.AddIngredient(ModContent.ItemType<AMS>());
             recipe.AddIngredient(ModContent.ItemType<TheWOBbler>());
 
@@ -56,7 +55,7 @@ namespace gcsep.Calamity.Addons
             public override int ToggleItemType => ModContent.ItemType<FrozenEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<FrozenHellstoneVisor>().UpdateArmorSet(player);
+                ModContent.GetInstance<FrozenHellstoneHeadMelee>().UpdateArmorSet(player);
             }
         }
     }

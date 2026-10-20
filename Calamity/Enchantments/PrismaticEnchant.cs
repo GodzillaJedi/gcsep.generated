@@ -1,6 +1,7 @@
 ﻿using CalamityMod;
 using CalamityMod.Items.Armor.LunicCorps;
 using CalamityMod.Items.Armor.Prismatic;
+using CalamityMod.Rarities;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
@@ -29,7 +30,7 @@ namespace gcsep.Calamity.Enchantments
             Item.height = 20;
             Item.accessory = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ModContent.RarityType<Turquoise>();
             Item.value = 50000000;
         }
         public override Color nameColor => new(0, 104, 94);

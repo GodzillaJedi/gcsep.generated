@@ -2,13 +2,14 @@
 using CalamityMod;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Tarragon;
+using CalamityMod.Rarities;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using RagnarokMod.Items.BardItems.Armor;
 using RagnarokMod.Items.HealerItems.Armor;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace gcsep.Calamity.Enchantments
             Item.height = 20;
             Item.accessory = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ModContent.RarityType<Turquoise>();
             Item.value = 50000000;
         }
         public override Color nameColor => new(169, 106, 52);
@@ -67,7 +68,7 @@ namespace gcsep.Calamity.Enchantments
             recipe.AddIngredient(ModContent.ItemType<TarragonLeggings>());
             recipe.AddIngredient(ModContent.ItemType<DarkSunRing>());
             recipe.AddIngredient(ModContent.ItemType<BadgeofBravery>());
-            recipe.AddIngredient(ModContent.ItemType<BlazingCore>());
+            recipe.AddIngredient(ModContent.ItemType<DivineProvidence>());
 
             recipe.AddTile(calamity, "DraedonsForge");
             recipe.Register();
@@ -114,7 +115,9 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<TarragonEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().blazingCore = true;
+                player.Calamity().divineProvidence = true;
+                player.Calamity().AccessoryParryItem = base.EffectItem(player);
+                player.noKnockback = true;
             }
         }
         public class BraveryEffect : AccessoryEffect
@@ -123,7 +126,8 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<TarragonEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().badgeOfBravery = true;
+                player.GetDamage<MeleeDamageClass>() += 0.1f;
+                player.GetCritChance<MeleeDamageClass>() += 10f;
                 player.GetArmorPenetration<MeleeDamageClass>() += 5f;
             }
         }

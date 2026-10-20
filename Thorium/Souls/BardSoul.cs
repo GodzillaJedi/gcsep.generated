@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using ThoriumMod.Items.BardItems;
 using ThoriumMod.Items.Donate;
+using ThoriumMod.Items.HealerItems;
 
 namespace gcsep.Thorium.Souls
 {
@@ -48,15 +49,13 @@ namespace gcsep.Thorium.Souls
             player.GetModPlayer<ThoriumPlayer>().bardHomingRangeBonus += 10;
 
             //epic mouthpiece
-            thoriumPlayer.accWindHoming = true;
-            //thoriumPlayer.bardHomingBonus = 5f;
-
+            ModContent.GetInstance<EpicMouthpiece>().UpdateAccessory(player, true);
             //straight mute
-            thoriumPlayer.accBrassMute2 = true;
+            ModContent.GetInstance<StraightMute>().UpdateAccessory(player, true);
             //digital tuner
-            thoriumPlayer.accPercussionTuner2 = true;
+            ModContent.GetInstance<DigitalTuner>().UpdateAccessory(player, true);
             //guitar pick claw
-            thoriumPlayer.bardBounceBonus = 10;
+            ModContent.GetInstance<GuitarPickClaw>().UpdateAccessory(player, true);
         }
         public override void AddRecipes()
         {

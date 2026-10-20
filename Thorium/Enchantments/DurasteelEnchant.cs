@@ -53,7 +53,6 @@ namespace gcsep.Thorium.Enchantments
             if (player.AddEffect<IncandescentEffect>(Item))
             {
                 ThoriumPlayer thoriumPlayer = player.GetThoriumPlayer();
-                thoriumPlayer.needsAfterimage = true;
                 thoriumPlayer.accIncandescentAlacrity = true;
                 player.noFallDmg = true;
                 player.runAcceleration += 0.25f;

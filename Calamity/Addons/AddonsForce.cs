@@ -1,5 +1,11 @@
-﻿using Fargowiltas.Items.Tiles;
+﻿using CalamityEntropy.Content.Items.Armor.Azafure;
+using CalamityEntropy.Content.Items.Armor.AzafureT3;
+using CalamityEntropy.Content.Items.Armor.NihTwins;
+using CalamityEntropy.Content.Items.Armor.Smoldering;
+using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Terraria;
 using Terraria.ID;
@@ -43,13 +49,63 @@ namespace gcsep.Calamity.Addons
             {
                 ModContent.GetInstance<MariviumEnchant>().UpdateAccessory(player, hideVisual);
                 ModContent.GetInstance<VoidFaquirEnchant>().UpdateAccessory(player, hideVisual);
+                player.AddEffect<SmolderingEffect>(Item);
+                player.AddEffect<AzafureEffect>(Item);
+                player.AddEffect<AcropolisEffect>(Item);
+                player.AddEffect<NihilistEffect>(Item);
+                player.AddEffect<AnarchoEffect>(Item);
             }
             if (ModCompatibility.WrathoftheGods.Loaded)
             {
                 ModContent.GetInstance<SolynsSigil>().UpdateAccessory(player, hideVisual);
             }
         }
-
+        public class SmolderingEffect : AccessoryEffect
+        {
+            public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
+            public override int ToggleItemType => ModContent.ItemType<AddonsForce>();
+            public override void PostUpdateEquips(Player player)
+            {
+                ModContent.GetInstance<SmolderingHelmet>().UpdateArmorSet(player);
+            }
+        }
+        public class AzafureEffect : AccessoryEffect
+        {
+            public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
+            public override int ToggleItemType => ModContent.ItemType<AddonsForce>();
+            public override void PostUpdateEquips(Player player)
+            {
+                ModContent.GetInstance<AzafureSteamKnightHelmet>().UpdateArmorSet(player);
+                ModContent.GetInstance<AzafureHeavyHelmet>().UpdateArmorSet(player);
+            }
+        }
+        public class AcropolisEffect : AccessoryEffect
+        {
+            public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
+            public override int ToggleItemType => ModContent.ItemType<AddonsForce>();
+            public override void PostUpdateEquips(Player player)
+            {
+                ModContent.GetInstance<AcropolisHeavyHelmet>().UpdateArmorSet(player);
+            }
+        }
+        public class NihilistEffect : AccessoryEffect
+        {
+            public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
+            public override int ToggleItemType => ModContent.ItemType<AddonsForce>();
+            public override void PostUpdateEquips(Player player)
+            {
+                ModContent.GetInstance<VoidEaterHelmet>().UpdateArmorSet(player);
+            }
+        }
+        public class AnarchoEffect : AccessoryEffect
+        {
+            public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
+            public override int ToggleItemType => ModContent.ItemType<AddonsForce>();
+            public override void PostUpdateEquips(Player player)
+            {
+                ModContent.GetInstance<ChaoticHelmet>().UpdateArmorSet(player);
+            }
+        }
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();

@@ -16,6 +16,7 @@ using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using System;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -42,31 +43,35 @@ namespace gcsep.Calamity.Enchantments
         }
         public override void Unload()
         {
-            DummyCannon.TurnToAir();
+            if (ModLoader.HasMod("CalamityMod"))
+            {
+                On_Main.DrawPendingMouseText -= SpoofMouseItem;
+            }
+
+            DummyCannon?.TurnToAir();
             DummyCannon = null;
         }
-        private void ActivateSetBonus(Player player)
+        private delegate void orig_HoldItem(WulfrumFusionCannon self, Player player);
+        private static void BypassCalamitySelfDestruct(orig_HoldItem orig, WulfrumFusionCannon self, Player player)
         {
-            if (WulfrumHat.HasArmorSet(player))
+            if (player.HasEffect<WulfrumArmorEffect>())
             {
-                if (player.Calamity().cooldowns.TryGetValue(WulfrumBastion.ID, out var value))
+                player.Calamity().mouseWorldListener = true;
+                self.Item.noUseGraphic = false;
+
+                if (!player.Calamity().cooldowns.TryGetValue(WulfrumBastion.ID, out var value) ||
+                    value.timeLeft > WulfrumHat.BastionCooldown + WulfrumHat.BastionTime - WulfrumHat.BastionBuildTime)
                 {
-                    if (value.timeLeft > WulfrumHat.BastionCooldown && value.timeLeft < WulfrumHat.BastionCooldown + WulfrumHat.BastionTime - 180)
-                    {
-                        value.timeLeft = WulfrumHat.BastionCooldown + 1;
-                    }
+                    self.Item.noUseGraphic = true;
                 }
-                else if (player.HasItem(ModContent.ItemType<WulfrumMetalScrap>()))
-                {
-                    player.ConsumeItem(ModContent.ItemType<WulfrumMetalScrap>());
-                    player.AddCooldown(WulfrumBastion.ID, WulfrumHat.BastionCooldown + WulfrumHat.BastionTime);
-                    WulfrumEnchantEx.DummyCannon.SetDefaults(ModContent.ItemType<WulfrumFusionCannon>());
-                }
+                return; 
             }
+
+            orig(self, player); 
         }
         public static void ActivationEffects(Player player)
         {
-            SoundEngine.PlaySound(in WulfrumHat.SetActivationSound);
+            Terraria.Audio.SoundEngine.PlaySound(in WulfrumHat.SetActivationSound);
             bool flag = player.Transformation().Type == ModContent.ItemType<AbandonedWulfrumHelmet>();
             if (!flag)
             {
@@ -78,30 +83,33 @@ namespace gcsep.Calamity.Enchantments
                     GeneralParticleHandler.SpawnParticle(new WulfrumBastionPartsParticle(player, i, WulfrumHat.BastionBuildTime + 2));
                 }
             }
-
-            Particle particle = new WulfrumBastionPartsParticle(player, 5, WulfrumHat.BastionBuildTime + 2);
-            if (flag)
+        }
+        public override void Load()
+        {
+            if (ModLoader.HasMod("CalamityMod"))
             {
-                (particle as WulfrumBastionPartsParticle).TimeOffset = 0f;
-                (particle as WulfrumBastionPartsParticle).AnimationTime = WulfrumHat.BastionBuildTime + 2;
+                var holdItemMethod = typeof(WulfrumFusionCannon).GetMethod("HoldItem", BindingFlags.Public | BindingFlags.Instance);
+                if (holdItemMethod != null)
+                {
+                    MonoModHooks.Add(holdItemMethod, BypassCalamitySelfDestruct);
+                }
             }
-
-            GeneralParticleHandler.SpawnParticle(particle);
         }
         private void SpoofMouseItem(On_Main.orig_DrawPendingMouseText orig)
         {
-            Player localPlayer = Main.LocalPlayer;
-            if (DummyCannon.IsAir && !Main.gameMenu)
+            if (!Main.gameMenu && DummyCannon != null)
             {
-                DummyCannon.SetDefaults(ModContent.ItemType<WulfrumFusionCannon>());
-            }
+                if (DummyCannon.IsAir)
+                {
+                    DummyCannon.SetDefaults(ModContent.ItemType<WulfrumFusionCannon>());
+                }
 
-            if (Main.keyState.PressingShift())
-            {
-                Main.HoverItem = DummyCannon.Clone();
-                Main.hoverItemName = DummyCannon.Name;
+                if (Main.keyState.PressingShift())
+                {
+                    Main.HoverItem = DummyCannon.Clone();
+                    Main.hoverItemName = DummyCannon.Name;
+                }
             }
-
             orig();
         }
         public override void SetDefaults()
@@ -142,62 +150,57 @@ namespace gcsep.Calamity.Enchantments
 
             public override void PostUpdateEquips(Player player)
             {
-                WulfrumArmorPlayer modPlayer = player.GetModPlayer<WulfrumArmorPlayer>();
-                player.GetModPlayer<WulfrumTransformationPlayer>();
-                modPlayer.wulfrumSet = true;
+                var wulfrumPlayer = player.GetModPlayer<WulfrumArmorPlayer>();
+                wulfrumPlayer.wulfrumSet = true;
+
                 Color color = Color.Lerp(new Color(194, 255, 67), new Color(112, 244, 244), 0.5f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly * 3f));
                 player.setBonus = EffectItem(player).ModItem.GetLocalization("SetBonus").Format(color.Hex3(), CalamityUtils.GetArmorSetBonusKey(), WulfrumHat.BastionTime.FramesToSeconds(), WulfrumHat.TimeLostPerHit.FramesToSeconds());
+
+                if (CalamityKeybinds.ArmorSetBonusHotKey.JustPressed && Main.myPlayer == player.whoAmI)
+                {
+                    if (!player.Calamity().cooldowns.TryGetValue(WulfrumBastion.ID, out var value))
+                    {
+                        player.ConsumeItem(ModContent.ItemType<WulfrumMetalScrap>());
+                        player.AddCooldown(WulfrumBastion.ID, WulfrumHat.BastionCooldown + WulfrumHat.BastionTime);
+                    }
+                }
+
                 if (PowerModeEngaged(player, out var cd))
                 {
                     if (cd.timeLeft == WulfrumHat.BastionCooldown + WulfrumHat.BastionTime)
                     {
-                        WulfrumEnchantEx.ActivationEffects(player);
+                        ActivationEffects(player);
                     }
 
                     player.statDefense += WulfrumHat.BastionDefenseBoost;
                     player.endurance += WulfrumHat.BastionDRBoost;
-                    bool num = player.Transformation().Type == ModContent.ItemType<AbandonedWulfrumHelmet>();
-                    Item item = ((player.armor[10].type != 0) ? player.armor[10] : player.armor[0]);
-                    bool flag = !num && item.type == ModContent.ItemType<WulfrumHat>();
-                    if (cd.timeLeft == WulfrumHat.BastionCooldown + WulfrumHat.BastionTime - (int)((float)WulfrumHat.BastionBuildTime * 0.9f) && flag)
-                    {
-                        GeneralParticleHandler.SpawnParticle(new WulfrumHatParticle(player, -Vector2.UnitY.RotatedByRandom(0.78539818525314331) * Main.rand.NextFloat(3f, 7f), 25));
-                    }
 
                     if (cd.timeLeft < WulfrumHat.BastionCooldown + WulfrumHat.BastionTime - WulfrumHat.BastionBuildTime)
                     {
                         player.Transformation().Type = ModContent.ItemType<AbandonedWulfrumHelmet>();
                     }
 
-                    if (DummyCannon.IsAir)
-                    {
-                        DummyCannon.SetDefaults(ModContent.ItemType<WulfrumFusionCannon>());
-                    }
-
                     if (Main.myPlayer == player.whoAmI)
                     {
-                        if (Main.mouseItem.type != DummyCannon.type && !Main.mouseItem.IsAir)
+                        if (DummyCannon == null || DummyCannon.IsAir)
                         {
-                            Main.LocalPlayer.QuickSpawnItem(null, Main.mouseItem, Main.mouseItem.stack);
+                            DummyCannon = new Item();
+                            DummyCannon.SetDefaults(ModContent.ItemType<WulfrumFusionCannon>());
                         }
 
-                        Main.mouseItem = DummyCannon;
+                        if (player.controlUseItem || player.itemAnimation > 0)
+                        {
+                            player.selectedItem = 58;
+                            player.inventory[58] = DummyCannon;
+                        }
                     }
-
-                    player.inventory[58] = DummyCannon;
-                    player.selectedItem = 58;
                 }
                 else if (Main.myPlayer == player.whoAmI)
                 {
-                    if (Main.mouseItem.type == ModContent.ItemType<WulfrumFusionCannon>())
-                    {
-                        Main.mouseItem = new Item();
-                    }
-
-                    DummyCannon.TurnToAir();
                     if (player.Transformation().Type == ModContent.ItemType<AbandonedWulfrumHelmet>())
                     {
                         player.Transformation().Type = -1;
+                        player.head = -1;
                     }
                 }
             }

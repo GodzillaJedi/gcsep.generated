@@ -1,11 +1,6 @@
 ﻿using CalamityMod;
-using CalamityMod.CalPlayer;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -28,24 +23,23 @@ namespace gcsep.Content.Projectiles.Enchantments
             Projectile.alpha = 50;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
+            Projectile.minion = true; 
         }
 
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
             var cal = player.Calamity();
+            var cse = player.GetModPlayer<GCSEPlayer>(); 
 
-            // Only exist while the armor set is active
-            if (!cal.reaverExplore || player.dead)
+            if ((!cal.reaverExplore && !cse.rOrb) || player.dead || !player.active)
             {
                 Projectile.Kill();
                 return;
             }
 
-            // Keep alive
             Projectile.timeLeft = 2;
 
-            // Dust burst on spawn
             dust--;
             if (dust >= 0)
             {
@@ -62,7 +56,6 @@ namespace gcsep.Content.Projectiles.Enchantments
                 }
             }
 
-            // Light + positioning
             Lighting.AddLight(Projectile.Center, 0.5f, 2f, 0.5f);
 
             Projectile.Center = player.Center + Vector2.UnitY * (player.gfxOffY - 60f);
@@ -80,7 +73,6 @@ namespace gcsep.Content.Projectiles.Enchantments
             Projectile.position.X = (int)Projectile.position.X;
             Projectile.position.Y = (int)Projectile.position.Y;
         }
-
         public override bool? CanDamage() => false;
     }
 }

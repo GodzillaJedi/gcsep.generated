@@ -1,10 +1,10 @@
-﻿using BombusApisBee.BeeDamageClass;
-using BombusApisBee.Items.Other.Crafting;
-using gcsep.Core;
+﻿using gcsep.Core;
 using Redemption.Items.Materials.PostML;
 using gcsep.ClassSouls.Beekeeper.Essences;
 using Terraria;
 using Terraria.ModLoader;
+using BombusApisBee.Core.BeekeeperClass;
+using BombusApisBee.Content.Pillars.Items.PhotonFragment;
 
 namespace gcsep.Redemption.Mutagens
 {
@@ -28,9 +28,9 @@ namespace gcsep.Redemption.Mutagens
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage<HymenoptraDamageClass>() += 0.20f;
-            player.GetCritChance<HymenoptraDamageClass>() += 0.10f;
-            player.GetModPlayer<BeeDamagePlayer>().BeeResourceMax2 += 100;
+            player.GetDamage<BeekeeperDamageClass>() += 0.20f;
+            player.GetCritChance<BeekeeperDamageClass>() += 0.10f;
+            player.GetModPlayer<BeekeeperPlayer>().BeeResourceMax2 += 100;
         }
 
         public override void AddRecipes()

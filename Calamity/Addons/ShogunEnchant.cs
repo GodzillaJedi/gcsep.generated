@@ -1,22 +1,18 @@
 ﻿using CalamityHunt.Common.Players;
+using CalamityHunt.Content.Buffs;
 using CalamityHunt.Content.Items.Accessories;
 using CalamityHunt.Content.Items.Armor.Shogun;
 using CalamityHunt.Content.Items.Misc;
 using CalamityHunt.Content.Items.Rarities;
 using CalamityHunt.Content.Items.Weapons.Melee;
-using CatalystMod.Items.Accessories;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
-using GMR;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace gcsep.Calamity.Addons
 {
@@ -40,7 +36,12 @@ namespace gcsep.Calamity.Addons
         {
             player.AddEffect<ShogunEffect>(Item);
             player.AddEffect<TendrilsEffect>(Item);
-            player.AddEffect<SplendorEffect>(Item);
+            if (player.AddEffect<SplendorEffect>(Item))
+            {
+                var jam = player.GetModPlayer<SplendorJamPlayer>();
+                jam.active = true;
+                jam.rainbow = true;
+            }
         }
 
         public override void AddRecipes()
@@ -70,21 +71,55 @@ namespace gcsep.Calamity.Addons
         public class TendrilsEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
-            public override int ToggleItemType => ModContent.ItemType<ShogunEnchant>();
+            public override int ToggleItemType => ModContent.ItemType<ShogunEnchant>(); 
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<TendrilCursorAttachment>().UpdateVanity(player);
+                if (player.TryGetModPlayer<VanityPlayer>(out var vanityPlayer))
+                {
+                    vanityPlayer.tendrilCursor = true;
+                }
+            }
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<TendrilsEffect>())
+                {
+                    if (player.TryGetModPlayer<VanityPlayer>(out var vanityPlayer))
+                    {
+                        vanityPlayer.tendrilCursor = false;
+                    }
+                }
             }
         }
         public class SplendorEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
-            public override int ToggleItemType => ModContent.ItemType<ShogunEnchant>();
+            public override int ToggleItemType => ModContent.ItemType<ShogunEnchant>(); 
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<SplendorJam>().UpdateAccessory(player, true);
+                if (player.TryGetModPlayer<SplendorJamPlayer>(out var jamPlayer))
+                {
+                    jamPlayer.active = true;
+                    jamPlayer.rainbow = true;
+                }
+            }
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<SplendorEffect>())
+                {
+                    if (player.TryGetModPlayer<SplendorJamPlayer>(out var jamPlayer))
+                    {
+                        // Safely clear the variables so the rainbow effect vanishes instantly
+                        jamPlayer.active = false;
+                        jamPlayer.rainbow = false;
+                    }
+                }
             }
         }
-
     }
 }

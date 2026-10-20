@@ -57,27 +57,32 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<DevastationExHeader>();
             public override int ToggleItemType => ModContent.ItemType<ReaverEnchantEx>();
-
+            public override bool MinionEffect => true; 
             public override void PostUpdateEquips(Player player)
             {
                 var cp = player.Calamity();
                 var cse = player.CSE();
 
-                // Only run if armor set OR enchant/force is active
+                cse.rOrb = true;
+
                 if (!cp.reaverExplore && !cse.rOrb)
                     return;
 
-                // Buff
                 int buffType = ModContent.BuffType<ReaverOrbBuff>();
-                if (!player.HasBuff(buffType))
-                    player.AddBuff(buffType, 2);
-
-                // Projectile
                 int projType = ModContent.ProjectileType<ReaverOrb>();
-                if (player.ownedProjectileCounts[projType] <= 0)
+
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 60);
+
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (player.ownedProjectileCounts[projType] <= 0 && !player.dead)
                 {
+                    var source = GetSource_EffectItem(player);
+
                     Projectile.NewProjectileDirect(
-                        player.GetSource_FromThis(),
+                        source,
                         player.Center,
                         Vector2.Zero,
                         projType,
@@ -85,6 +90,35 @@ namespace gcsep.Calamity.Enchantments
                         0f,
                         player.whoAmI
                     );
+                }
+            }
+
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<ReaverOrbEffect>())
+                {
+                    player.CSE().rOrb = false;
+
+                    int buffType = ModContent.BuffType<ReaverOrbBuff>();
+                    int projType = ModContent.ProjectileType<ReaverOrb>();
+
+                    int buffIndex = player.FindBuffIndex(buffType);
+                    if (buffIndex != -1)
+                    {
+                        player.DelBuff(buffIndex);
+                    }
+
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        Projectile p = Main.projectile[i];
+                        if (p.active && p.owner == player.whoAmI && p.type == projType)
+                        {
+                            p.Kill();
+                        }
+                    }
                 }
             }
         }

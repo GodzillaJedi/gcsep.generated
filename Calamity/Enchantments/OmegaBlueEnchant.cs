@@ -7,6 +7,7 @@ using CalamityMod.Items.Armor.OmegaBlue;
 using CalamityMod.Items.Armor.Prismatic;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Projectiles.Summon;
+using CalamityMod.Rarities;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
@@ -29,7 +30,7 @@ namespace gcsep.Calamity.Enchantments
             Item.height = 20;
             Item.accessory = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ModContent.RarityType<PureGreen>();
             Item.value = 50000000;
         }
         public override Color nameColor => new(31, 79, 156);
@@ -58,27 +59,25 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<DesolationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<OmegaBlueEnchant>();
-
+            public override bool MinionEffect => true; 
             public override void PostUpdateEquips(Player player)
             {
                 int buffType = ModContent.BuffType<MutatedTruffleBuff>();
+                int projType = ModContent.ProjectileType<MutatedTruffleMinion>();
 
-                // Apply buff without resetting timer every tick
                 if (!player.HasBuff(buffType))
-                    player.AddBuff(buffType, 2);
+                    player.AddBuff(buffType, 60);
 
-                // Only spawn projectile on local player
                 if (player.whoAmI != Main.myPlayer)
                     return;
 
-                int projType = ModContent.ProjectileType<MutatedTruffleMinion>();
-
-                if (player.ownedProjectileCounts[projType] <= 0)
+                if (player.ownedProjectileCounts[projType] <= 0 && !player.dead)
                 {
+                    var source = GetSource_EffectItem(player);
                     int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
 
                     var proj = Projectile.NewProjectileDirect(
-                        player.GetSource_FromThis(),
+                        source,
                         player.Center,
                         -Vector2.UnitY,
                         projType,
@@ -90,7 +89,35 @@ namespace gcsep.Calamity.Enchantments
                     proj.originalDamage = damage;
                 }
             }
+
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<TruffleEffect>())
+                {
+                    int buffType = ModContent.BuffType<MutatedTruffleBuff>();
+                    int projType = ModContent.ProjectileType<MutatedTruffleMinion>();
+
+                    int buffIndex = player.FindBuffIndex(buffType);
+                    if (buffIndex != -1)
+                    {
+                        player.DelBuff(buffIndex);
+                    }
+
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        Projectile p = Main.projectile[i];
+                        if (p.active && p.owner == player.whoAmI && p.type == projType)
+                        {
+                            p.Kill();
+                        }
+                    }
+                }
+            }
         }
+
         public class ReaperEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<DesolationForceHeader>();

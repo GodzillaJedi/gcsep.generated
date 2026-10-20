@@ -1,24 +1,17 @@
 ﻿using CalamityBardHealer;
 using CalamityBardHealer.Items;
 using CalamityMod;
-using CalamityMod.Buffs.Summon;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Armor.Demonshade;
 using CalamityMod.Items.Armor.Silva;
-using CalamityMod.Items.Armor.Statigel;
-using CalamityMod.Projectiles.Summon;
+using CalamityMod.Rarities;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using RagnarokMod.Items.BardItems.Armor;
 using RagnarokMod.Items.HealerItems.Armor;
-using RagnarokMod.Utils;
-using gcsep.Content.SoulToggles;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
@@ -43,7 +36,7 @@ namespace gcsep.Calamity.Enchantments
             Item.height = 20;
             Item.accessory = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ModContent.RarityType<CosmicPurple>();
             Item.value = 50000000;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -150,10 +143,11 @@ namespace gcsep.Calamity.Enchantments
             public override int ToggleItemType => ModContent.ItemType<SilvaEnchant>();
             public override void PostUpdateEquips(Player player)
             {
-                player.Calamity().hasJetpack = true;
+                player.Calamity().rogueDashItem = base.EffectItem(player);
                 player.GetDamage<ThrowingDamageClass>() += 0.12f;
                 player.Calamity().rogueVelocity += 0.15f;
                 player.Calamity().blunderBooster = true;
+                player.Calamity().blunderBoosterVisibility = true;
                 player.Calamity().stealthGenStandstill += 0.1f;
                 player.Calamity().stealthGenMoving += 0.1f;
             }

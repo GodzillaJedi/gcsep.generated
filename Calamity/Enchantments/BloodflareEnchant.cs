@@ -1,26 +1,19 @@
-﻿using CalamityBardHealer.Buffs;
-using CalamityBardHealer.Items;
-using CalamityBardHealer.Projectiles;
+﻿using CalamityBardHealer.Items;
 using CalamityMod;
 using CalamityMod.Buffs.StatBuffs;
-using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Armor.Auric;
 using CalamityMod.Items.Armor.Bloodflare;
-using CalamityMod.Items.Armor.Demonshade;
+using CalamityMod.Rarities;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using RagnarokMod.Items.BardItems.Accessories;
 using RagnarokMod.Items.BardItems.Armor;
 using RagnarokMod.Items.HealerItems.Armor;
-using RagnarokMod.Utils;
-using gcsep.Content.SoulToggles;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using ThoriumMod;
 using ThoriumMod.Utilities;
@@ -43,7 +36,7 @@ namespace gcsep.Calamity.Enchantments
             Item.height = 20;
             Item.accessory = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ModContent.RarityType<PureGreen>();
             Item.value = 50000000;
         }
         public override Color nameColor => new(219, 18, 0);

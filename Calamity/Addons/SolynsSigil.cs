@@ -1,16 +1,16 @@
-﻿using FargowiltasSouls.Core.AccessoryEffectSystem;
+﻿using CalamityMod;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Content.SoulToggles;
 using gcsep.Core;
+using gcsep.CrossMod.CraftingStations;
 using Microsoft.Xna.Framework;
 using NoxusBoss.Content.Items.Accessories.VanityEffects;
 using NoxusBoss.Content.Items.Accessories.Wings;
 using NoxusBoss.Content.Rarities;
-using NoxusBoss.Core.CrossCompatibility.Inbound.BaseCalamity;
 using NoxusBoss.Core.Utilities;
-using gcsep.Content.SoulToggles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using gcsep.CrossMod.CraftingStations;
 
 namespace gcsep.Calamity.Addons
 {
@@ -53,7 +53,17 @@ namespace gcsep.Calamity.Addons
             public override int ToggleItemType => ModContent.ItemType<PortalSkirt>();
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<PortalSkirt>().UpdateAccessory(player, true);
+                player.GetValueRef<bool>("WearingPortalSkirt").Value = true;
+            }
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<SkirtEffect>())
+                {
+                    player.GetValueRef<bool>("WearingPortalSkirt").Value = false;
+                }
             }
         }
 
@@ -63,7 +73,17 @@ namespace gcsep.Calamity.Addons
             public override int ToggleItemType => ModContent.ItemType<DeificTouch>();
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<DeificTouch>().UpdateAccessory(player, true);
+                player.GetValueRef<bool>("DeificTouch").Value = true;
+            }
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<DeificEffect>())
+                {
+                    player.GetValueRef<bool>("DeificTouch").Value = false;
+                }
             }
         }
         public class DivineEffect : AccessoryEffect
@@ -72,7 +92,37 @@ namespace gcsep.Calamity.Addons
             public override int ToggleItemType => ModContent.ItemType<DivineWings>();
             public override void PostUpdateEquips(Player player)
             {
-                ModContent.GetInstance<DivineWings>().UpdateAccessory(player, true);
+                player.wingsLogic = DivineWings.WingSlotID;
+
+                player.noFallDmg = true;
+
+                if (ModLoader.HasMod("CalamityMod"))
+                {
+                    player.Calamity().infiniteFlight = true;
+                }
+
+                Lighting.AddLight(player.Center, Vector3.One);
+
+                player.wingTimeMax = 100000000; 
+
+                if (player.wingTime > 0f && player.controlJump)
+                {
+                    if (player.velocity.Y > 0f)
+                        player.velocity.Y -= 2f * player.gravDir; 
+                }
+            }
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<DivineEffect>())
+                {
+                    if (player.wingsLogic == DivineWings.WingSlotID)
+                    {
+                        player.wingsLogic = 0;
+                    }
+                }
             }
         }
     }
