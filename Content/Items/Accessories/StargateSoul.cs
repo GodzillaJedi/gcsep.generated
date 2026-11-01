@@ -136,22 +136,31 @@ namespace gcsep.Content.Items.Accessories
                 eternitySoul.UpdateAccessory(player, hideVisual);
             }
         }
-
         public override void AddRecipes()
         {
-            Recipe recipe = CreateRecipe(1);
+            if (ModLoader.HasMod("FargowiltasSouls"))
+            {
+                Recipe recipe = CreateRecipe(1);
 
-            recipe.AddIngredient<EternityForce>();
-            recipe.AddIngredient<EternitySoul>();
-            recipe.AddIngredient<MacroverseSoul>();
-            recipe.AddIngredient<MicroverseSoul>();
-            recipe.AddIngredient<CyclonicFin>();
+                recipe.AddIngredient(ModContent.ItemType<EternityForce>());
+                recipe.AddIngredient(ModContent.ItemType<MacroverseSoul>());
+                recipe.AddIngredient(ModContent.ItemType<MicroverseSoul>());
+                recipe.AddIngredient(ModContent.ItemType<CyclonicFin>());
 
-            recipe.AddIngredient<Sadism>(30);
-            recipe.AddIngredient<tModLoadiumBar>(30); // check capitalization!
+                if (ModLoader.GetMod("FargowiltasSouls").TryFind<ModItem>("EternitySoul", out var eternitySoulItem))
+                {
+                    recipe.AddIngredient(eternitySoulItem.Type);
+                }
+                if (ModLoader.GetMod("FargowiltasSouls").TryFind<ModItem>("Sadism", out var sadismItem))
+                {
+                    recipe.AddIngredient(sadismItem.Type, 30);
+                }
 
-            recipe.AddTile<MutantsForgeTile>();
-            recipe.Register();
+                recipe.AddIngredient(ModContent.ItemType<tModLoadiumBar>(), 30);
+
+                recipe.AddTile<MutantsForgeTile>();
+                recipe.Register();
+            }
         }
     }
 }

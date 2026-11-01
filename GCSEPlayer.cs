@@ -49,7 +49,10 @@ namespace gcsep
         public bool equippedGemTechEnchantment;
         public bool equippedVoidFaquirEnchantment;
         public bool equippedDemonshadeEnchantment;
-
+        public bool YharonSummon;
+        public bool AresSummon;
+        public bool ThanatosSummon;
+        public bool TwinsSummon;
         public float monstrosityHits;
         public void DiscordWhiteTheme(float duration, float sharpness)
         {
@@ -406,6 +409,10 @@ namespace gcsep
             equippedAbominableEnchantment = false;
             equippedNekomiEnchantment = false;
             rDevil = false;
+            AresSummon = false;
+            TwinsSummon = false;
+            ThanatosSummon = false;
+            YharonSummon = false;
             throwerVelocity = 1f;
             CyclonicFin = false;
             lumberjackSet = false;

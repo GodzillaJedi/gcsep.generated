@@ -1,7 +1,10 @@
-﻿using CalamityMod.Projectiles.Summon;
+﻿using CalamityMod;
+using CalamityMod.Projectiles.Summon;
+using FargowiltasSouls.Core.AccessoryEffectSystem;
 using System;
 using Terraria;
 using Terraria.ModLoader;
+using static gcsep.Calamity.Enchantments.GodSlayerEnchant;
 
 namespace gcsep.Reworks
 {
@@ -15,6 +18,7 @@ namespace gcsep.Reworks
                 projectile.minionSlots = 5f;
             }
         }
+
         public override void PostAI(Projectile projectile)
         {
             if (ModLoader.HasMod("CalamityMod") &&
@@ -22,14 +26,14 @@ namespace gcsep.Reworks
             {
                 Player player = Main.player[projectile.owner];
 
-                
-                int dynamicSegments = 5 + player.maxMinions;
+                if (player.HasEffect<MechwormEffect>() || player.Calamity().hasVoidEaterMarionette)
+                {
+                    int dynamicSegments = 5 + player.maxMinions;
 
-                
-                int finalSegmentCount = Math.Clamp(dynamicSegments, 5, 15);
+                    int finalSegmentCount = Math.Clamp(dynamicSegments, 5, 15);
 
-                
-                projectile.minionSlots = finalSegmentCount;
+                    projectile.minionSlots = finalSegmentCount;
+                }
             }
         }
     }

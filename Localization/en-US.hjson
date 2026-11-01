@@ -167,6 +167,26 @@ Mods: {
 				Description: Mods.gcsep.Buffs.DemonshadeSetDevilBuff.Description
 				DisplayName: Demonshade Set Devil Buff
 			}
+
+			YharonSummonBuff: {
+				Description: Mods.gcsep.Buffs.YharonSummonBuff.Description
+				DisplayName: Yharon Summon Buff
+			}
+
+			AresMinionBuff: {
+				DisplayName: Ares Minion Buff
+				Description: Mods.gcsep.Buffs.AresMinionBuff.Description
+			}
+
+			ExoTwinsMinionBuff: {
+				DisplayName: Exo Twins Minion Buff
+				Description: Mods.gcsep.Buffs.ExoTwinsMinionBuff.Description
+			}
+
+			ThanatosMinionBuff: {
+				DisplayName: Thanatos Minion Buff
+				Description: Mods.gcsep.Buffs.ThanatosMinionBuff.Description
+			}
 		}
 
 		Items: {
@@ -2809,6 +2829,11 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Reaver Rework
 			}
+
+			CosmicObliterator: {
+				DisplayName: Cosmic Obliterator
+				Tooltip: ""
+			}
 		}
 
 		Toggler: {
@@ -2927,6 +2952,8 @@ Mods: {
 			MutantAuraOfSupression.DisplayName: Mutant Aura Of Supression
 			MutantIllusion.DisplayName: Mutant Illusion
 			CyberneticOrb.DisplayName: Cybernetic Orb
+			ExoTwinsApollo.DisplayName: Exo Twins Apollo
+			ExoTwinsArtemis.DisplayName: Exo Twins Artemis
 		}
 
 		Projectiles: {
@@ -3050,6 +3077,12 @@ Mods: {
 			}
 
 			DemonshadeRedDevil.DisplayName: Demonshade Red Devil
+			YharonBossMinion.DisplayName: Yharon Boss Minion
+			ExoTwinsMinion.DisplayName: Exo Twins Minion
+			AresMinion.DisplayName: Ares Minion
+			ThanatosMinion.DisplayName: Thanatos Minion
+			AresMinionBeam.DisplayName: Ares Minion Beam
+			PlayerSuperCosmicBeam.DisplayName: Player Super Cosmic Beam
 		}
 
 		Configs: {

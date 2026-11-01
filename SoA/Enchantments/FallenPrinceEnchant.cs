@@ -48,10 +48,7 @@ namespace gcsep.SoA.Enchantments
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.AddEffect<FallenPrinceEffect>(Item);
-            if (player.AddEffect<ResolveEffect>(Item))
-            {
-                ModContent.GetInstance<NovanielResolve>().UpdateAccessory(player, hideVisual);
-            }
+            player.AddEffect<ResolveEffect>(Item);
         }
 
         public class FallenPrinceEffect : AccessoryEffect
@@ -66,9 +63,40 @@ namespace gcsep.SoA.Enchantments
         public class ResolveEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<SoranForceHeader>();
-            public override int ToggleItemType => ModContent.ItemType<FallenPrinceEnchant>();
-        }
+            public override int ToggleItemType => ModContent.ItemType<FallenPrinceEnchant>(); 
+            public override void PostUpdateEquips(Player player)
+            {
+                if (player.TryGetModPlayer<MiscEffectsPlayer>(out var miscPlayer))
+                {
+                    miscPlayer.novanielResolveItem = ModContent.GetInstance<NovanielResolve>().Item;
+                    miscPlayer.novanielResolveFunctional = true;
+                }
 
+                if (player.TryGetModPlayer<DrawEffectsPlayer>(out var drawPlayer))
+                {
+                    drawPlayer.novanielResolveVisible = true;
+                }
+            }
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<ResolveEffect>())
+                {
+                    if (player.TryGetModPlayer<MiscEffectsPlayer>(out var miscPlayer))
+                    {
+                        miscPlayer.novanielResolveItem = null;
+                        miscPlayer.novanielResolveFunctional = false;
+                    }
+
+                    if (player.TryGetModPlayer<DrawEffectsPlayer>(out var drawPlayer))
+                    {
+                        drawPlayer.novanielResolveVisible = false;
+                    }
+                }
+            }
+        }
         public override void AddRecipes()
         {
             Recipe recipe = this.CreateRecipe();
