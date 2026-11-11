@@ -1,9 +1,12 @@
 ﻿using CalamityMod;
 using CalamityMod.NPCs.ExoMechs.Ares;
+using CalamityMod.Projectiles.BaseProjectiles;
 using CalamityMod.Projectiles.Boss;
 using CalamityMod.Sounds;
+using FargowiltasCrossmod.Content.Calamity.Bosses.ExoMechs.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Runtime.Intrinsics.X86;
 using Terraria;
@@ -23,6 +26,7 @@ namespace gcsep.Content.Projectiles.Minions
         public const float BeamSpinPerTick = 0.01f;   
         private const float BeamDamageMult = 1.5f;    
         private const float HoverHeight = 460f;       
+
         public const int StatePlasma = 0;   
         public const int StateBeams = 1;    
         public const int StateTesla = 2;    
@@ -30,10 +34,11 @@ namespace gcsep.Content.Projectiles.Minions
         public const int StateLaser = 4;    
         public const int StateBarrage = 5;  
 
-        private const float PlasmaDamageMult = 1f;
+        private const float PlasmaDamageMult = 0.7f;   
         private const float TeslaDamageMult = 1.2f;
         private const float GaussDamageMult = 3f;
         private const float LaserDamageMult = 0.8f;
+
         private const int MaxFramesX = 6;
         private const int MaxFramesY = 8;
 
@@ -45,6 +50,8 @@ namespace gcsep.Content.Projectiles.Minions
         private bool lastWasBeamState;
         private int cannonFrameIndex;
         private int cannonFrameTick;
+
+        // Cannon aiming state: 0 = laser, 1 = gauss, 2 = tesla, 3 = plasma
         private float[] cannonRot;
         private int[] cannonDir;
         private float[] cannonKick;   
@@ -81,13 +88,14 @@ namespace gcsep.Content.Projectiles.Minions
             Projectile.localNPCHitCooldown = 6;
             Projectile.DamageType = DamageClass.Summon;
 
-            
             cannonRot = new float[4];
             cannonDir = new int[] { -1, 1, -1, 1 };
             cannonKick = new float[4];
         }
 
         public override bool? CanDamage() => false;
+
+
         public Vector2 CoreWorldPos => Projectile.Center + new Vector2(-1f, 23f).RotatedBy(Projectile.rotation) * Projectile.scale;
 
         private Vector2 CannonPos(int which)
@@ -103,26 +111,18 @@ namespace gcsep.Content.Projectiles.Minions
             }
             return Projectile.Center + local.RotatedBy(Projectile.rotation) * Projectile.scale;
         }
+
         private static Rectangle SheetFrame(Texture2D tex, int cols, int rows, int index)
         {
             int w = tex.Width / cols;
             int h = tex.Height / rows;
             return new Rectangle(w * (index / rows), h * (index % rows), w, h);
         }
+
         private static float StepAngle(float current, float target, float maxChange)
         {
             float diff = MathHelper.WrapAngle(target - current);
             return MathHelper.WrapAngle(current + MathHelper.Clamp(diff, -maxChange, maxChange));
-        }
-
-        private static void MakeFriendly(int index)
-        {
-            if (index < 0 || index >= Main.maxProjectiles)
-                return;
-            Projectile p = Main.projectile[index];
-            p.hostile = false;
-            p.friendly = true;
-            p.DamageType = DamageClass.Summon;
         }
 
         private void MoveTowards(Vector2 destination, float maxSpeed, float inertia)
@@ -162,7 +162,7 @@ namespace gcsep.Content.Projectiles.Minions
             if (++cannonFrameTick >= 6)
             {
                 cannonFrameTick = 0;
-                cannonFrameIndex = (cannonFrameIndex + 1) % 12; // idle loop
+                cannonFrameIndex = (cannonFrameIndex + 1) % 12; 
             }
 
             for (int i = 0; i < 4; i++)
@@ -207,7 +207,9 @@ namespace gcsep.Content.Projectiles.Minions
                 default: return StatePlasma;
             }
         }
+
         private bool Every(float interval, float start = 0f) => AttackTimer >= start && (AttackTimer - start) % interval == 0f;
+
         private void FirePlasma(NPC target)
         {
             Vector2 pos = CannonPos(3);
@@ -217,11 +219,14 @@ namespace gcsep.Content.Projectiles.Minions
             if (Main.myPlayer != Projectile.owner)
                 return;
 
-            int fireball = Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos + dir * 40f, dir * 12f,
-                ModContent.ProjectileType<AresPlasmaFireball>(), (int)(Projectile.damage * PlasmaDamageMult), 0f, Projectile.owner,
-                target.Center.X, target.Center.Y);
-            MakeFriendly(fireball);
+            for (int i = -1; i <= 1; i++)
+            {
+                Vector2 velocity = dir.RotatedBy(i * 0.12f) * 5f;
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos + dir * 40f, velocity,
+                    ModContent.ProjectileType<ExoMinionPlasmaBolt>(), (int)(Projectile.damage * PlasmaDamageMult), 0f, Projectile.owner);
+            }
         }
+
         private void FireTesla(NPC target)
         {
             Vector2 pos = CannonPos(2);
@@ -234,10 +239,9 @@ namespace gcsep.Content.Projectiles.Minions
             for (int i = -1; i <= 1; i++)
             {
                 Vector2 velocity = dir.RotatedBy(i * 0.3f) * 11f;
-                int orb = Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos + velocity.SafeNormalize(Vector2.UnitY) * 40f, velocity,
-                    ModContent.ProjectileType<AresTeslaOrb>(), (int)(Projectile.damage * TeslaDamageMult), 0f, Projectile.owner,
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos + velocity.SafeNormalize(Vector2.UnitY) * 40f, velocity,
+                    ModContent.ProjectileType<ExoMinionTeslaOrb>(), (int)(Projectile.damage * TeslaDamageMult), 0f, Projectile.owner,
                     orbIdentity++);
-                MakeFriendly(orb);
             }
         }
 
@@ -250,10 +254,8 @@ namespace gcsep.Content.Projectiles.Minions
             if (Main.myPlayer != Projectile.owner)
                 return;
 
-            int nuke = Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos + dir * 40f, dir * 14f,
-                ModContent.ProjectileType<AresGaussNukeProjectile>(), (int)(Projectile.damage * GaussDamageMult), 5f, Projectile.owner,
-                0f, target.Center.Y);
-            MakeFriendly(nuke);
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos + dir * 40f, dir * 14f,
+                ModContent.ProjectileType<ExoMinionGaussNuke>(), (int)(Projectile.damage * GaussDamageMult), 5f, Projectile.owner);
         }
 
         private void FireLaser(NPC target)
@@ -265,10 +267,8 @@ namespace gcsep.Content.Projectiles.Minions
             if (Main.myPlayer != Projectile.owner)
                 return;
 
-            int laser = Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos + dir * 70f + Vector2.UnitY * 16f, target.Center,
-                ModContent.ProjectileType<AresDeathBeamTelegraph>(), (int)(Projectile.damage * LaserDamageMult), 0f, Projectile.owner,
-                0f, target.whoAmI);
-            MakeFriendly(laser);
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos + dir * 70f + Vector2.UnitY * 16f, dir * 7.5f,
+                ModContent.ProjectileType<ExoMinionLaser>(), (int)(Projectile.damage * LaserDamageMult), 0f, Projectile.owner);
         }
 
         public override void AI()
@@ -332,6 +332,7 @@ namespace gcsep.Content.Projectiles.Minions
                         break;
 
                     case StateBarrage:
+                        // All four cannons together, each at a slower rate than on its own
                         if (AttackTimer == 1f)
                             SoundEngine.PlaySound(AresGaussNuke.TelSound, CannonPos(1));
                         if (Every(45f, 20f))
@@ -412,7 +413,6 @@ namespace gcsep.Content.Projectiles.Minions
 
         public void DrawMinionArm(SpriteBatch spriteBatch, Vector2 handPosition, Color glowmaskColor, int direction, bool backArm)
         {
-            // Ported from AresBody.DrawArm (same offsets / math as the boss)
             SpriteEffects dirFx = direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             float s = Projectile.scale;
             float distanceFromHand = Vector2.Distance(Projectile.Center, handPosition);
@@ -568,6 +568,7 @@ namespace gcsep.Content.Projectiles.Minions
             DrawMinionArm(sb, CannonPos(2), Color.White, -1, false);  // tesla
             DrawMinionArm(sb, CannonPos(3), Color.White, 1, false);   // plasma
 
+            // Body
             Main.EntitySpriteDraw(texture, drawPosition, bodyFrame, lightColor * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
             Main.EntitySpriteDraw(AresBody.GlowTexture.Value, drawPosition, bodyFrame, Color.White * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0f);
 
@@ -575,89 +576,6 @@ namespace gcsep.Content.Projectiles.Minions
             DrawCannon(sb, 1, TextureAssets.Npc[ModContent.NPCType<AresGaussNuke>()].Value, AresGaussNuke.GlowTexture.Value, 9, 12, lightColor);
             DrawCannon(sb, 2, TextureAssets.Npc[ModContent.NPCType<AresTeslaCannon>()].Value, AresTeslaCannon.GlowTexture.Value, 6, 8, lightColor);
             DrawCannon(sb, 3, TextureAssets.Npc[ModContent.NPCType<AresPlasmaFlamethrower>()].Value, AresPlasmaFlamethrower.GlowTexture.Value, 6, 8, lightColor);
-
-            return false;
-        }
-    }
-    public class AresMinionBeam : ModProjectile
-    {
-        public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MagicMissile; // never actually drawn
-
-        public override void SetStaticDefaults()
-        {
-            ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 3000;
-        }
-
-        public override void SetDefaults()
-        {
-            Projectile.width = 16;
-            Projectile.height = 16;
-            Projectile.friendly = true;
-            Projectile.hostile = false;
-            Projectile.DamageType = DamageClass.Summon;
-            Projectile.penetrate = -1;
-            Projectile.tileCollide = false;
-            Projectile.ignoreWater = true;
-            Projectile.timeLeft = AresMinion.BeamDuration;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 12;
-        }
-
-        private float WidthScale()
-        {
-            float elapsed = AresMinion.BeamDuration - Projectile.timeLeft;
-            float grow = MathHelper.Clamp(elapsed / 15f, 0f, 1f);
-            float shrink = MathHelper.Clamp(Projectile.timeLeft / 20f, 0f, 1f);
-            return Math.Min(grow, shrink);
-        }
-
-        public override void AI()
-        {
-            int index = Projectile.GetByUUID(Projectile.owner, (int)Projectile.ai[1]);
-            if (index < 0 || !Main.projectile[index].active || !(Main.projectile[index].ModProjectile is AresMinion minion))
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            if (Projectile.timeLeft < AresMinion.BeamDuration - 5 && (int)minion.AttackPattern != AresMinion.StateBeams)
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            Projectile.Center = minion.CoreWorldPos;
-            float elapsed = AresMinion.BeamDuration - Projectile.timeLeft;
-            Projectile.rotation = Projectile.ai[0] + elapsed * AresMinion.BeamSpinPerTick;
-
-            Lighting.AddLight(Projectile.Center, 0.2f, 0.8f, 1.2f);
-        }
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            float width = 70f * WidthScale();
-            if (width <= 1f)
-                return false;
-
-            Vector2 end = Projectile.Center + Projectile.rotation.ToRotationVector2() * AresMinion.BeamLength;
-            float unused = 0f;
-
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, end, width, ref unused);
-        }
-        public override bool PreDraw(ref Color lightColor)
-        {
-            float width = 70f * WidthScale();
-            if (width <= 0.5f)
-                return false;
-
-            SpriteBatch sb = Main.spriteBatch;
-            Texture2D px = TextureAssets.MagicPixel.Value;
-            Vector2 start = Projectile.Center - Main.screenPosition;
-            Vector2 beamOrigin = new Vector2(0f, 0.5f);
-            float length = AresMinion.BeamLength;
-
-            sb.Draw(px, start, new Rectangle(0, 0, 1, 1), new Color(30, 140, 255, 0) * 0.30f, Projectile.rotation, beamOrigin, new Vector2(length, width * 1.7f), SpriteEffects.None, 0f);
-            sb.Draw(px, start, new Rectangle(0, 0, 1, 1), new Color(80, 220, 255, 0) * 0.55f, Projectile.rotation, beamOrigin, new Vector2(length, width), SpriteEffects.None, 0f);
-            sb.Draw(px, start, new Rectangle(0, 0, 1, 1), new Color(255, 255, 255, 0) * 0.85f, Projectile.rotation, beamOrigin, new Vector2(length, width * 0.35f), SpriteEffects.None, 0f);
 
             return false;
         }

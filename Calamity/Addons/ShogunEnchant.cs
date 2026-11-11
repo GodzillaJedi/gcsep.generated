@@ -114,7 +114,6 @@ namespace gcsep.Calamity.Addons
                 {
                     if (player.TryGetModPlayer<SplendorJamPlayer>(out var jamPlayer))
                     {
-                        // Safely clear the variables so the rainbow effect vanishes instantly
                         jamPlayer.active = false;
                         jamPlayer.rainbow = false;
                     }

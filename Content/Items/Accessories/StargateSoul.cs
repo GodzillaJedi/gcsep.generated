@@ -7,7 +7,6 @@ using gcsep.Core;
 using Luminance.Core.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using gcsep.Content.Items.Consumables;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

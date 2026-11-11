@@ -14,14 +14,12 @@ using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using NoxusBoss.Content.Rarities;
 using RagnarokMod.Items.BardItems.Armor;
 using RagnarokMod.Items.HealerItems.Armor;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
-using ThoriumMod.Prefixes.BardPrefixes;
 namespace gcsep.Calamity.Enchantments
 {
     [ExtendsFromMod(ModCompatibility.Calamity.Name)]

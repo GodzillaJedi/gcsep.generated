@@ -13,8 +13,8 @@ using Terraria.ModLoader;
 
 namespace gcsep.Calamity.Addons
 {
-    [ExtendsFromMod(ModCompatibility.Calamity.Name)]
-    [JITWhenModsEnabled(ModCompatibility.Calamity.Name)]
+    [ExtendsFromMod(ModCompatibility.Calamity.Name, ModCompatibility.Entropy.Name)]
+    [JITWhenModsEnabled(ModCompatibility.Calamity.Name, ModCompatibility.Entropy.Name)]
     public class AddonsForce : BaseForce
     {
         public override void SetDefaults()
@@ -60,6 +60,7 @@ namespace gcsep.Calamity.Addons
                 ModContent.GetInstance<SolynsSigil>().UpdateAccessory(player, hideVisual);
             }
         }
+        [JITWhenModsEnabled(ModCompatibility.Calamity.Name, ModCompatibility.Entropy.Name)]
         public class SmolderingEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
@@ -69,6 +70,7 @@ namespace gcsep.Calamity.Addons
                 ModContent.GetInstance<SmolderingHelmet>().UpdateArmorSet(player);
             }
         }
+        [JITWhenModsEnabled(ModCompatibility.Calamity.Name, ModCompatibility.Entropy.Name)]
         public class AzafureEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
@@ -79,6 +81,7 @@ namespace gcsep.Calamity.Addons
                 ModContent.GetInstance<AzafureHeavyHelmet>().UpdateArmorSet(player);
             }
         }
+        [JITWhenModsEnabled(ModCompatibility.Calamity.Name, ModCompatibility.Entropy.Name)]
         public class AcropolisEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
@@ -88,6 +91,7 @@ namespace gcsep.Calamity.Addons
                 ModContent.GetInstance<AcropolisHeavyHelmet>().UpdateArmorSet(player);
             }
         }
+        [JITWhenModsEnabled(ModCompatibility.Calamity.Name, ModCompatibility.Entropy.Name)]
         public class NihilistEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();
@@ -97,6 +101,7 @@ namespace gcsep.Calamity.Addons
                 ModContent.GetInstance<VoidEaterHelmet>().UpdateArmorSet(player);
             }
         }
+        [JITWhenModsEnabled(ModCompatibility.Calamity.Name, ModCompatibility.Entropy.Name)]
         public class AnarchoEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<AddonsForceHeader>();

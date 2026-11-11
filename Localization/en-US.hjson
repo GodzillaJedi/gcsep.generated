@@ -1,11 +1,5 @@
 Mods: {
 	gcsep: {
-		Keybinds: {
-			SupernovaeAttack.DisplayName: Supernovae Attack
-			CruserAttack.DisplayName: Cruser Attack
-			NamelessAttack.DisplayName: Nameless Attack
-		}
-
 		Tiles: {
 			DemonshadeWorkbenchTile.MapEntry: Demonshade Workbench Tile
 			DreamersForgeTile.MapEntry: Dreamers Forge Tile
@@ -40,67 +34,67 @@ Mods: {
 		Buffs: {
 			ChtuxlagorInferno: {
 				DisplayName: Chtuxlagor Inferno
-				Description: Mods.gcsep.Buffs.ChtuxlagorInferno.Description
+				Description: Summons the fires of Cthuxlagor on whoever
 			}
 
 			CryDebuff: {
 				DisplayName: Cry Debuff
-				Description: Mods.gcsep.Buffs.CryDebuff.Description
+				Description: Inflict Cry upon you
 			}
 
 			CutOpen: {
 				DisplayName: Cut Open
-				Description: Mods.gcsep.Buffs.CutOpen.Description
+				Description: Gets whoever dissected open
 			}
 
 			DreadflameAura: {
 				DisplayName: Dreadflame Aura
-				Description: Mods.gcsep.Buffs.DreadflameAura.Description
+				Description: Summons a circle of Dreadfire upon your enemies
 			}
 
 			DreadflameAuraCD: {
-				DisplayName: Dreadflame Aura C D
-				Description: Mods.gcsep.Buffs.DreadflameAuraCD.Description
+				DisplayName: Dreadflame Aura Cooldown
+				Description: Coolsdown your flames
 			}
 
 			EnrageCal: {
-				DisplayName: Enrage Cal
-				Description: Mods.gcsep.Buffs.EnrageCal.Description
+				DisplayName: Calamitous Rage
+				Description: Terrarian strongest there is!
 			}
 
 			FearBuff: {
 				DisplayName: Fear Buff
-				Description: Mods.gcsep.Buffs.FearBuff.Description
+				Description: You have the abilty to instill and inflict fear upon yourself to increase stats
 			}
 
 			GojiPrice: {
-				DisplayName: Goji Price
-				Description: Mods.gcsep.Buffs.GojiPrice.Description
+				DisplayName: Active Skill Buff
+				Description: For Active Skills Only
 			}
 
 			DeviSoulBuff: {
 				DisplayName: Devi Soul Buff
-				Description: Mods.gcsep.Buffs.DeviSoulBuff.Description
+				Description: Summons a spectral Deviantt to fight for you
 			}
 
 			MutantSoulBuff: {
 				DisplayName: Mutant Soul Buff
-				Description: Mods.gcsep.Buffs.MutantSoulBuff.Description
+				Description: Summons a spectral Mutant to fight for you
 			}
 
 			MonstrosityPresenceBuff: {
 				DisplayName: Monstrosity Presence Buff
-				Description: Mods.gcsep.Buffs.MonstrosityPresenceBuff.Description
+				Description: Monstrosity's gaze be upon ye
 			}
 
 			MushroomBuff: {
 				DisplayName: Mushroom Buff
-				Description: Mods.gcsep.Buffs.MushroomBuff.Description
+				Description: Dont do shrooms even if they increase your stats!
 			}
 
 			NihilityPresenceBuff: {
 				DisplayName: Nihility Presence Buff
-				Description: Mods.gcsep.Buffs.NihilityPresenceBuff.Description
+				Description: Nihilus's gaze be upon Ye!
 			}
 
 			PureFlameBuff: {
@@ -110,47 +104,47 @@ Mods: {
 
 			RivalBuff: {
 				DisplayName: Rival Buff
-				Description: Mods.gcsep.Buffs.RivalBuff.Description
+				Description: Stats that rival anyone's or something
 			}
 
 			SadismEX: {
-				DisplayName: Sadism E X
-				Description: Mods.gcsep.Buffs.SadismEX.Description
+				DisplayName: Sadism EX
+				Description: Being a sadistic mofo or something IDK
 			}
 
 			SniperBuff: {
 				DisplayName: Sniper Buff
-				Description: Mods.gcsep.Buffs.SniperBuff.Description
+				Description: Increases your focus for Ranged Weapons or something
 			}
 
 			SniperCooldownBuff: {
 				DisplayName: Sniper Cooldown Buff
-				Description: Mods.gcsep.Buffs.SniperCooldownBuff.Description
+				Description: Unfocuses your focus
 			}
 
 			TheRichBuff: {
 				DisplayName: The Rich Buff
-				Description: Mods.gcsep.Buffs.TheRichBuff.Description
+				Description: Don't be a Scrooge!
 			}
 
 			YharimBuff: {
 				DisplayName: Yharim Buff
-				Description: Mods.gcsep.Buffs.YharimBuff.Description
+				Description: The Godseeker's blessing be upon Ye!
 			}
 
 			Moonified: {
 				DisplayName: Moonified
-				Description: Mods.gcsep.Buffs.Moonified.Description
+				Description: Hey you got Smurfed!
 			}
 
 			Gun: {
 				DisplayName: Gun
-				Description: Mods.gcsep.Buffs.Gun.Description
+				Description: That's it just Gun XD!
 			}
 
 			SoulStrength: {
 				DisplayName: Soul Strength
-				Description: Mods.gcsep.Buffs.SoulStrength.Description
+				Description: Your Spirit is Strenghtened
 			}
 
 			ReaverOrbBuff: {
@@ -159,33 +153,33 @@ Mods: {
 			}
 
 			XenoniteClusterBuff: {
-				Description: Mods.gcsep.Buffs.XenoniteClusterBuff.Description
+				Description: Summons a Xenotite Cluster to protect you
 				DisplayName: Xenonite Cluster Buff
 			}
 
 			DemonshadeSetDevilBuff: {
-				Description: Mods.gcsep.Buffs.DemonshadeSetDevilBuff.Description
-				DisplayName: Demonshade Set Devil Buff
+				Description: The red devil will protect you
+				DisplayName: Red Devil
 			}
 
 			YharonSummonBuff: {
-				Description: Mods.gcsep.Buffs.YharonSummonBuff.Description
-				DisplayName: Yharon Summon Buff
+				Description: Summons the Auric Dragon of Rebirth to fight alongside you
+				DisplayName: Yharon
 			}
 
 			AresMinionBuff: {
-				DisplayName: Ares Minion Buff
-				Description: Mods.gcsep.Buffs.AresMinionBuff.Description
+				DisplayName: XF-09 Ares
+				Description: Summons a XF-09 Ares minion to fight for you
 			}
 
 			ExoTwinsMinionBuff: {
-				DisplayName: Exo Twins Minion Buff
-				Description: Mods.gcsep.Buffs.ExoTwinsMinionBuff.Description
+				DisplayName: XS-01 Artemis and XS-03 Apollo
+				Description: Summons both XS-01 Artemis and XS-03 Apollo to fight for you
 			}
 
 			ThanatosMinionBuff: {
-				DisplayName: Thanatos Minion Buff
-				Description: Mods.gcsep.Buffs.ThanatosMinionBuff.Description
+				DisplayName: XM-05 Thanatos
+				Description: Summons the mechworm XM-05 Thanatos to fight alongside you
 			}
 		}
 
@@ -202,7 +196,8 @@ Mods: {
 					[i:gcsep/VoidFaquirEnchant] Effects of Reincarnation Badge and Void Faquir Armor
 					[i:gcsep/VoidFaquirEnchant] Summons a Cruiser that follows your cursor 
 					[i:gcsep/SolynsSigil] Effects of Divine Wings, Portal Skirt, and Deific Touch
-					'Bought the Season Pass for this one'
+					[i:gcsep/AddonsForce] Effects of Acropolis, Void Eater, Chaos, and Azafure Armors
+					'Bought the Season Passes for this one'
 					'''
 			}
 
@@ -384,20 +379,32 @@ Mods: {
 			}
 
 			BloodflareEnchant: {
-				DisplayName: Bloodflare Enchant
-				Tooltip: ""
+				DisplayName: Bloodflare Enchantment
+				Tooltip:
+					'''
+					[i:RagnarokMod/SigilOfACruelWorld] Increases symphonic damage by 15%
+					Increases symphonic playing speed by 8%
+					Increases symphonic regeneration rate by 8%
+					Increases maximum inspiration by 3 
+					[i:CalamityMod/BloodflareCore] {$Common.KnockbackImmunity}
+					Recovering defense damage heals you, each defense recovered gives 1 HP
+					Taking damage converts at least half of your total defense in defense damage
+					[i:CalamityMod/PhantomicArtifact] Minion attacks provide various buffs
+					Does not stack with downgrades
+					[c/8ce0ff:  Phantomic Empowerment] [c/ccf1ff: grants {0}% increased summon damage and throws knives at enemies]
+					[c/d08aff:  Phantomic Shield] [c/eed4ff: grants {1} defense and a 20% damage reduction bulwark]
+					[c/ff8cb5:  Phantomic Regen] [c/ffccde: grants {2} HP/s life regen and occasionally drops phantom hearts which grant an additional 1 HP/s life regen]
+					[i:CalamityMod/Affliction] Gives all teammates +{0} HP/s life regen, +{1}% max life, {2}% damage reduction, {3} defense and {4}% increased damage
+					Effects of Bloodflare Armors
+					'''
 			}
 
 			BrimflameEnchant: {
 				DisplayName: Brimflame Enchantment
 				Tooltip:
 					'''
-					[i:CalamityMod/BrimflameCowl] Grants an additional 15% increased damage and magic crit
-					Press Armor Set Bonus to trigger a brimflame frenzy effect
-					While under this effect, you get an additional 40% increase to magic damage
-					However, this comes at the cost of rapid life loss and no mana regeneration
-					This can be toggled off, however, a brimflame frenzy has a 30 second cooldown
-					[i:CalamityMod/FlameLickedShell] 	Grants immunity to knockback
+					Effects of Brimflame Cowl
+					[i:CalamityMod/FlameLickedShell] Grants immunity to knockback
 					Pressing Activate Accessory Parry will activate a parry, encasing you in rocks
 					Being hit shortly after encasement will implode the rocks
 					Upon implosion, a ring of brimstone hellfire is launched outwards and you receive 90% DR for that hit
@@ -419,12 +426,17 @@ Mods: {
 			}
 
 			DaedalusEnchantEx: {
-				DisplayName: Daedalus Enchant Ex
-				Tooltip: ""
+				DisplayName: Daedalus Enchantment EX
+				Tooltip:
+					'''
+					[i:CalamityMod/OrnateShield]Allows the ability to dash
+					This dash can ram through enemies without taking damage
+					Effects of Daedalus Armors and Enchantment
+					'''
 			}
 
 			DemonShadeEnchant: {
-				DisplayName: Demon Shade Enchant
+				DisplayName: Demonshade Enchantment
 				Tooltip: ""
 			}
 
@@ -504,13 +516,20 @@ Mods: {
 			}
 
 			GodSlayerEnchant: {
-				DisplayName: God Slayer Enchant
+				DisplayName: God Slayer Enchantment
 				Tooltip: ""
 			}
 
 			HydrothermicEnchantEx: {
 				DisplayName: Hydrothermic Enchantment EX
-				Tooltip: "[i:]"
+				Tooltip:
+					'''
+					[i:CalamityMod/HydrothermicHeadMelee], [i:CalamityMod/HydrothermicHeadMagic], [i:CalamityMod/HydrothermicHeadRanged], [i:CalamityMod/HydrothermicHeadSummon], [i:CalamityMod/HydrothermicHeadRogue], [i:CalamityBardHealer/HydrothermicHat], and [i:CalamityBardHealer/HydrothermicGasMask] Effects of Hydrothermic Armors and Enchantment
+					[i:CalamityMod/EtherealExtorter] Rogue projectiles explode into homing souls on hit
+					8% increased rogue damage and +5 maximum stealth
+					[i:CalamityMod/Apollyon] Critical strikes curse enemies with [cbuff:CalamityMod/Bane] that scales off of your critical strike chance
+					When critically hit, enemies spread all debuffs they are afflicted with that are weaker than your [cbuff:CalamityMod/Bane] to nearby enemies
+					'''
 			}
 
 			LunicCorpEnchant: {
@@ -615,7 +634,14 @@ Mods: {
 
 			ReaverEnchantEx: {
 				DisplayName: Reaver Enchantment EX
-				Tooltip: ""
+				Tooltip:
+					'''
+					[i:CalamityMod/NecklaceofVexation] Up to 30% increased damage the lower your life is
+					Current boost: [DAMAGE]%
+					All attacks inflict [cbuff:Venom]
+					[i:CalamityMod/LivingDew]  Natural life regen is {0}% more potent and returns {1}% faster
+					Effects of Reaver Armor and Enchantment
+					'''
 			}
 
 			SilvaEnchant: {
@@ -639,13 +665,49 @@ Mods: {
 			}
 
 			TarragonEnchant: {
-				DisplayName: Tarragon Enchant
-				Tooltip: ""
+				DisplayName: Tarragon Enchantment
+				Tooltip:
+					'''
+					[i:CalamityMod/DarkSunRing]Grants immunity to knockback
+					12% increased damage
+					+0.5 HP/s life regen and +2 max minions
+					Increased minion knockback
+					Grants various buffs as the day goes on 
+					[i:CalamityMod/DivineProvidence] {$Common.KnockbackImmunity}
+					Pressing [KEY] will activate a parry, encasing you in luminous profaned crystal
+					Being hit shortly after encasement will shatter the crystal
+					Upon shattering, holy stars spiral outwards and damage taken is negated
+					After shattering, this damage reduction effect goes on cooldown
+					Damage parried whilst on cooldown summons additional healing stars, and will not be reduced
+					[c/FF8C00:The searing core of the Profaned Goddess]
+					[i:CalamityMod/BadgeofBravery] Increases melee damage and critical strike chance by 10%
+					Increases melee armor penetration by 5
+					Effects of Tarragon Armors
+					'''
 			}
 
 			TitanHeartEnchantEx: {
 				DisplayName: Titan Heart Enchantment EX
-				Tooltip: ""
+				Tooltip:
+					'''
+					[i:CalamityMod/TitanHeartMask] {$Common.RogueDamage} and {$Common.RogueVelocity@1}
+					Rogue weapons inflict [cbuff:CalamityMod/AstralInfectionDebuff]
+					{$Common.RogueStealth}
+					Stealth strikes deal {1}x knockback and cause an astral explosion
+					{$Common.KnockbackImmunity}
+					[i:CalamityMod/MoonstoneCrown] Increases maximum mana by 40
+					Summons a [c/27F5E0:Lunar Sigil] every 2 seconds, up to a maximum of 10
+					Each [c/27F5E0:Lunar Sigil] increases magic damage by 2% and reduces mana cost by 1%
+					With 5 sigils, increases mana regeneration by +5 MP/s
+					With 10 sigils, increases magic critical strike chance by 10% and all magic attacks inflict [cbuff:CalamityMod/Nightwither]
+					Running out of mana or using a mana potion shatters all sigils
+					Upon shattering a sigil, no new sigils can appear for 5 seconds
+					Sigils are transparent and silent if visibility is disabled
+					[i:CalamityMod/InfectedJewel]+{0} HP/s life regen
+					Reduces damage over time taken by {1} HP/s
+					Jump-starts regeneration after a damaging debuff ends
+					'Heart of Steel'
+					'''
 			}
 
 			UmbraphileEnchant: {
@@ -729,7 +791,15 @@ Mods: {
 
 			DevastationForceEx: {
 				DisplayName: Force of Devastation EX
-				Tooltip: ""
+				Tooltip:
+					'''
+					[i:gcsep/HydrothermicEnchantEx] Effects of Ethereal Extorter, Apollyon, and Hydrothermic Armors and Enchantment
+					[i:gcsep/HydrothermicEnchantEx] Summons [cbuff:CalamityMod/HydrothermicVentBuff] to fight for you
+					[i:gcsep/TitanHeartEnchantEx] Effects of Moonstone Crown, Infected Jewel, and Titan Heart Armors and Enchantment
+					[i:gcsep/DaedalusEnchantEx] Effects of Ornate Shield, Daedalus Armors and Enchantment
+					[i:gcsep/ReaverEnchantEx] Effects of Living Dew, Necklace of Vexation, and Reaver Armors and Enchantment
+					[i:gcsep/ReaverEnchantEx] Summons [cbuff:gcsep/ReaverOrbBuff] to light your way
+					'''
 			}
 
 			ExaltationForce: {
@@ -2837,7 +2907,7 @@ Mods: {
 		}
 
 		Toggler: {
-			//calamityaddons
+			//Calamity Addons
 			PyrogenEffect: Soul of Pyrogen
 			HellFlareEffect: Hell Flare
 			ClamitasEffect: Hellfire Shells
@@ -2859,7 +2929,7 @@ Mods: {
 			ReincarnationBadgeEffect: Reincarnation Badge
 			SolynsSigilHeader: Solyn's Sigil
 			AddonsForceHeader: Force of Additions
-			//calamity
+			//Calamity Mod
 			//Annihilation
 			DarkHeartCalamityEffect: Dark Heart
 			DarkSheathEffect: Dark Matter Sheath
@@ -2896,6 +2966,7 @@ Mods: {
 			ShellfishEffect: Abyssal Shellfish
 			EmblemEffect: Aquatic Emblem
 			PearlEffect: Giant Pearl
+			DesolationForceHeader: Force of Desolation
 			//DevastationEX
 			ApolloEffect: Apollyon
 			EtherealEffect: Ethereal Extorter
@@ -2912,6 +2983,19 @@ Mods: {
 			ReaverOrbEffect: Reaver Orb
 			VexationEffect: Necklace of Vexation
 			DewEffect: Living Dew
+			DevastationExHeader: Force of Devasation EX
+			//Exaltation
+			DarkRingEffect: Dark Sun Ring
+			BlazingEffect: Divine Providence
+			BraveryEffect: Badge of Bravery
+			TarragonArmorEffect: Tarragon Armors
+			HealerGaurdianEffect: Healer Guardian
+			AfflictionEffect: Affliction
+			PhantomicEffect: Phantomic Artifact
+			BloodflareEffect: Bloodflare Core
+			CruelSigilEffect: Sigil of a Cruel World
+			BloodflareArmorEffect: Bloodflare Armor
+			PhantomicMines: Phantomic Mines
 		}
 
 		NPCs: {
@@ -3083,6 +3167,37 @@ Mods: {
 			ThanatosMinion.DisplayName: Thanatos Minion
 			AresMinionBeam.DisplayName: Ares Minion Beam
 			PlayerSuperCosmicBeam.DisplayName: Player Super Cosmic Beam
+
+			Minions: {
+				MinionExoLaser.DisplayName: Minion Exo Laser
+				MinionThanatosLaser.DisplayName: Minion Thanatos Laser
+			}
+
+			ExoMinionGaussNuke.DisplayName: Exo Minion Gauss Nuke
+			ExoMinionLaser.DisplayName: Exo Minion Laser
+			ExoMinionNukeBlast.DisplayName: Exo Minion Nuke Blast
+			ExoMinionPlasmaBolt.DisplayName: Exo Minion Plasma Bolt
+			ExoMinionTeslaOrb.DisplayName: Exo Minion Tesla Orb
+			ThanatosMinionBeam.DisplayName: Thanatos Minion Beam
+			ExoMinionBigFlare2.DisplayName: Exo Minion Big Flare2
+			YharonFlareDust.DisplayName: Yharon Flare Dust
+			YharonMinionBigFlare.DisplayName: Yharon Minion Big Flare
+			YharonMinionBulletHellVortex.DisplayName: Yharon Minion Bullet Hell Vortex
+			YharonMinionFireball.DisplayName: Yharon Minion Fireball
+			YharonMinionFlare.DisplayName: Yharon Minion Flare
+			YharonMinionFlareBomb.DisplayName: Yharon Minion Flare Bomb
+			YharonMinionFlareDust2.DisplayName: Yharon Minion Flare Dust2
+			YharonMinionFlarenado.DisplayName: Yharon Minion Flarenado
+			YharonMinionInfernado.DisplayName: Yharon Minion Infernado
+			YharonMinionInfernado2.DisplayName: Yharon Minion Infernado2
+			YharonMinionSkyFlareRevenge.DisplayName: Yharon Minion Sky Flare Revenge
+			YharonMinionYharonFireball2.DisplayName: Yharon Minion Yharon Fireball2
+			YharonMinionBlast.DisplayName: Yharon Minion Blast
+			YharonMinionRainFireball.DisplayName: Yharon Minion Rain Fireball
+			ExoTwinsDeathray.DisplayName: Exo Twins Deathray
+			ExoTwinsFireball.DisplayName: Exo Twins Fireball
+			ExoTwinsLaser.DisplayName: Exo Twins Laser
+			ExoTwinsRocket.DisplayName: Exo Twins Rocket
 		}
 
 		Configs: {

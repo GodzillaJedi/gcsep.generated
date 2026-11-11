@@ -14,7 +14,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace gcsep.Content.Projectiles
+namespace gcsep.Content.Projectiles.Minions
 {
     public class ThanatosMinion : ModProjectile
     {
@@ -24,14 +24,15 @@ namespace gcsep.Content.Projectiles
             UndergroundLaserBarrage = 1,
             Deathray = 2
         }
-        public ref float AttackPattern => ref Projectile.ai[0];
-        public ref float AttackTimer => ref Projectile.ai[1];
-        public ref float NextIsDeathray => ref Projectile.localAI[0];
-        public ref float DeathrayPulse => ref Projectile.localAI[1];
-        private ref float TargetIndexPlusOne => ref Projectile.localAI[2]; 
-        public override string Texture => "CalamityMod/NPCs/ExoMechs/Thanatos/ThanatosHead";
-        private const int TotalBodySegments = 30; 
-        private const float Body1Gap = 88f;
+        private struct Steering
+        {
+            public float Speed;
+            public float TurnSpeed;
+            public float TurnDistance;
+            public Vector2 Destination;
+        }
+        private const int TotalBodySegments = 30;
+        private const float Body1Gap = 88f;   
         private const float Body2Gap = 90f;
         private const float TailGap = 76f;
 
@@ -39,46 +40,54 @@ namespace gcsep.Content.Projectiles
         private const int BodyFrameCount = 5;
         private const int TailFrameCount = 5;
 
-        private List<Vector2> segmentPositions;
-        private List<float> segmentRotations;
-
         private const float SpeedUpTime = 300f;
         private const float SlowDownTime = 50f;
         private const float ChargePhaseDuration = SpeedUpTime + SlowDownTime;
+
         private const float LaserBarrageDuration = 360f;
         private const float VelocityAdjustTime = 20f;
+        private const float BarrageOffset = 600f;
+        private const int BarrageFireRate = 12;
+        private const float BarrageLaserRange = 1800f;   
         private const float DeathrayTelegraphDuration = 180f;
-        private const float DeathrayDuration = 180f;
+        private const float DeathrayDuration = 180f;      
+        private const float SlowdownRadius = 800f;
+        private const float TelegraphWidth = 3600f;
+        private const float BeamDamageMultiplier = 2f;
         private const float VentDuration = 180f;
 
         private const float BaseVelocity = 18f;
         private const float BaseTurnDistance = 160f;
-        private const float BarrageOffset = 600f;
-        private const float SlowdownRadius = 800f;
+        private const float LeashDistance = 3000f;        
 
-        private const float BeamLength = 2400f;
-        private const float BeamWidth = 60f;
-        private const float BeamDamageMultiplier = 2f;
-
-        private const int BarrageFireRate = 12;
+        public ref float AttackPattern => ref Projectile.ai[0];
+        public ref float AttackTimer => ref Projectile.ai[1];
+        public ref float NextIsDeathray => ref Projectile.localAI[0];
+        public ref float DeathrayPulse => ref Projectile.localAI[1];
+        private ref float TargetIndexPlusOne => ref Projectile.localAI[2];   
 
         private float chargeVelocityScalar;
         private float phaseSubTimer;
         private float ventTimer;
         private int barrageSide;
 
+        private Vector2[] segPos;
+        private float[] segRot;
+
         public ThanatosSmokeParticleSet SmokeDrawer;
 
         private bool Vulnerable => (int)AttackPattern == (int)Phase.Deathray;
-        private bool BeamActive => Vulnerable && DeathrayPulse >= 1f && AttackTimer >= DeathrayTelegraphDuration && AttackTimer < DeathrayTelegraphDuration + DeathrayDuration;
         private Vector2 HeadForward => (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
+        public bool IsDeathrayPhase => Vulnerable;
+        public Vector2 BeamDirection => HeadForward;
 
+        public override string Texture => "CalamityMod/NPCs/ExoMechs/Thanatos/ThanatosHead";
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = HeadFrameCount;
             ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-            ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 3000;
+            ProjectileID.Sets.DrawScreenCheckFluff[Projectile.type] = 4000;   // long worm + long telegraph
         }
 
         public override void SetDefaults()
@@ -99,7 +108,6 @@ namespace gcsep.Content.Projectiles
 
             SmokeDrawer = new ThanatosSmokeParticleSet(-1, 3, 0f, 16f, 1.5f);
         }
-
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(chargeVelocityScalar);
@@ -108,7 +116,6 @@ namespace gcsep.Content.Projectiles
             writer.Write(NextIsDeathray);
             writer.Write(DeathrayPulse);
         }
-
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             chargeVelocityScalar = reader.ReadSingle();
@@ -117,10 +124,6 @@ namespace gcsep.Content.Projectiles
             NextIsDeathray = reader.ReadSingle();
             DeathrayPulse = reader.ReadSingle();
         }
-
-        // ------------------------------ segments ------------------------------
-
-        /// <summary>Distance from segment k-1 to segment k (k = 1 is the first body piece, k = TotalBodySegments is the tail).</summary>
         private float GapFor(int k)
         {
             float gap = k == TotalBodySegments ? TailGap : (k % 2 == 1 ? Body1Gap : Body2Gap);
@@ -129,53 +132,47 @@ namespace gcsep.Content.Projectiles
 
         private void EnsureSegments()
         {
-            if (segmentPositions != null && segmentPositions.Count == TotalBodySegments + 1)
+            if (segPos != null)
                 return;
 
-            // Lay the worm out behind the head (opposite its heading)
+            segPos = new Vector2[TotalBodySegments + 1];
+            segRot = new float[TotalBodySegments + 1];
+            LayOutSegmentsBehindHead();
+        }
+        private void LayOutSegmentsBehindHead()
+        {
             Vector2 heading = Projectile.velocity.SafeNormalize(Vector2.Zero);
             Vector2 back = heading == Vector2.Zero ? Vector2.UnitY : -heading;
 
-            segmentPositions = new List<Vector2>();
-            segmentRotations = new List<float>();
             Vector2 pos = Projectile.Center;
             for (int i = 0; i <= TotalBodySegments; i++)
             {
                 if (i > 0)
                     pos += back * GapFor(i);
-                segmentPositions.Add(pos);
-                segmentRotations.Add((-back).ToRotation() + MathHelper.PiOver2); // heading angle + 90 degrees, same as the head
+                segPos[i] = pos;
+                segRot[i] = (-back).ToRotation() + MathHelper.PiOver2;   
             }
         }
 
         private void UpdateSegments()
         {
-            segmentPositions[0] = Projectile.Center;
-            segmentRotations[0] = Projectile.rotation;
+            segPos[0] = Projectile.Center;
+            segRot[0] = Projectile.rotation;
 
             for (int k = 1; k <= TotalBodySegments; k++)
             {
-                Vector2 leader = segmentPositions[k - 1];
-                Vector2 offset = segmentPositions[k] - leader;
+                Vector2 leader = segPos[k - 1];
+                Vector2 offset = segPos[k] - leader;
                 if (offset == Vector2.Zero)
                     offset = Vector2.UnitY;
                 offset.Normalize();
 
-                segmentPositions[k] = leader + offset * GapFor(k);
-                // Same convention as the boss: face the segment in front of you, +90 degrees
-                segmentRotations[k] = (-offset).ToRotation() + MathHelper.PiOver2;
+                segPos[k] = leader + offset * GapFor(k);
+                segRot[k] = (-offset).ToRotation() + MathHelper.PiOver2;   
             }
         }
 
-        private void ResetPhase(Phase newPhase)
-        {
-            AttackPattern = (float)newPhase;
-            AttackTimer = 0f;
-            phaseSubTimer = 0f;
-            chargeVelocityScalar = 0f;
-            DeathrayPulse = 0f;
-            Projectile.netUpdate = true;
-        }
+
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -189,11 +186,10 @@ namespace gcsep.Content.Projectiles
 
             EnsureSegments();
 
-            if (Vector2.Distance(player.Center, Projectile.Center) > 3000f)
+            if (Vector2.Distance(player.Center, Projectile.Center) > LeashDistance)
             {
                 Projectile.Center = player.Center;
-                for (int i = 0; i <= TotalBodySegments; i++)
-                    segmentPositions[i] = player.Center;
+                LayOutSegmentsBehindHead();
                 Projectile.netUpdate = true;
             }
 
@@ -201,7 +197,7 @@ namespace gcsep.Content.Projectiles
             TargetIndexPlusOne = target != null ? target.whoAmI + 1 : 0f;
 
             if (target != null)
-                AttackAI(player, target);
+                AttackAI(target);
             else
                 IdleAI(player);
 
@@ -217,141 +213,166 @@ namespace gcsep.Content.Projectiles
             Lighting.AddLight(Projectile.Center, Vulnerable ? new Vector3(1.2f, 0.3f, 0.3f) : new Vector3(0.3f, 0.8f, 1.2f));
         }
 
-        private void AttackAI(Player player, NPC target)
+        private void ResetPhase(Phase newPhase)
         {
-            float velocity = BaseVelocity;
-            float turnSpeed = MathHelper.ToRadians(velocity * 0.11f);
-            float turnDistance = BaseTurnDistance;
-            Vector2 destination = target.Center;
+            AttackPattern = (float)newPhase;
+            AttackTimer = 0f;
+            phaseSubTimer = 0f;
+            chargeVelocityScalar = 0f;
+            DeathrayPulse = 0f;
+            Projectile.netUpdate = true;
+        }
+
+        private void AttackAI(NPC target)
+        {
             float distanceFromTarget = Vector2.Distance(Projectile.Center, target.Center);
 
+            Steering steer = new Steering
+            {
+                Speed = BaseVelocity,
+                TurnSpeed = MathHelper.ToRadians(BaseVelocity * 0.11f),
+                TurnDistance = BaseTurnDistance,
+                Destination = target.Center
+            };
+
             if (distanceFromTarget > 600f)
-                velocity *= MathHelper.Lerp(1f, 2.5f, MathHelper.Clamp((distanceFromTarget - 600f) / 2000f, 0f, 1f));
+                steer.Speed *= MathHelper.Lerp(1f, 2.5f, MathHelper.Clamp((distanceFromTarget - 600f) / 2000f, 0f, 1f));
 
             switch ((Phase)(int)AttackPattern)
             {
                 case Phase.Charge:
-                    {
-                        if (phaseSubTimer == 0f)
-                        {
-                            chargeVelocityScalar += 1f / SpeedUpTime;
-                            if (chargeVelocityScalar >= 1f)
-                            {
-                                chargeVelocityScalar = 1f;
-                                phaseSubTimer = 1f;
-                            }
-                        }
-                        else
-                            chargeVelocityScalar = Math.Max(chargeVelocityScalar - 1f / SlowDownTime, 0f);
-
-                        velocity *= MathHelper.Lerp(1f, 1.5f, chargeVelocityScalar);
-                        turnSpeed *= MathHelper.Lerp(1f, 1.5f, chargeVelocityScalar);
-                        turnDistance *= 0.2f;
-
-                        if (distanceFromTarget < 240f)
-                            turnSpeed *= distanceFromTarget / 240f;
-
-                        AttackTimer++;
-                        if (AttackTimer >= ChargePhaseDuration)
-                            ResetPhase(NextIsDeathray == 1f ? Phase.Deathray : Phase.UndergroundLaserBarrage);
-                        break;
-                    }
-
+                    ChargePhase(ref steer, distanceFromTarget);
+                    break;
                 case Phase.UndergroundLaserBarrage:
-                    {
-                        destination += new Vector2(0f, barrageSide == 0 ? BarrageOffset : -BarrageOffset);
-                        turnDistance *= 3f;
-
-                        if (phaseSubTimer == 0f)
-                            chargeVelocityScalar = Math.Min(chargeVelocityScalar + 0.02f, 1f);
-
-                        velocity *= MathHelper.Lerp(1f, 1.5f, chargeVelocityScalar);
-                        turnSpeed *= MathHelper.Lerp(1f, 3f, chargeVelocityScalar);
-
-                        if ((destination - Projectile.Center).Length() < turnDistance || AttackTimer > 0f)
-                        {
-                            AttackTimer++;
-
-                            if (AttackTimer % BarrageFireRate == 0f && Main.myPlayer == Projectile.owner)
-                            {
-                                int segment = Main.rand.Next(1, TotalBodySegments);
-                                FireLaser(segmentPositions[segment], target);
-                            }
-
-                            if (AttackTimer >= LaserBarrageDuration)
-                            {
-                                chargeVelocityScalar = Math.Max(chargeVelocityScalar - 1f / VelocityAdjustTime, 0f);
-                                phaseSubTimer++;
-                                if (phaseSubTimer >= VelocityAdjustTime)
-                                {
-                                    barrageSide ^= 1;
-                                    NextIsDeathray = 1f;
-                                    ResetPhase(Phase.Charge);
-                                }
-                            }
-                        }
-                        break;
-                    }
-
+                    BarragePhase(ref steer, target);
+                    break;
                 case Phase.Deathray:
-                    {
-                        bool readyToFire = distanceFromTarget < SlowdownRadius;
-                        if (readyToFire && DeathrayPulse == 0f)
-                            DeathrayPulse = 1f;
-
-                        if (phaseSubTimer == 0f)
-                        {
-                            chargeVelocityScalar += 1f / DeathrayDuration;
-                            if (chargeVelocityScalar >= 1f)
-                            {
-                                chargeVelocityScalar = 1f;
-                                if (DeathrayPulse >= 1f)
-                                    phaseSubTimer = 1f;
-                            }
-                        }
-                        else
-                            chargeVelocityScalar = Math.Max(chargeVelocityScalar - 5f / DeathrayDuration, 0f);
-
-                        velocity *= MathHelper.Lerp(0.5f, 3f, chargeVelocityScalar);
-                        turnSpeed *= MathHelper.Lerp(0.5f, 3f, chargeVelocityScalar);
-                        turnDistance *= 0.2f;
-
-                        if (DeathrayPulse >= 1f)
-                        {
-                            float velocityScale = distanceFromTarget / SlowdownRadius;
-                            if (velocityScale < 1f)
-                                velocityScale *= velocityScale;
-                            velocity *= MathHelper.Max(velocityScale, 0.15f);
-                            turnSpeed *= MathHelper.Max(velocityScale, 0.25f);
-
-                            DeathrayPulse += 1f / 60f * (distanceFromTarget < SlowdownRadius * 0.5f ? 0.75f : 1.5f);
-
-                            AttackTimer++;
-                            if (AttackTimer == 1f)
-                                SoundEngine.PlaySound(ThanatosHead.LaserSound, Projectile.Center);
-
-                            if (AttackTimer == DeathrayTelegraphDuration)
-                                SoundEngine.PlaySound(CommonCalamitySounds.LaserCannonSound, Projectile.Center);
-
-                            if (AttackTimer >= DeathrayTelegraphDuration + DeathrayDuration)
-                            {
-                                NextIsDeathray = 0f;
-                                ResetPhase(Phase.Charge);
-                            }
-                        }
-                        break;
-                    }
+                    DeathrayPhase(ref steer, distanceFromTarget);
+                    break;
             }
 
-            if (!((destination - Projectile.Center).Length() < turnDistance))
+            if (!((steer.Destination - Projectile.Center).Length() < steer.TurnDistance))
             {
-                float targetAngle = Projectile.AngleTo(destination);
-                float newAngle = Projectile.velocity.ToRotation().AngleTowards(targetAngle, turnSpeed);
-                Projectile.velocity = newAngle.ToRotationVector2() * velocity;
+                float targetAngle = Projectile.AngleTo(steer.Destination);
+                float newAngle = Projectile.velocity.ToRotation().AngleTowards(targetAngle, steer.TurnSpeed);
+                Projectile.velocity = newAngle.ToRotationVector2() * steer.Speed;
             }
 
-            if (Projectile.velocity.Length() > velocity)
-                Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.UnitY) * velocity;
+            if (Projectile.velocity.Length() > steer.Speed)
+                Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.UnitY) * steer.Speed;
+        }
+        private void ChargePhase(ref Steering steer, float distanceFromTarget)
+        {
+            if (phaseSubTimer == 0f)
+            {
+                chargeVelocityScalar += 1f / SpeedUpTime;
+                if (chargeVelocityScalar >= 1f)
+                {
+                    chargeVelocityScalar = 1f;
+                    phaseSubTimer = 1f;
+                }
+            }
+            else
+                chargeVelocityScalar = Math.Max(chargeVelocityScalar - 1f / SlowDownTime, 0f);
+
+            steer.Speed *= MathHelper.Lerp(1f, 1.5f, chargeVelocityScalar);
+            steer.TurnSpeed *= MathHelper.Lerp(1f, 1.5f, chargeVelocityScalar);
+            steer.TurnDistance *= 0.2f;
+
+            if (distanceFromTarget < 240f)
+                steer.TurnSpeed *= distanceFromTarget / 240f;
+
+            AttackTimer++;
+            if (AttackTimer >= ChargePhaseDuration)
+                ResetPhase(NextIsDeathray == 1f ? Phase.Deathray : Phase.UndergroundLaserBarrage);
+        }
+
+        private void BarragePhase(ref Steering steer, NPC target)
+        {
+            steer.Destination += new Vector2(0f, barrageSide == 0 ? BarrageOffset : -BarrageOffset);
+            steer.TurnDistance *= 3f;
+
+            if (phaseSubTimer == 0f)
+                chargeVelocityScalar = Math.Min(chargeVelocityScalar + 0.02f, 1f);
+
+            steer.Speed *= MathHelper.Lerp(1f, 1.5f, chargeVelocityScalar);
+            steer.TurnSpeed *= MathHelper.Lerp(1f, 3f, chargeVelocityScalar);
+
+            if ((steer.Destination - Projectile.Center).Length() >= steer.TurnDistance && AttackTimer <= 0f)
+                return;
+
+            AttackTimer++;
+
+            if (AttackTimer % BarrageFireRate == 0f && Main.myPlayer == Projectile.owner)
+                FireLaser(segPos[PickBarrageSegment(target)], target);
+
+            if (AttackTimer >= LaserBarrageDuration)
+            {
+                chargeVelocityScalar = Math.Max(chargeVelocityScalar - 1f / VelocityAdjustTime, 0f);
+                phaseSubTimer++;
+                if (phaseSubTimer >= VelocityAdjustTime)
+                {
+                    barrageSide ^= 1;
+                    NextIsDeathray = 1f;
+                    ResetPhase(Phase.Charge);
+                }
+            }
+        }
+
+        private void DeathrayPhase(ref Steering steer, float distanceFromTarget)
+        {
+            if (distanceFromTarget < SlowdownRadius && DeathrayPulse == 0f)
+                DeathrayPulse = 1f;
+
+            if (phaseSubTimer == 0f)
+            {
+                chargeVelocityScalar += 1f / DeathrayDuration;
+                if (chargeVelocityScalar >= 1f)
+                {
+                    chargeVelocityScalar = 1f;
+                    if (DeathrayPulse >= 1f)
+                        phaseSubTimer = 1f;
+                }
+            }
+            else
+                chargeVelocityScalar = Math.Max(chargeVelocityScalar - 5f / DeathrayDuration, 0f);
+
+            steer.Speed *= MathHelper.Lerp(0.5f, 3f, chargeVelocityScalar);
+            steer.TurnSpeed *= MathHelper.Lerp(0.5f, 3f, chargeVelocityScalar);
+            steer.TurnDistance *= 0.2f;
+
+            if (DeathrayPulse < 1f)
+                return;
+
+            float velocityScale = distanceFromTarget / SlowdownRadius;
+            if (velocityScale < 1f)
+                velocityScale *= velocityScale;
+            steer.Speed *= MathHelper.Max(velocityScale, 0.15f);
+            steer.TurnSpeed *= MathHelper.Max(velocityScale, 0.25f);
+
+            DeathrayPulse += 1f / 60f * (distanceFromTarget < SlowdownRadius * 0.5f ? 0.75f : 1.5f);
+
+            AttackTimer++;
+            if (AttackTimer == 1f)
+                SoundEngine.PlaySound(ThanatosHead.LaserSound, Projectile.Center);
+
+            if (AttackTimer == DeathrayTelegraphDuration)
+            {
+                SoundEngine.PlaySound(CommonCalamitySounds.LaserCannonSound, Projectile.Center);
+
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero,
+                        ModContent.ProjectileType<ThanatosMinionBeam>(), (int)(Projectile.damage * BeamDamageMultiplier), 0f, Projectile.owner,
+                        0f, Projectile.identity);
+                }
+            }
+
+            if (AttackTimer >= DeathrayTelegraphDuration + DeathrayDuration)
+            {
+                NextIsDeathray = 0f;
+                ResetPhase(Phase.Charge);
+            }
         }
 
         private void IdleAI(Player player)
@@ -372,24 +393,29 @@ namespace gcsep.Content.Projectiles
                 Projectile.velocity = newAngle.ToRotationVector2() * speed;
             }
         }
+        private int PickBarrageSegment(NPC target)
+        {
+            int chosen = -1;
+            int candidates = 0;
+            float rangeSquared = BarrageLaserRange * BarrageLaserRange;
+
+            for (int i = 1; i < TotalBodySegments; i++)
+            {
+                if (Vector2.DistanceSquared(segPos[i], target.Center) < rangeSquared && Main.rand.Next(++candidates) == 0)
+                    chosen = i;
+            }
+
+            return chosen != -1 ? chosen : Main.rand.Next(1, TotalBodySegments);
+        }
 
         private void FireLaser(Vector2 source, NPC target)
         {
             SoundEngine.PlaySound(CommonCalamitySounds.ExoLaserShootSound with { Volume = 0.25f * CommonCalamitySounds.ExoLaserShootSound.Volume }, source);
 
-            int laser = Projectile.NewProjectile(Projectile.GetSource_FromThis(), source, target.Center,
-                ModContent.ProjectileType<ThanatosBeamTelegraph>(), Projectile.damage, 1f, Projectile.owner, 0f, target.whoAmI);
-
-            if (laser >= 0 && laser < Main.maxProjectiles)
-            {
-                Projectile p = Main.projectile[laser];
-                p.hostile = false;
-                p.friendly = true;
-                p.DamageType = DamageClass.Summon;
-                p.netUpdate = true;
-            }
+            Vector2 direction = (target.Center - source).SafeNormalize(Vector2.UnitY);
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), source, direction * 7.5f,
+                ModContent.ProjectileType<ExoMinionLaser>(), Projectile.damage, 1f, Projectile.owner);
         }
-
         private void UpdateFrames()
         {
             Projectile.frameCounter++;
@@ -425,24 +451,14 @@ namespace gcsep.Content.Projectiles
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            float collisionPoint = 0f;
-
-            if (BeamActive)
-            {
-                Vector2 start = Projectile.Center;
-                Vector2 end = start + HeadForward * BeamLength;
-                if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, BeamWidth, ref collisionPoint))
-                    return true;
-            }
-
             if (projHitbox.Intersects(targetHitbox))
                 return true;
 
-            if (segmentPositions != null)
+            if (segPos != null)
             {
                 for (int i = 1; i <= TotalBodySegments; i++)
                 {
-                    Rectangle segmentBox = Utils.CenteredRectangle(segmentPositions[i], new Vector2(80f, 80f) * Projectile.scale);
+                    Rectangle segmentBox = Utils.CenteredRectangle(segPos[i], new Vector2(80f, 80f) * Projectile.scale);
                     if (segmentBox.Intersects(targetHitbox))
                         return true;
                 }
@@ -450,116 +466,107 @@ namespace gcsep.Content.Projectiles
 
             return false;
         }
-
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-            if (BeamActive)
-                modifiers.SourceDamage *= BeamDamageMultiplier;
-        }
         public override bool PreDraw(ref Color lightColor)
         {
             EnsureSegments();
 
-            SpriteBatch spriteBatch = Main.spriteBatch;
             Vector2 headDrawPos = Projectile.Center - Main.screenPosition;
 
             Texture2D headTex = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D body1Tex = TextureAssets.Npc[ModContent.NPCType<ThanatosBody1>()].Value;
-            Texture2D body2Tex = TextureAssets.Npc[ModContent.NPCType<ThanatosBody2>()].Value;
-            Texture2D tailTex = TextureAssets.Npc[ModContent.NPCType<ThanatosTail>()].Value;
             Texture2D headGlow = ThanatosHead.GlowTexture.Value;
 
             for (int i = TotalBodySegments; i > 0; i--)
             {
-                Vector2 drawPos = segmentPositions[i] - Main.screenPosition;
-                Color segmentLight = Lighting.GetColor((int)(segmentPositions[i].X / 16f), (int)(segmentPositions[i].Y / 16f));
-
                 Texture2D tex;
                 Texture2D glow;
                 int frameCount;
                 if (i == TotalBodySegments)
                 {
-                    tex = tailTex;
+                    tex = TextureAssets.Npc[ModContent.NPCType<ThanatosTail>()].Value;
                     glow = ThanatosTail.GlowTexture.Value;
                     frameCount = TailFrameCount;
                 }
                 else if (i % 2 == 1)    
                 {
-                    tex = body1Tex;
+                    tex = TextureAssets.Npc[ModContent.NPCType<ThanatosBody1>()].Value;
                     glow = ThanatosBody1.GlowTexture.Value;
                     frameCount = BodyFrameCount;
                 }
                 else
                 {
-                    tex = body2Tex;
+                    tex = TextureAssets.Npc[ModContent.NPCType<ThanatosBody2>()].Value;
                     glow = ThanatosBody2.GlowTexture.Value;
                     frameCount = BodyFrameCount;
                 }
 
                 Rectangle frame = tex.Frame(1, frameCount, 0, Math.Min(Projectile.frame, frameCount - 1));
                 Vector2 origin = frame.Size() * 0.5f;
+                Vector2 drawPos = segPos[i] - Main.screenPosition;
+                Color segmentLight = Lighting.GetColor((int)(segPos[i].X / 16f), (int)(segPos[i].Y / 16f));
 
-                Main.EntitySpriteDraw(tex, drawPos, frame, segmentLight * Projectile.Opacity, segmentRotations[i], origin, Projectile.scale, SpriteEffects.None, 0f);
-                Main.EntitySpriteDraw(glow, drawPos, frame, Color.White * Projectile.Opacity, segmentRotations[i], origin, Projectile.scale, SpriteEffects.None, 0f);
+                Main.EntitySpriteDraw(tex, drawPos, frame, segmentLight * Projectile.Opacity, segRot[i], origin, Projectile.scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(glow, drawPos, frame, Color.White * Projectile.Opacity, segRot[i], origin, Projectile.scale, SpriteEffects.None, 0);
             }
 
+            // Head
             Rectangle headFrame = headTex.Frame(1, HeadFrameCount, 0, Projectile.frame);
             Vector2 headOrigin = headFrame.Size() * 0.5f;
-            Main.EntitySpriteDraw(headTex, headDrawPos, headFrame, lightColor * Projectile.Opacity, Projectile.rotation, headOrigin, Projectile.scale, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(headTex, headDrawPos, headFrame, lightColor * Projectile.Opacity, Projectile.rotation, headOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             Color glowmaskColor = Vulnerable
                 ? Color.Lerp(new Color(255, 64, 64), Color.CornflowerBlue, MathHelper.Clamp(AttackTimer / DeathrayTelegraphDuration, 0f, 1f))
                 : Color.White;
-            Main.EntitySpriteDraw(headGlow, headDrawPos, headFrame, glowmaskColor * Projectile.Opacity, Projectile.rotation, headOrigin, Projectile.scale, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(headGlow, headDrawPos, headFrame, glowmaskColor * Projectile.Opacity, Projectile.rotation, headOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             SmokeDrawer.DrawSet(Projectile.Center);
 
             if (Vulnerable && DeathrayPulse >= 1f)
             {
-                DrawTelegraphAndBeam(spriteBatch);
-                DrawAuraAndReticle(spriteBatch, headDrawPos);
+                DrawTelegraph();
+                DrawAuraAndReticle(Main.spriteBatch, headDrawPos);
             }
 
             return false;
         }
-
-        private void DrawTelegraphAndBeam(SpriteBatch spriteBatch)
+        private void DrawTelegraph()
         {
-            spriteBatch.SetBlendState(BlendState.Additive);
+            if (AttackTimer >= DeathrayTelegraphDuration)
+                return;
 
-            float baseAngle = HeadForward.ToRotation();
+            Texture2D telegraph = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/LaserWallTelegraphBeam").Value;
 
-            if (AttackTimer < DeathrayTelegraphDuration)
+            float time = AttackTimer;
+            float timeLeft = DeathrayTelegraphDuration - time;
+            float convergence = MathHelper.SmoothStep(0f, 1f, Utils.GetLerpValue(25f, 120f, time, true));
+            float verticalScale = Utils.GetLerpValue(0f, 20f, time, true) * Utils.GetLerpValue(0f, 16f, timeLeft, true) * 4f;
+
+            Vector2 origin = telegraph.Size() * new Vector2(0f, 0.5f);
+            Vector2 scaleInner = new Vector2(TelegraphWidth / telegraph.Width, verticalScale);
+            Vector2 scaleOuter = scaleInner * new Vector2(1f, 2.2f);
+
+            Color colorOuter = Color.Lerp(Color.Red, Color.CornflowerBlue, time / DeathrayTelegraphDuration);   // red to blue, as if heating up
+            colorOuter = Color.Lerp(colorOuter, Color.White, Utils.GetLerpValue(40f, 0f, timeLeft, true) * 0.8f);
+            Color colorInner = Color.Lerp(colorOuter, Color.White, 0.5f);
+            colorInner *= 0.85f;
+            colorOuter *= 0.7f;
+
+            float headAngle = HeadForward.ToRotation();
+            Vector2 start = Projectile.Center + HeadForward * 8f - Main.screenPosition;
+
+            for (int b = 0; b <= 6; b++)
             {
-                Texture2D lineTex = ModContent.Request<Texture2D>("CalamityMod/Particles/BloomLine").Value;
-                float progress = AttackTimer / DeathrayTelegraphDuration;
-                float spreadFactor = 1f - MathHelper.SmoothStep(0f, 1f, progress);
-                Color lineColor = Color.Lerp(Color.Red, Color.White, progress) * 0.7f;
-
-                for (int b = 0; b <= 6; b++)
+                // Beams 0-5 start fanned out ("stretched" spacing); beam 6 is the straight one
+                float startOffset = 0f;
+                if (b < 6)
                 {
                     float squished = (float)Math.Pow(Math.Sin(MathHelper.Pi * b / 6f), 2D);
-                    float offsetAngle = b == 6 ? 0f : MathHelper.Lerp(-0.74f, 0.74f, MathHelper.SmoothStep(0f, 1f, squished)) * spreadFactor;
-                    float angle = baseAngle + offsetAngle;
-
-                    spriteBatch.Draw(lineTex, Projectile.Center - Main.screenPosition, null, lineColor, angle + MathHelper.PiOver2,
-                        new Vector2(lineTex.Width * 0.5f, lineTex.Height), new Vector2(0.5f + progress, BeamLength / lineTex.Height), SpriteEffects.None, 0f);
+                    startOffset = MathHelper.Lerp(-0.74f, 0.74f, MathHelper.SmoothStep(0f, 1f, squished));
                 }
-            }
-            else if (BeamActive)
-            {
-                Texture2D pixel = TextureAssets.MagicPixel.Value;
-                Rectangle src = new Rectangle(0, 0, 1, 1);
-                float beamProgress = (AttackTimer - DeathrayTelegraphDuration) / DeathrayDuration;
-                float widthScale = (float)Math.Sin(MathHelper.Pi * MathHelper.Clamp(beamProgress, 0f, 1f)) * 0.5f + 0.5f;
-                Vector2 start = Projectile.Center + HeadForward * 60f - Main.screenPosition;
 
-                spriteBatch.Draw(pixel, start, src, new Color(255, 40, 40) * 0.6f, baseAngle, new Vector2(0f, 0.5f), new Vector2(BeamLength, BeamWidth * 1.6f * widthScale), SpriteEffects.None, 0f);
-                spriteBatch.Draw(pixel, start, src, new Color(255, 120, 120) * 0.8f, baseAngle, new Vector2(0f, 0.5f), new Vector2(BeamLength, BeamWidth * widthScale), SpriteEffects.None, 0f);
-                spriteBatch.Draw(pixel, start, src, Color.White, baseAngle, new Vector2(0f, 0.5f), new Vector2(BeamLength, BeamWidth * 0.35f * widthScale), SpriteEffects.None, 0f);
+                float rotation = startOffset.AngleLerp(0f, convergence) + headAngle;
+                Main.EntitySpriteDraw(telegraph, start, null, colorOuter, rotation, origin, scaleOuter, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(telegraph, start, null, colorInner, rotation, origin, scaleInner, SpriteEffects.None, 0);
             }
-
-            spriteBatch.SetBlendState(BlendState.AlphaBlend);
         }
 
         private void DrawAuraAndReticle(SpriteBatch spriteBatch, Vector2 headDrawPos)

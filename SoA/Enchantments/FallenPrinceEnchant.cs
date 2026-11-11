@@ -1,21 +1,13 @@
-﻿using CalamityMod;
-using CalamityMod.Buffs.Summon;
-using CalamityMod.Items.Armor.Auric;
-using CalamityMod.Items.Armor.Demonshade;
-using CalamityMod.Projectiles.Summon;
-using FargowiltasSouls.Content.Items.Accessories.Enchantments;
+﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
-using SacredTools;
 using SacredTools.Common.Players;
 using SacredTools.Content.Items.Accessories.ChallengeItems;
 using SacredTools.Content.Items.Armor.Lunar.Quasar;
-using SacredTools.Content.Projectiles.Accessories.NovanielResolve;
 using SacredTools.Items.Weapons.Lunatic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -18,18 +18,14 @@ namespace gcsep.Content.Buffs.Minions
 
             if (player.ownedProjectileCounts[projType] > 0)
             {
-                player.GetModPlayer<GCSEPlayer>().YharonSummon = true;
+                player.buffTime[buffIndex] = 18000;
             }
-
-            if (!player.GetModPlayer<GCSEPlayer>().YharonSummon)
+            else
             {
                 player.DelBuff(buffIndex);
                 buffIndex--;
             }
-            else
-            {
-                player.buffTime[buffIndex] = 18000;
-            }
         }
     }
+
 }

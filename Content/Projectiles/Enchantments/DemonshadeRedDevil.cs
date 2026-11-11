@@ -30,6 +30,7 @@ namespace gcsep.Content.Projectiles.Enchantments
             Projectile.netImportant = true;
             Projectile.timeLeft = 18000;
             Projectile.minion = true;
+            Projectile.DamageType = DamageClass.Summon;
         }
 
         public override void AI()
@@ -37,22 +38,14 @@ namespace gcsep.Content.Projectiles.Enchantments
             Player player = Main.player[Projectile.owner];
             GCSEPlayer gPlayer = player.GetModPlayer<GCSEPlayer>();
 
-            // Minion only exists while rDevil is true
-            if (!gPlayer.rDevil)
+            if (!gPlayer.rDevil || player.dead || !player.active)
             {
-                Projectile.active = false;
+                Projectile.Kill();
                 return;
             }
 
-            if (player.dead)
-                gPlayer.rDevil = false;
+            Projectile.timeLeft = 2;
 
-            if (gPlayer.rDevil)
-                Projectile.timeLeft = 2;
-
-            // -----------------------------------------
-            // SPAWN DUST (small, non-laggy burst)
-            // -----------------------------------------
             if (spawnDustTimer > 0)
             {
                 spawnDustTimer--;
@@ -79,11 +72,8 @@ namespace gcsep.Content.Projectiles.Enchantments
                 }
             }
 
-            // -----------------------------------------
-            // ANIMATION (5-frame vertical sheet)
-            // -----------------------------------------
             Projectile.frameCounter++;
-            if (Projectile.frameCounter >= 6) // tweak for speed
+            if (Projectile.frameCounter >= 6) 
             {
                 Projectile.frameCounter = 0;
                 Projectile.frame++;
@@ -92,15 +82,10 @@ namespace gcsep.Content.Projectiles.Enchantments
                     Projectile.frame = 0;
             }
 
-            // -----------------------------------------
-            // LIGHT
-            // -----------------------------------------
             float lightScale = Main.rand.NextFloat(0.90f, 1.10f) * Main.essScale;
             Lighting.AddLight(Projectile.Center, 1f * lightScale, 0f, 0.15f * lightScale);
 
-            // -----------------------------------------
-            // FACING (flip left/right)
-            // -----------------------------------------
+
             if (Projectile.velocity.X > 0.1f)
             {
                 Projectile.direction = 1;
@@ -114,9 +99,6 @@ namespace gcsep.Content.Projectiles.Enchantments
 
             Projectile.rotation = Projectile.velocity.X * 0.04f;
 
-            // -----------------------------------------
-            // TARGET ACQUISITION
-            // -----------------------------------------
             Vector2 targetPos = Projectile.position;
             float targetDist = 2000f;
             bool foundTarget = false;
@@ -153,9 +135,6 @@ namespace gcsep.Content.Projectiles.Enchantments
                 }
             }
 
-            // -----------------------------------------
-            // RETURN TO PLAYER IF TOO FAR
-            // -----------------------------------------
             float maxRange = foundTarget ? 3000f : 2000f;
             if (Vector2.Distance(player.Center, Projectile.Center) > maxRange)
             {
@@ -163,9 +142,6 @@ namespace gcsep.Content.Projectiles.Enchantments
                 Projectile.netUpdate = true;
             }
 
-            // -----------------------------------------
-            // MOVEMENT
-            // -----------------------------------------
             if (foundTarget && State == 0f)
             {
                 Vector2 dir = targetPos - Projectile.Center;
@@ -212,43 +188,34 @@ namespace gcsep.Content.Projectiles.Enchantments
                 }
             }
 
-            // -----------------------------------------
-            // ATTACK LOGIC & COOLDOWN REFRESH
-            // -----------------------------------------
-
-            // If the cooldown timer is ticking down, decrease it by 1 every frame
             if (Timer > 0f)
             {
                 Timer--;
             }
 
-            // Fire attack if the cooldown reaches 0, we are close, and a target exists
             if (State == 0f && foundTarget && Timer <= 0f)
             {
-                // Set the attack cooldown (e.g., 35 frames between shots)
                 Timer = 35f;
 
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Vector2 vel = Vector2.Normalize(targetPos - Projectile.Center) * 24f;
 
-                    // Spawning vanilla ProjectileID.UnholyTrident (114)
                     int pIndex = Projectile.NewProjectile(
                         Projectile.GetSource_FromThis(),
                         Projectile.Center,
                         vel,
-                        ProjectileID.UnholyTridentFriendly, // Clear integer translation mapping
+                        ProjectileID.UnholyTridentFriendly, 
                         Projectile.damage,
                         0f,
                         Projectile.owner
                     );
 
-                    // Fixed array bounds index check structure safely mapped to engine loops
                     if (pIndex >= 0 && pIndex < Main.maxProjectiles)
                     {
                         Projectile proj = Main.projectile[pIndex];
                         proj.timeLeft = 300;
-                        proj.DamageType = DamageClass.Summon; // Correctly classify damage tracking
+                        proj.DamageType = DamageClass.Summon; 
                     }
 
                     Projectile.netUpdate = true;
@@ -258,4 +225,5 @@ namespace gcsep.Content.Projectiles.Enchantments
 
         public override bool? CanDamage() => false;
     }
+
 }

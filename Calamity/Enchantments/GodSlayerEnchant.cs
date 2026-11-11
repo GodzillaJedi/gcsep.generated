@@ -124,8 +124,6 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<ExaltationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<GodSlayerEnchant>();
-
-            // Fargo marks this true internally if it consumes slots or acts as a minion companion
             public override bool MinionEffect => true;
 
             // 1. THIS RUNS ONLY IF EQUIPPED AND CHECKED IN THE UI

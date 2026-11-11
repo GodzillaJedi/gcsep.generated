@@ -19,28 +19,44 @@ namespace gcsep.Reworks
         {
             return head.type == ModContent.ItemType<ReaverHeadExplore>() && body.type == ModContent.ItemType<ReaverScaleMail>() && legs.type == ModContent.ItemType<ReaverCuisses>() ? "ReaverOrb" : "";
         }
+        public static class ReaverOrbHelper
+        {
+            public static void EnsureOrb(Player player, IEntitySource source)
+            {
+                if (player.whoAmI != Main.myPlayer || player.dead)
+                    return;
+
+                int orbType = ModContent.ProjectileType<ReaverOrb>();
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile p = Main.projectile[i];
+                    if (p.active && p.owner == player.whoAmI && p.type == orbType)
+                        return;
+                }
+
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, orbType, 0, 0f, player.whoAmI);
+            }
+        }
 
         public override void UpdateArmorSet(Player player, string set)
         {
             CalamityPlayer calamity = player.Calamity();
-            calamity.reaverExplore = true;
+            calamity.reaverExplore = true;   
             calamity.wearingRogueArmor = true;
 
             player.findTreasure = true;
             player.blockRange += 4;
             player.aggro -= 200;
+
             if (player.whoAmI == Main.myPlayer)
             {
-                IEntitySource source_ItemUse = player.GetSource_FromThis();
-                if (player.FindBuffIndex(ModContent.BuffType<ReaverOrbBuff>()) == -1)
-                {
-                    player.AddBuff(ModContent.BuffType<ReaverOrbBuff>(), 3600);
-                }
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<ReaverOrb>()] < 1)
-                {
-                    Projectile.NewProjectile(source_ItemUse, player.Center, Vector2.Zero, ModContent.ProjectileType<ReaverOrb>(), 0, 0f, player.whoAmI);
-                }
+                int buffType = ModContent.BuffType<ReaverOrbBuff>();
+                if (player.FindBuffIndex(buffType) == -1)
+                    player.AddBuff(buffType, 3600);
+
+                ReaverOrbHelper.EnsureOrb(player, player.GetSource_FromThis());
             }
         }
     }
+
 }

@@ -1,35 +1,45 @@
-The addon for Fargos's Souls. The main goal of the mod is to balance many global mods with Fargos and among themselves.
+==============================================================================
+                       COMMUNITY SOULS EXPANSION
+==============================================================================
+An ultimate cross-mod expansion addon for Fargo's Souls Mod. 
+The core objective of this project is to bridge, scale, and balance mechanics 
+across major content expansions seamlessly.
 
+🌐 [url=https://terrariamods.wiki.gg/wiki/Community_Souls_Expansion]Official Wiki Engine[/url]
+💬 [url=https://discord.gg/frUcz2dQAy]Join the Community Discord[/url]
+🛠️ [url=https://github.com/Shtuks/StarlightsSouls]Open Source Codebase[/url]
 
-Source code: https://github.com/Shtuks/StarlightsSouls
+------------------------------------------------------------------------------
+⚡ CURRENT FEATURES & OVERHAULS
+------------------------------------------------------------------------------
+• Pinnacle Content Balancing — Integrates unique end-game Forces for Calamity Addons.
+• Unified Playstyles — Merges Kinetic (SoA), Thrower (Thorium), and Rogue (Calamity) into a singular, balanced progression path.
+• Unified Equipment Paths — Complete redesign and progression overhaul for Boots and Shields.
+• Early-Game Soul Scaling — Expands 1st-tier Soul recipes and effects utilizing Thorium and Shadows of Abaddon materials.
+• Captured Inhabitants — Adds functional caught Town NPCs for Shadows of Abaddon, Thorium, and Mod of Redemption.
+• Expanded Mastery Trees — Adds fully tailored Enchantments, Forces, and Souls for Thorium, Shadows of Abaddon, Polarities, and Spooky Mod.
+• Class Adaptations — Integrates unique Souls, Essences, and Mutagens for Clicker Class and Beekeeper Class.
 
-Discord Server: https://discord.gg/frUcz2dQAy
+------------------------------------------------------------------------------
+📦 FULL INTEGRATION ROSTER
+------------------------------------------------------------------------------
+• Core Overhauls: Calamity Mod, Thorium Mod, Shadows of Abaddon, Mod of Redemption, Spirit Mod, Polarities, Spooky Mod
+• Content & Utilities: Magic Storage, Consolaria, Homeward Journey, Bombus Apis
+• Calamity Addons: Hunt of the Old God, Catalyst, Wrath of the Gods, Clamity Addon
 
-Official Wiki: https://terrariamods.wiki.gg/wiki/Community_Souls_Expansion
+🚀 COMING SOON: Ancients Awakened Content Compatibility Modules!
 
+------------------------------------------------------------------------------
+✨ CREATIVE DEVELOPERS & CREDITS
+------------------------------------------------------------------------------
+• Architecture & Coding: StarlightCat, Ropro0923
+• Graphical Art & Sprites: ma3allim, DanHameln, Dandel, Mr.Puzzles
+• Wiki Database Curation: Soltan, magegor11, ma3allim, Machinashin
+• Gameplay Balance Testing: cheesenuggets, Mr.Puzzles, Wild Mayo
 
-All things mod doing for now:
+🏆 SPECIAL THANKS
+Fargowilta, Javyz, Terry N Muse, Blushiemagic, DanYami, Jopojelly, ChickenBones, Jofairden, DivermanSam.
 
-- Force for Calamity Addons
-
-- Merge kinetic(SoA) thrower(Thorium) and rogue(Calamity) in one class
-
-- Reworked boots and shields progression
-
-- Adds SoA and Thorium items to 1st tier souls recepies and effects
-
-- Redemption, Thorium, SoA caught NPCs
-
-- Thorium / SoA / Polarities / Spooky enchantments, forces, souls
-
-Full list of supported mods: Calamity, Shadows of Abaddon, Thorium, Redemption, Spooky, Polarities, Bombus Apis, Magic Storage
-Coming soon compatibility: Homeward Journey, Spirit, Consolaria
-
-Coding: StarlightCat, Ropro0923
-Sprites: ma3allim, DanHameln
-Wiki: Soltan, magegor11
-Testing: cheesenuggets, Mr.Puzzles, Wild Mayo
-
-Special thanks to Fargowilta, Javyz, Terry N Muse, Blushiemagic, DanYami, Jopojelly, ChickenBones, Jofairden, DivermanSam.
-
-Thanks to active members of Discord Server: Mith Moonwalker, AwesomeSavage777, GodzillaJedi, vergeneu
+🌟 COMMUNITY RECOGNITION
+Special shoutout to our dedicated Discord active contributors:
+Mith Moonwalker, AwesomeSavage777, GodzillaJedi, vergeneu

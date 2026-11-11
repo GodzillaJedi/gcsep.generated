@@ -11,7 +11,7 @@ namespace gcsep.Calamity
 {
     [ExtendsFromMod(ModCompatibility.Calamity.Name, ModCompatibility.FargoCrossmod.Name)]
     [JITWhenModsEnabled(ModCompatibility.Calamity.Name, ModCompatibility.FargoCrossmod.Name)]
-    public class CSECalamityPlayer : ModPlayer
+    public class GCSECalamityPlayer : ModPlayer
     {
         public override void PostUpdate()
         {

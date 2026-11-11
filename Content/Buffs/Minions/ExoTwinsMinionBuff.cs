@@ -18,18 +18,14 @@ namespace gcsep.Content.Buffs.Minions
 
             if (player.ownedProjectileCounts[projType] > 0)
             {
-                player.GetModPlayer<GCSEPlayer>().TwinsSummon = true;
+                player.buffTime[buffIndex] = 18000;
             }
-
-            if (!player.GetModPlayer<GCSEPlayer>().TwinsSummon)
+            else
             {
                 player.DelBuff(buffIndex);
                 buffIndex--;
             }
-            else
-            {
-                player.buffTime[buffIndex] = 18000;
-            }
         }
     }
+
 }

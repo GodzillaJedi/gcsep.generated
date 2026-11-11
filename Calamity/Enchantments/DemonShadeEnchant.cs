@@ -1,5 +1,4 @@
-﻿using CalamityEntropy.Content.Items.Accessories;
-using CalamityMod;
+﻿using CalamityMod;
 using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Demonshade;
@@ -17,9 +16,9 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Reflection;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static gcsep.Reworks.DemonshadeHelmRework;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -56,7 +55,7 @@ namespace gcsep.Calamity.Enchantments
         {
             orig(player);
 
-            if (player.HasEffect<RedDevil>())
+            if (player.HasEffect<SoulCrystal>())
             {
                 player.Calamity().profanedCrystalBuffs = true;
 
@@ -103,72 +102,26 @@ namespace gcsep.Calamity.Enchantments
             recipe.AddTile(calamity, "DraedonsForge");
             recipe.Register();
         }
-
         public class RedDevil : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<SalvationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<DemonShadeEnchant>();
             public static int DevilDamage = 1000;
+
             public override void PostUpdateEquips(Player player)
             {
                 ModContent.GetInstance<DemonshadeHelm>().UpdateArmorSet(player);
 
                 player.GetModPlayer<GCSEPlayer>().rDevil = true;
 
-                if (!player.HasBuff(ModContent.BuffType<DemonshadeSetDevilBuff>()))
-                {
-                    player.AddBuff(ModContent.BuffType<DemonshadeSetDevilBuff>(), 3600);
-                }
+                int buffType = ModContent.BuffType<DemonshadeSetDevilBuff>();
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 60);
 
-                // Spawn minion if not already present in the active tracking table
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<DemonshadeRedDevil>()] < 1 && player.whoAmI == Main.myPlayer)
-                {
-                    var source = GetSource_EffectItem(player);
-                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(DevilDamage);
-
-                    var proj = Projectile.NewProjectileDirect(
-                        source,
-                        player.Center,
-                        -Vector2.UnitY,
-                        ModContent.ProjectileType<DemonshadeRedDevil>(),
-                        damage,
-                        0f,
-                        player.whoAmI
-                    );
-
-                    proj.originalDamage = damage;
-                }
-            }
-
-            public override void PostUpdate(Player player)
-            {
-                if (player.whoAmI != Main.myPlayer)
-                    return;
-
-                if (!player.HasEffect<RedDevil>())
-                {
-                    player.GetModPlayer<GCSEPlayer>().rDevil = false;
-
-                    int buffType = ModContent.BuffType<DemonshadeSetDevilBuff>();
-                    int minionType = ModContent.ProjectileType<DemonshadeRedDevil>();
-
-                    int buffIndex = player.FindBuffIndex(buffType);
-                    if (buffIndex != -1)
-                    {
-                        player.DelBuff(buffIndex);
-                    }
-
-                    for (int i = 0; i < Main.maxProjectiles; i++)
-                    {
-                        Projectile p = Main.projectile[i];
-                        if (p.active && p.owner == player.whoAmI && p.type == minionType)
-                        {
-                            p.Kill();
-                        }
-                    }
-                }
+                DemonshadeDevilHelper.EnsureDevil(player, GetSource_EffectItem(player), DevilDamage);
             }
         }
+
         public class AngelicAllianceEffect : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<SalvationForceHeader>();
@@ -278,13 +231,11 @@ namespace gcsep.Calamity.Enchantments
          {
                 CalamityPlayer modPlayer = player.Calamity();
 
-                // Directly flip Calamity's internal registration flags seamlessly
                 modPlayer.pSoulArtifact = true;
                 modPlayer.profanedCrystal = true;
                 modPlayer.pSoulShieldVisible = true;
                 modPlayer.profanedSoulRelicBuff = true;
 
-                // Force tModLoader's transformation animation engine to register your character's visual body override
                 if (player.Transformation().Type == -1)
                 {
                     player.Transformation().Type = ModContent.ItemType<ProfanedSoulCrystal>();

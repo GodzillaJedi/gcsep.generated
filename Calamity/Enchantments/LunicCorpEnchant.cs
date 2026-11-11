@@ -4,7 +4,9 @@ using CalamityMod.CalPlayer;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.Demonshade;
 using CalamityMod.Items.Armor.LunicCorps;
+using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Projectiles.Summon;
+using CalamityMod.Projectiles.Summon.MirrorofKalandraMinions;
 using CalamityMod.World;
 using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
@@ -14,6 +16,7 @@ using Microsoft.Xna.Framework;
 using RagnarokMod.Items.BardItems.Armor;
 using Redemption.Buffs.Minions;
 using Redemption.Projectiles.Minions;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -40,10 +43,7 @@ namespace gcsep.Calamity.Enchantments
         {
             player.AddEffect<HighRuleEffect>(Item);
             player.AddEffect<LunicArmorEffect>(Item);
-            if (ModCompatibility.Redemption.Loaded)
-            {
-                player.AddEffect<NaviEffect>(Item);
-            }
+            player.AddEffect<KalandraEffect>(Item);
         }
         public override void AddRecipes()
         {
@@ -109,24 +109,26 @@ namespace gcsep.Calamity.Enchantments
                 ModContent.GetInstance<LunicCorpsHelmet>().UpdateArmorSet(player);
             }
         }
-        public class NaviEffect : AccessoryEffect
+        public class KalandraEffect : AccessoryEffect
         {
+            // Fargo's Toggler Header Setup
             public override Header ToggleHeader => Header.GetHeader<SalvationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<LunicCorpEnchant>();
-            public override bool MinionEffect => true; 
+            public override bool MinionEffect => true;
+
             public override void PostUpdateEquips(Player player)
             {
-                if (player.whoAmI == Main.myPlayer)
+                if (player.whoAmI == Main.myPlayer && !player.dead)
                 {
-                    int buffType = ModContent.BuffType<NaturePixieBuff>();
-                    int projType = ModContent.ProjectileType<NaturePixie>();
+                    int buffType = ModContent.BuffType<KalandraMirrorBuff>();
+                    int baseProjType = ModContent.ProjectileType<AtzirisDisfavor>();
 
                     if (!player.HasBuff(buffType))
                     {
                         player.AddBuff(buffType, 60);
                     }
 
-                    if (player.ownedProjectileCounts[projType] < 1 && !player.dead)
+                    if (player.ownedProjectileCounts[baseProjType] < 1)
                     {
                         var source = GetSource_EffectItem(player);
                         int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
@@ -135,13 +137,44 @@ namespace gcsep.Calamity.Enchantments
                             source,
                             player.Center,
                             -Vector2.UnitY,
-                            projType,
+                            baseProjType,
                             damage,
                             0f,
                             player.whoAmI
                         );
 
                         proj.originalDamage = damage;
+                    }
+                    else if (player.ownedProjectileCounts[baseProjType] == 1)
+                    {
+                        int typeToSpawn = 0;
+
+                        if (player.ownedProjectileCounts[ModContent.ProjectileType<HopeShredder>()] != 1)
+                        {
+                            typeToSpawn = ModContent.ProjectileType<HopeShredder>();
+                        }
+                        else if (player.ownedProjectileCounts[ModContent.ProjectileType<WindRipper>()] != 1)
+                        {
+                            typeToSpawn = ModContent.ProjectileType<WindRipper>();
+                        }
+                        else if (player.ownedProjectileCounts[ModContent.ProjectileType<Paradoxica>()] != 1)
+                        {
+                            typeToSpawn = ModContent.ProjectileType<Paradoxica>();
+                        }
+                        else if (player.ownedProjectileCounts[ModContent.ProjectileType<Starforge>()] != 1)
+                        {
+                            typeToSpawn = ModContent.ProjectileType<Starforge>();
+                        }
+
+                        if (typeToSpawn != 0)
+                        {
+                            var source = GetSource_EffectItem(player);
+                            int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
+
+                            Projectile projectile = Projectile.NewProjectileDirect(source, player.Center, Vector2.Zero, typeToSpawn, damage, 0f, player.whoAmI);
+                            projectile.rotation = -MathF.PI / 2f;
+                            projectile.originalDamage = damage;
+                        }
                     }
                 }
             }
@@ -151,10 +184,9 @@ namespace gcsep.Calamity.Enchantments
                 if (player.whoAmI != Main.myPlayer)
                     return;
 
-                if (!player.HasEffect<NaviEffect>())
+                if (!player.HasEffect<KalandraEffect>())
                 {
-                    int buffType = ModContent.BuffType<NaturePixieBuff>();
-                    int projType = ModContent.ProjectileType<NaturePixie>();
+                    int buffType = ModContent.BuffType<KalandraMirrorBuff>();
 
                     int buffIndex = player.FindBuffIndex(buffType);
                     if (buffIndex != -1)
@@ -162,10 +194,19 @@ namespace gcsep.Calamity.Enchantments
                         player.DelBuff(buffIndex);
                     }
 
+                    int[] typesToKill = new int[]
+                    {
+                    ModContent.ProjectileType<AtzirisDisfavor>(),
+                    ModContent.ProjectileType<HopeShredder>(),
+                    ModContent.ProjectileType<WindRipper>(),
+                    ModContent.ProjectileType<Paradoxica>(),
+                    ModContent.ProjectileType<Starforge>()
+                    };
+
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
                         Projectile p = Main.projectile[i];
-                        if (p.active && p.owner == player.whoAmI && p.type == projType)
+                        if (p.active && p.owner == player.whoAmI && Array.Exists(typesToKill, t => t == p.type))
                         {
                             p.Kill();
                         }

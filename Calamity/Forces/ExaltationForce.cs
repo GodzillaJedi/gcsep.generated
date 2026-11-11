@@ -1,16 +1,10 @@
 ﻿using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Core;
 using gcsep.Calamity.Enchantments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static gcsep.Calamity.Enchantments.AuricTeslaEnchant;
-using static gcsep.Calamity.Enchantments.BloodflareEnchant;
-using static gcsep.Calamity.Enchantments.GodSlayerEnchant;
-using static gcsep.Calamity.Enchantments.SilvaEnchant;
-using static gcsep.Calamity.Enchantments.TarragonEnchant;
 
 namespace gcsep.Calamity.Forces
 {

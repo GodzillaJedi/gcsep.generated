@@ -25,52 +25,58 @@ namespace gcsep.Reworks
                 body.type == ModContent.ItemType<DemonshadeBreastplate>() &&
                 legs.type == ModContent.ItemType<DemonshadeGreaves>())
             {
-                return "DemonshadeAddonSet"; 
+                return "DemonshadeAddonSet";
             }
             return "";
         }
-        public override void UpdateArmorSet(Player player, string set)
+        public static class DemonshadeDevilHelper
         {
-            if (set == "DemonshadeAddonSet")
+            public static void EnsureDevil(Player player, IEntitySource source, int baseDamage)
             {
-                CalamityPlayer calamityPlayer = player.Calamity();
+                if (player.whoAmI != Main.myPlayer || player.dead)
+                    return;
 
-                calamityPlayer.wearingRogueArmor = true;
-                calamityPlayer.WearingPostMLSummonerSet = true;
-
-                var gPlayer = player.GetModPlayer<GCSEPlayer>();
-
-                if (player.whoAmI == Main.myPlayer && !calamityPlayer.chibii)
+                int devilType = ModContent.ProjectileType<DemonshadeRedDevil>();
+                for (int i = 0; i < Main.maxProjectiles; i++)
                 {
-                    gPlayer.rDevil = true;
-
-                    if (!player.HasBuff(ModContent.BuffType<DemonshadeSetDevilBuff>()))
-                    {
-                        player.AddBuff(ModContent.BuffType<DemonshadeSetDevilBuff>(), 3600);
-                    }
-
-                    if (player.ownedProjectileCounts[ModContent.ProjectileType<DemonshadeRedDevil>()] < 1)
-                    {
-                        IEntitySource source = player.GetSource_FromThis();
-                        int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(DevilDamage);
-
-                        var proj = Projectile.NewProjectileDirect(
-                            source,
-                            player.Center,
-                            -Vector2.UnitY,
-                            ModContent.ProjectileType<DemonshadeRedDevil>(),
-                            damage,
-                            0f, 
-                            player.whoAmI
-                        );
-
-                        proj.originalDamage = damage;
-                    }
+                    Projectile p = Main.projectile[i];
+                    if (p.active && p.owner == player.whoAmI && p.type == devilType)
+                        return;
                 }
 
-                player.maxMinions += SetBonusMinionSlotBoost;
-                player.GetDamage<SummonDamageClass>() += SetBonusSummonDamageBoost;
+                int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
+                Projectile proj = Projectile.NewProjectileDirect(source, player.Center, -Vector2.UnitY, devilType, damage, 0f, player.whoAmI);
+                proj.originalDamage = damage;
             }
+        }
+
+        public override void UpdateArmorSet(Player player, string set)
+        {
+            if (set != "DemonshadeAddonSet")
+                return;
+
+            CalamityPlayer calamityPlayer = player.Calamity();
+
+            calamityPlayer.wearingRogueArmor = true;
+            calamityPlayer.WearingPostMLSummonerSet = true;
+
+            if (!calamityPlayer.chibii)
+            {
+                player.GetModPlayer<GCSEPlayer>().rDevil = true;
+
+                // Only the owner adds the buff and spawns the minion
+                if (player.whoAmI == Main.myPlayer)
+                {
+                    int buffType = ModContent.BuffType<DemonshadeSetDevilBuff>();
+                    if (!player.HasBuff(buffType))
+                        player.AddBuff(buffType, 3600);
+
+                    DemonshadeDevilHelper.EnsureDevil(player, player.GetSource_FromThis(), DevilDamage);
+                }
+            }
+
+            player.maxMinions += SetBonusMinionSlotBoost;
+            player.GetDamage<SummonDamageClass>() += SetBonusSummonDamageBoost;
         }
     }
 }

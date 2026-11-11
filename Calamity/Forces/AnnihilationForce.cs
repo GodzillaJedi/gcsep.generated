@@ -1,16 +1,10 @@
 ﻿using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Content.Items.Accessories.Forces;
-using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Core;
 using gcsep.Calamity.Enchantments;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static gcsep.Calamity.Enchantments.BrimflameEnchant;
-using static gcsep.Calamity.Enchantments.EmpyreanEnchant;
-using static gcsep.Calamity.Enchantments.FearfallenEnchant;
-using static gcsep.Calamity.Enchantments.PlaguebringerEnchant;
-using static gcsep.Calamity.Enchantments.PlagueReaperEnchant;
 
 namespace gcsep.Calamity.Forces
 {

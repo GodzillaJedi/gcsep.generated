@@ -15,6 +15,7 @@ using Terraria.ModLoader;
 using FargowiltasCrossmod.Content.Calamity.Items.Accessories.Enchantments;
 using gcsep.Content.Buffs;
 using gcsep.Content.Projectiles.Enchantments;
+using static gcsep.Reworks.ReaverRework;
 
 namespace gcsep.Calamity.Enchantments
 {
@@ -57,70 +58,18 @@ namespace gcsep.Calamity.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<DevastationExHeader>();
             public override int ToggleItemType => ModContent.ItemType<ReaverEnchantEx>();
-            public override bool MinionEffect => true; 
+            public override bool MinionEffect => true;
             public override void PostUpdateEquips(Player player)
             {
-                var cp = player.Calamity();
-                var cse = player.CSE();
-
-                cse.rOrb = true;
-
-                if (!cp.reaverExplore && !cse.rOrb)
-                    return;
+                player.CSE().rOrb = true;
 
                 int buffType = ModContent.BuffType<ReaverOrbBuff>();
-                int projType = ModContent.ProjectileType<ReaverOrb>();
-
                 if (!player.HasBuff(buffType))
                     player.AddBuff(buffType, 60);
 
-                if (player.whoAmI != Main.myPlayer)
-                    return;
-
-                if (player.ownedProjectileCounts[projType] <= 0 && !player.dead)
-                {
-                    var source = GetSource_EffectItem(player);
-
-                    Projectile.NewProjectileDirect(
-                        source,
-                        player.Center,
-                        Vector2.Zero,
-                        projType,
-                        0,
-                        0f,
-                        player.whoAmI
-                    );
-                }
+                ReaverOrbHelper.EnsureOrb(player, GetSource_EffectItem(player));
             }
 
-            public override void PostUpdate(Player player)
-            {
-                if (player.whoAmI != Main.myPlayer)
-                    return;
-
-                if (!player.HasEffect<ReaverOrbEffect>())
-                {
-                    player.CSE().rOrb = false;
-
-                    int buffType = ModContent.BuffType<ReaverOrbBuff>();
-                    int projType = ModContent.ProjectileType<ReaverOrb>();
-
-                    int buffIndex = player.FindBuffIndex(buffType);
-                    if (buffIndex != -1)
-                    {
-                        player.DelBuff(buffIndex);
-                    }
-
-                    for (int i = 0; i < Main.maxProjectiles; i++)
-                    {
-                        Projectile p = Main.projectile[i];
-                        if (p.active && p.owner == player.whoAmI && p.type == projType)
-                        {
-                            p.Kill();
-                        }
-                    }
-                }
-            }
         }
         public class VexationEffect : AccessoryEffect
         {

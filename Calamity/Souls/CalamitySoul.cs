@@ -26,6 +26,7 @@ namespace gcsep.Calamity.Souls
         public override void SetStaticDefaults()
         {
             Main.RegisterItemAnimation(Item.type, new DrawAnimationRectangularV(6, 6, 10));
+
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
         }

@@ -1,6 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using gcsep.Content.Projectiles;
+using gcsep.Content.Projectiles.Minions;
 
 namespace gcsep.Content.Buffs.Minions
 {
@@ -18,18 +18,14 @@ namespace gcsep.Content.Buffs.Minions
 
             if (player.ownedProjectileCounts[projType] > 0)
             {
-                player.GetModPlayer<GCSEPlayer>().ThanatosSummon = true;
+                player.buffTime[buffIndex] = 18000;
             }
-
-            if (!player.GetModPlayer<GCSEPlayer>().ThanatosSummon)
+            else
             {
                 player.DelBuff(buffIndex);
                 buffIndex--;
             }
-            else
-            {
-                player.buffTime[buffIndex] = 18000; 
-            }
         }
     }
+
 }

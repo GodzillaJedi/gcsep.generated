@@ -14,6 +14,7 @@ using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace gcsep.Calamity.Souls
@@ -124,66 +125,24 @@ namespace gcsep.Calamity.Souls
         public class YharonSummonEffect : CalamitySoulEffect
         {
             public override Header ToggleHeader => Header.GetHeader<CalamitySoulHeader>(); 
-            public override int ToggleItemType => ModContent.ItemType<PotJT>(); 
-            public static int BaseDragonDamage = 1500;
+            public override int ToggleItemType => ModContent.ItemType<PotJT>();
+            public static void Maintain(Player player, IEntitySource source, int buffType, int minionType, int baseDamage, float knockback)
+            {
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 60);
+
+                if (player.whoAmI != Main.myPlayer || player.dead || player.ownedProjectileCounts[minionType] >= 1)
+                    return;
+
+                int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
+                Projectile.NewProjectile(source, player.Center, -Vector2.UnitY * 5f, minionType, damage, knockback, player.whoAmI);
+            }
             public override void PostUpdateEquips(Player player)
             {
                 player.GetModPlayer<GCSEPlayer>().YharonSummon = true;
 
-                int buffType = ModContent.BuffType<YharonSummonBuff>();
-                int minionType = ModContent.ProjectileType<YharonBossMinion>();
-
-                if (!player.HasBuff(buffType))
-                {
-                    player.AddBuff(buffType, 60);
-                }
-
-                if (player.ownedProjectileCounts[minionType] < 1 && player.whoAmI == Main.myPlayer && !player.dead)
-                {
-                    var source = GetSource_EffectItem(player);
-                    int scaledDamage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(BaseDragonDamage);
-
-                    var proj = Projectile.NewProjectileDirect(
-                        source,
-                        player.Center,
-                        -Vector2.UnitY * 5f,
-                        minionType,
-                        scaledDamage,
-                        4f,
-                        player.whoAmI
-                    );
-
-                    proj.originalDamage = BaseDragonDamage;
-                }
-            }
-
-            public override void PostUpdate(Player player)
-            {
-                if (player.whoAmI != Main.myPlayer)
-                    return;
-
-                if (!player.HasEffect<YharonSummonEffect>())
-                {
-                    player.GetModPlayer<GCSEPlayer>().YharonSummon = false;
-
-                    int buffType = ModContent.BuffType<YharonSummonBuff>();
-                    int minionType = ModContent.ProjectileType<YharonBossMinion>();
-
-                    int buffIndex = player.FindBuffIndex(buffType);
-                    if (buffIndex != -1)
-                    {
-                        player.DelBuff(buffIndex);
-                    }
-
-                    for (int i = 0; i < Main.maxProjectiles; i++)
-                    {
-                        Projectile p = Main.projectile[i];
-                        if (p.active && p.owner == player.whoAmI && p.type == minionType)
-                        {
-                            p.Kill();
-                        }
-                    }
-                }
+                Maintain(player, GetSource_EffectItem(player),
+                    ModContent.BuffType<YharonSummonBuff>(), ModContent.ProjectileType<YharonBossMinion>(), 1200, 2f);
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.DamageOverTime; 
+using CalamityMod.Buffs.DamageOverTime;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.Armor.GemTech;
 using CalamityMod.Projectiles.Rogue;
@@ -8,12 +8,12 @@ using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
 using gcsep.Content.Buffs;
 using gcsep.Content.Buffs.Minions;
-using gcsep.Content.Projectiles;
 using gcsep.Content.Projectiles.Minions;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -138,47 +138,24 @@ namespace gcsep.Calamity.Enchantments
             public override Header ToggleHeader => Header.GetHeader<SalvationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<GemTechEnchant>();
             public override bool MinionEffect => true;
+            public static void Maintain(Player player, IEntitySource source, int buffType, int minionType, int baseDamage, float knockback)
+            {
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 60);
+
+                if (player.whoAmI != Main.myPlayer || player.dead || player.ownedProjectileCounts[minionType] >= 1)
+                    return;
+
+                int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
+                Projectile.NewProjectile(source, player.Center, -Vector2.UnitY * 5f, minionType, damage, knockback, player.whoAmI);
+            }
 
             public override void PostUpdateEquips(Player player)
             {
                 player.GetModPlayer<GCSEPlayer>().AresSummon = true;
 
-                int buffType = ModContent.BuffType<AresMinionBuff>();
-                int minionType = ModContent.ProjectileType<AresMinion>();
-
-                if (!player.HasBuff(buffType))
-                    player.AddBuff(buffType, 60);
-
-                if (player.ownedProjectileCounts[minionType] < 1 && player.whoAmI == Main.myPlayer && !player.dead)
-                {
-                    var source = GetSource_EffectItem(player);
-                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(1500);
-
-                    Projectile.NewProjectile(source, player.Center, -Vector2.UnitY * 5f, minionType, damage, 3f, player.whoAmI);
-                }
-            }
-
-            public override void PostUpdate(Player player)
-            {
-                if (player.whoAmI != Main.myPlayer) return;
-
-                if (!player.HasEffect<GemTechAres>())
-                {
-                    player.GetModPlayer<GCSEPlayer>().AresSummon = false;
-
-                    int buffType = ModContent.BuffType<AresMinionBuff>();
-                    int minionType = ModContent.ProjectileType<AresMinion>();
-
-                    int buffIndex = player.FindBuffIndex(buffType);
-                    if (buffIndex != -1) player.DelBuff(buffIndex);
-
-                    for (int i = 0; i < Main.maxProjectiles; i++)
-                    {
-                        Projectile p = Main.projectile[i];
-                        if (p.active && p.owner == player.whoAmI && p.type == minionType)
-                            p.Kill();
-                    }
-                }
+                Maintain(player, GetSource_EffectItem(player),
+                    ModContent.BuffType<AresMinionBuff>(), ModContent.ProjectileType<AresMinion>(), 1500, 3f);
             }
         }
 
@@ -187,97 +164,53 @@ namespace gcsep.Calamity.Enchantments
             public override Header ToggleHeader => Header.GetHeader<SalvationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<GemTechEnchant>();
             public override bool MinionEffect => true;
+            public static void Maintain(Player player, IEntitySource source, int buffType, int minionType, int baseDamage, float knockback)
+            {
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 60);
+
+                // Only the owner spawns it, and only if there isn't one already
+                if (player.whoAmI != Main.myPlayer || player.dead || player.ownedProjectileCounts[minionType] >= 1)
+                    return;
+
+                int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
+                Projectile.NewProjectile(source, player.Center, -Vector2.UnitY * 5f, minionType, damage, knockback, player.whoAmI);
+            }
 
             public override void PostUpdateEquips(Player player)
             {
                 player.GetModPlayer<GCSEPlayer>().TwinsSummon = true;
 
-                int buffType = ModContent.BuffType<ExoTwinsMinionBuff>();
-                int minionType = ModContent.ProjectileType<ExoTwinsMinion>();
-
-                if (!player.HasBuff(buffType))
-                    player.AddBuff(buffType, 60);
-
-                if (player.ownedProjectileCounts[minionType] < 1 && player.whoAmI == Main.myPlayer && !player.dead)
-                {
-                    var source = GetSource_EffectItem(player);
-                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(1100);
-
-                    Projectile.NewProjectile(source, player.Center, -Vector2.UnitY * 5f, minionType, damage, 2f, player.whoAmI);
-                }
-            }
-
-            public override void PostUpdate(Player player)
-            {
-                if (player.whoAmI != Main.myPlayer) return;
-
-                if (!player.HasEffect<GemTechTwins>())
-                {
-                    player.GetModPlayer<GCSEPlayer>().TwinsSummon = false;
-
-                    int buffType = ModContent.BuffType<ExoTwinsMinionBuff>();
-                    int minionType = ModContent.ProjectileType<ExoTwinsMinion>();
-
-                    int buffIndex = player.FindBuffIndex(buffType);
-                    if (buffIndex != -1) player.DelBuff(buffIndex);
-
-                    for (int i = 0; i < Main.maxProjectiles; i++)
-                    {
-                        Projectile p = Main.projectile[i];
-                        if (p.active && p.owner == player.whoAmI && p.type == minionType)
-                            p.Kill();
-                    }
-                }
+                Maintain(player, GetSource_EffectItem(player),
+                    ModContent.BuffType<ExoTwinsMinionBuff>(), ModContent.ProjectileType<ExoTwinsMinion>(), 1100, 2f);
             }
         }
+
         public class GemTechThanatos : AccessoryEffect
         {
             public override Header ToggleHeader => Header.GetHeader<SalvationForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<GemTechEnchant>();
             public override bool MinionEffect => true;
+            public static void Maintain(Player player, IEntitySource source, int buffType, int minionType, int baseDamage, float knockback)
+            {
+                if (!player.HasBuff(buffType))
+                    player.AddBuff(buffType, 60);
+
+                if (player.whoAmI != Main.myPlayer || player.dead || player.ownedProjectileCounts[minionType] >= 1)
+                    return;
+
+                int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(baseDamage);
+                Projectile.NewProjectile(source, player.Center, -Vector2.UnitY * 5f, minionType, damage, knockback, player.whoAmI);
+            }
+
             public override void PostUpdateEquips(Player player)
             {
                 player.GetModPlayer<GCSEPlayer>().ThanatosSummon = true;
 
-                int buffType = ModContent.BuffType<ThanatosMinionBuff>();
-                int minionType = ModContent.ProjectileType<ThanatosMinion>();
-
-                if (!player.HasBuff(buffType))
-                    player.AddBuff(buffType, 60);
-
-                if (player.ownedProjectileCounts[minionType] < 1 && player.whoAmI == Main.myPlayer && !player.dead)
-                {
-                    var source = GetSource_EffectItem(player);
-
-                    int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(1200);
-
-                    Projectile.NewProjectile(source, player.Center, -Vector2.UnitY * 5f, minionType, damage, 2f, player.whoAmI);
-                }
-            }
-            public override void PostUpdate(Player player)
-            {
-                if (player.whoAmI != Main.myPlayer)
-                    return;
-
-                if (!player.HasEffect<GemTechThanatos>())
-                {
-                    player.GetModPlayer<GCSEPlayer>().ThanatosSummon = false;
-
-                    int buffType = ModContent.BuffType<ThanatosMinionBuff>();
-                    int minionType = ModContent.ProjectileType<ThanatosMinion>();
-
-                    int buffIndex = player.FindBuffIndex(buffType);
-                    if (buffIndex != -1)
-                        player.DelBuff(buffIndex);
-
-                    for (int i = 0; i < Main.maxProjectiles; i++)
-                    {
-                        Projectile p = Main.projectile[i];
-                        if (p.active && p.owner == player.whoAmI && p.type == minionType)
-                            p.Kill();
-                    }
-                }
+                Maintain(player, GetSource_EffectItem(player),
+                    ModContent.BuffType<ThanatosMinionBuff>(), ModContent.ProjectileType<ThanatosMinion>(), 1200, 2f);
             }
         }
+
     }
 }

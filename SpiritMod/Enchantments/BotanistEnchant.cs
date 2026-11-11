@@ -1,8 +1,11 @@
 ﻿using FargowiltasSouls.Content.Items.Accessories.Enchantments;
 using FargowiltasSouls.Core.AccessoryEffectSystem;
+using gcsep.Calamity.Enchantments;
 using gcsep.Content.SoulToggles;
 using gcsep.Core;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs.Minions;
+using Redemption.Projectiles.Minions;
 using SpiritMod.Items.Armor.BotanistSet;
 using SpiritMod.Items.Placeable.Furniture;
 using SpiritMod.Items.Sets.BriarChestLoot;
@@ -26,6 +29,7 @@ namespace gcsep.SpiritMod.Enchantments
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.AddEffect<BotanistHerbEffect>(Item);
+            player.AddEffect<NaviEffect>(Item);
             if (player.AddEffect<ReachBroochEffect>(Item))
             {
                 ModContent.GetInstance<ReachBrooch>().UpdateAccessory(player, hideVisual);
@@ -56,6 +60,70 @@ namespace gcsep.SpiritMod.Enchantments
         {
             public override Header ToggleHeader => Header.GetHeader<AdventurerForceHeader>();
             public override int ToggleItemType => ModContent.ItemType<BotanistEnchant>();
+        }
+        public class NaviEffect : AccessoryEffect
+        {
+            public override Header ToggleHeader => Header.GetHeader<AdventurerForceHeader>();
+            public override int ToggleItemType => ModContent.ItemType<BotanistEnchant>();
+            public override bool MinionEffect => true;
+            public override void PostUpdateEquips(Player player)
+            {
+                if (player.whoAmI == Main.myPlayer)
+                {
+                    int buffType = ModContent.BuffType<NaturePixieBuff>();
+                    int projType = ModContent.ProjectileType<NaturePixie>();
+
+                    if (!player.HasBuff(buffType))
+                    {
+                        player.AddBuff(buffType, 60);
+                    }
+
+                    if (player.ownedProjectileCounts[projType] < 1 && !player.dead)
+                    {
+                        var source = GetSource_EffectItem(player);
+                        int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(140f);
+
+                        var proj = Projectile.NewProjectileDirect(
+                            source,
+                            player.Center,
+                            -Vector2.UnitY,
+                            projType,
+                            damage,
+                            0f,
+                            player.whoAmI
+                        );
+
+                        proj.originalDamage = damage;
+                    }
+                }
+            }
+
+            public override void PostUpdate(Player player)
+            {
+                if (player.whoAmI != Main.myPlayer)
+                    return;
+
+                if (!player.HasEffect<NaviEffect>())
+                {
+                    int buffType = ModContent.BuffType<NaturePixieBuff>();
+                    int projType = ModContent.ProjectileType<NaturePixie>();
+
+                    int buffIndex = player.FindBuffIndex(buffType);
+                    if (buffIndex != -1)
+                    {
+                        player.DelBuff(buffIndex);
+                    }
+
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        Projectile p = Main.projectile[i];
+                        if (p.active && p.owner == player.whoAmI && p.type == projType)
+                        {
+                            p.Kill();
+                        }
+                    }
+                }
+            }
         }
     }
 }
